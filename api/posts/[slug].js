@@ -13,7 +13,7 @@ module.exports = async (req, res) => {
     }
 
     const { slug } = req.query;
-    const postsDir = path.join(__dirname, '..', 'posts');
+    const postsDir = path.join(__dirname, 'posts');
 
     if (!slug || slug.includes('..') || slug.includes('/')) {
         res.writeHead(400, { 'Content-Type': 'text/plain' });
