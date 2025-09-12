@@ -12,7 +12,7 @@ module.exports = async (req, res) => {
         return;
     }
 
-    const postsDir = path.join(__dirname, 'posts');
+    const postsDir = path.join(__dirname, '..', 'posts');
 
     try {
         const files = await fs.readdir(postsDir);
