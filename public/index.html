@@ -233,7 +233,10 @@
                             </div>
                         </a>
                     `).join('');
-                document.getElementById('posts-list-container').innerHTML = postsListHtml || '<p>No posts found.</p>';
+                const postsListContainer = document.getElementById('posts-list-container');
+                if (postsListContainer) {
+                    postsListContainer.innerHTML = postsListHtml || '<p>No posts found.</p>';
+                }
                 
 
             } catch (error) {
@@ -251,6 +254,7 @@
                 if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
                 const postContentMarkdown = await response.text();
                 console.log('Type of marked:', typeof marked);
+                console.log('Markdown Content:', postContentMarkdown);
                 const postContentHtml = marked.parse(postContentMarkdown);
                 
                 contentArea.innerHTML = `
