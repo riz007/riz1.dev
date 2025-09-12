@@ -1,17 +1,24 @@
 {
-  "rewrites": [
-    {
-      "source": "/api/(.*)",
-      "destination": "/api/$1"
-    },
-    {
-      "source": "/(.*)",
-      "destination": "/index.html"
-    }
-  ],
   "functions": {
-    "api/**/*.js": {
+    "api/posts/[slug].js": {
+      "includeFiles": "posts/**"
+    },
+    "api/posts.js": {
       "includeFiles": "posts/**"
     }
-  }
+  },
+  "routes": [
+    {
+      "src": "/api/posts",
+      "dest": "/api/posts.js"
+    },
+    {
+      "src": "/api/posts/(?<slug>[^/]+)",
+      "dest": "/api/posts/[slug].js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ]
 }
