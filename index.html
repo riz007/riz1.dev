@@ -1,152 +1,340 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-WCHT2DKSX2"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rizwanul Islam Rudra - Software Engineer | Technical Lead</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WCHT2DKSX2"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
 
-    gtag('config', 'G-WCHT2DKSX2');
-  </script>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rizwanul Islam Rudra - Software Enginner</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      color: #000;
-      background: #fff;
-      margin: 0 auto;
-      padding: 20px;
-      max-width: 800px;
-      line-height: 1.6;
-    }
-    h1, h2, h3 {
-      margin-bottom: 5px;
-    }
-    h1 {
-      font-size: 24px;
-    }
-    h2 {
-      font-size: 20px;
-      border-bottom: 1px solid #000;
-      padding-bottom: 3px;
-      margin-top: 20px;
-    }
-    h3 {
-      font-size: 16px;
-      margin-top: 15px;
-    }
-    p, li {
-      font-size: 14px;
-    }
-    ul {
-      margin-top: 5px;
-    }
-    .contact {
-      margin-bottom: 15px;
-    }
-    .footer {
-      margin-top: 30px;
-      border-top: 1px solid #000;
-      padding-top: 10px;
-      font-size: 14px;
-    }
-    a {
-      color: #000;
-      text-decoration: underline;
-    }
-  </style>
+        gtag('config', 'G-WCHT2DKSX2');
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #212121;
+        }
+
+        .main-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        .nav-link {
+            transition: color 0.2s ease-in-out;
+        }
+
+        .nav-link:hover {
+            color: #6366f1;
+        }
+
+        .post-link {
+            transition: color 0.2s ease-in-out;
+        }
+
+        .post-link:hover {
+            color: #6366f1;
+        }
+
+        .markdown-content h1,
+        .markdown-content h2,
+        .markdown-content h3 {
+            font-weight: bold;
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .markdown-content h1 {
+            font-size: 2.25rem;
+        }
+
+        .markdown-content h2 {
+            font-size: 1.875rem;
+        }
+
+        .markdown-content h3 {
+            font-size: 1.5rem;
+        }
+
+        .markdown-content p {
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .markdown-content ul,
+        .markdown-content ol {
+            list-style-position: inside;
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+        }
+
+        .markdown-content ul li {
+            list-style-type: disc;
+        }
+
+        .markdown-content ol li {
+            list-style-type: decimal;
+        }
+
+        .markdown-content code {
+            background-color: #e5e7eb;
+            padding: 0.2rem 0.4rem;
+            border-radius: 0.25rem;
+            font-family: monospace;
+        }
+
+        .markdown-content pre {
+            background-color: #f3f4f6;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            margin-bottom: 1rem;
+        }
+
+        .markdown-content pre code {
+            padding: 0;
+            background-color: transparent;
+        }
+
+        .list-disc-inside {
+            list-style-position: inside;
+        }
+
+        .experience-item {
+            border-left: 2px solid #e5e7eb;
+            padding-left: 1rem;
+        }
+    </style>
 </head>
-<body>
 
-  <h1>Rizwanul Islam Rudra</h1>
-  <div class="contact">
-    <p>📞 +66 0900XXXXXX · ✉️ <a href="mailto:rizwanulrudra@gmail.com">rizwanulrudra@gmail.com</a></p>
-    <p>📍 Bangkok, Thailand</p>
-    <p><a href="https://www.linkedin.com/in/rizwanulrudra/" target="_blank">LinkedIn</a></p>
-  </div>
+<body class="bg-white">
+    <div class="main-container">
+        <header class="flex justify-between items-center py-4 mb-8">
+            <nav>
+                <a href="/" class="nav-link text-base font-medium mr-4">home</a>
+                <a href="/blog" class="nav-link text-base font-medium mr-4">blog</a>
+                <a href="/dsa" class="nav-link text-base font-medium mr-4">algorithms</a>
+                <a href="/useful-links" class="nav-link text-base font-medium">links</a>
+            </nav>
+        </header>
 
-  <h2>Professional Summary</h2>
-  <p>Software Engineer with 10+ years of experience building scalable, high-quality web and back-office applications using Vue.js 3, Nuxt 3, Node.js, TypeScript, and React. Skilled in full-stack development, clean architecture, and continuous delivery, with a track record of delivering impactful solutions in cross-functional teams. Passionate about writing maintainable, well-tested code that delights users and drives business value.</p>
+        <main id="content-area">
+            </main>
 
-  <h2>Key Skills</h2>
-  <ul>
-    <li>Frontend: Vue 3, Nuxt 3, TypeScript, JavaScript, Vuex/Pinia, Vuetify, TailwindCSS</li>
-    <li>Backend & APIs: Node.js, Nest.js, Express, REST APIs, SQL, Python, DynamoDB</li>
-    <li>Architecture & Practices: DDD, Clean Architecture, TDD</li>
-    <li>Testing: Jest, Vitest, Cypress, Playwright</li>
-    <li>DevOps & Tools: Git, GitHub Actions, CI/CD, AWS, Sentry</li>
-    <li>Leadership & Collaboration: Technical Leadership, Code Reviews, Agile Teams</li>
-  </ul>
+        <footer class="mt-16 text-sm text-gray-500 flex flex-col sm:flex-row sm:items-center sm:justify-between">
+            <div class="mb-2 sm:mb-0">©2025 Rizwanul Islam Rudra</div>
+            <div class="flex items-center space-x-4">
+                <a href="#" target="_blank" rel="noopener noreferrer" class="hover:text-gray-900 transition-colors">
+                    <span class="mr-1">↗</span> rss
+                </a>
+                <a href="https://github.com/riz007" target="_blank" rel="noopener noreferrer"
+                    class="hover:text-gray-900 transition-colors">
+                    <span class="mr-1">↗</span> github
+                </a>
+            </div>
+        </footer>
+    </div>
 
-  <h2>Experience</h2>
+    <script>
+        const contentArea = document.getElementById('content-area');
 
-  <h3>YPB Group International Company Ltd. | Apr 2021 - Present</h3>
-  <p><strong>Senior Software Developer (Tech Lead)</strong></p>
-  <ul>
-    <li>Define and evolve platform architecture to ensure scalability, maintainability, and high performance.</li>
-    <li>Collaborate with the Head of Technology and cross-functional stakeholders to deliver software aligned with the engineering roadmap.</li>
-    <li>Lead recruitment, onboarding, and mentorship of software engineers.</li>
-    <li>Drive adoption of best practices including DDD, TDD, and Clean Architecture.</li>
-    <li>Communicate complex technical concepts effectively to stakeholders.</li>
-    <li>Introduce innovative solutions and optimize team structures.</li>
-  </ul>
+        const API_URL = '';
 
-  <h3>Manatal | Aug 2019 - Mar 2021</h3>
-  <p><strong>Senior Software Developer</strong></p>
-  <ul>
-    <li>Developed and maintained critical features for a SaaS platform.</li>
-    <li>Conducted regular code reviews and provided constructive feedback.</li>
-    <li>Collaborated with project managers, UI/UX designers, and stakeholders.</li>
-    <li>Worked in an agile environment to roll out features that contributed to business goals.</li>
-  </ul>
 
-  <h3>Pocket Playlab | Apr 2018 - May 2019</h3>
-  <p><strong>Software Engineer</strong></p>
-  <ul>
-    <li>Developed web applications using HTML, CSS, JavaScript, jQuery on ASP.NET.</li>
-    <li>Migrated vanilla codebase into Angular.</li>
-    <li>Collaborated with project managers, UI/UX designers, system analysts.</li>
-    <li>Introduced modern frontend frameworks and tools.</li>
-  </ul>
 
-  <h3>Cal-Comp Electronics (Thailand) | Sep 2016 - Mar 2018</h3>
-  <p><strong>Software Engineer</strong></p>
-  <ul>
-    <li>Led development of the XYZ Printing 3D web gallery application using Java, Play Framework, Angular.js.</li>
-    <li>Developed STEAM 3D Printing Solution for kids.</li>
-    <li>Designed and implemented responsive UI components.</li>
-  </ul>
+        const homepageContent = `
+            <h1 class="text-4xl font-bold mb-4">About Me</h1>
+            <div class="text-lg text-gray-700 space-y-2">
+            <p>👋 Hello, I'm Riz!</p>
+            <ul class="list-none space-y-1">
+                <li>🎓 Master's in Computer Science (ABAC) | Bachelor's in Computer Engineering</li>
+                <li>💻 Passionate about technology, problem-solving, and building innovative solutions</li>
+                <li>🌍 Always eager to learn, grow, and collaborate with people from diverse backgrounds</li>
+                <li>🚀 Let's connect and create something amazing together!</li>
+            </ul>
+            </div>
+            <div class="mt-8">
+                <h2 class="text-2xl font-bold mb-4">Key Skills</h2>
+                <ul class="flex flex-wrap gap-2 text-sm text-gray-600">
+                    <li class="bg-gray-200 px-3 py-1 rounded-full">JavaScript</li>
+                    <li class="bg-gray-200 px-3 py-1 rounded-full">TypeScript</li>
+                    <li class="bg-gray-200 px-3 py-1 rounded-full">Python</li>
+                    <li class="bg-gray-200 px-3 py-1 rounded-full">Vue 3</li>
+                    <li class="bg-gray-200 px-3 py-1 rounded-full">React</li>
+                    <li class="bg-gray-200 px-3 py-1 rounded-full">Node.js</li>
+                    <li class="bg-gray-200 px-3 py-1 rounded-full">SQL</li>
+                    <li class="bg-gray-200 px-3 py-1 rounded-full">TailwindCSS</li>
+                    <li class="bg-gray-200 px-3 py-1 rounded-full">Clean Architecture</li>
+                    <li class="bg-gray-200 px-3 py-1 rounded-full">Docker</li>
+                    <li class="bg-gray-200 px-3 py-1 rounded-full">Git</li>
+                    <li class="bg-gray-200 px-3 py-1 rounded-full">Engineering Management</li>
+                </ul>
+            </div>
+            <div class="mt-8">
+                <h2 class="text-2xl font-bold mb-4">Experience</h2>
+                <div class="space-y-6">
+                    <div class="experience-item">
+                        <h3 class="text-lg font-semibold">Senior Software Developer (Tech Lead)</h3>
+                        <p class="text-sm text-gray-500">YPB Group International Company Ltd. · Apr 2021 - Present</p>
+                    </div>
+                    <div class="experience-item">
+                        <h3 class="text-lg font-semibold">Senior Software Developer</h3>
+                        <p class="text-sm text-gray-500">Manatal · Aug 2019 - Mar 2021</p>
+                    </div>
+                    <div class="experience-item">
+                        <h3 class="text-lg font-semibold">Software Engineer</h3>
+                        <p class="text-sm text-gray-500">Pocket Playlab · Apr 2018 - May 2019</p>
+                    </div>
+                    <div class="experience-item">
+                        <h3 class="text-lg font-semibold">Web Developer</h3>
+                        <p class="text-sm text-gray-500">Taste Adventures Ltd. · Jun 2015 - Jun 2016</p>
+                    </div>
+                </div>
+            </div>
+        `;
 
-  <h3>Taste Adventures Ltd. | Jun 2015 - Jun 2016</h3>
-  <p><strong>Web Developer</strong></p>
-  <ul>
-    <li>Developed a tour expense tracking application using PHP, HTML, CSS, JavaScript, MySQL.</li>
-    <li>Maintained and optimized a PHP-based food tour website.</li>
-    <li>Supported business analysis and documented requirements.</li>
-    <li>Grew social media platforms by 60% in visitors and 80% engagement.</li>
-  </ul>
+        const renderHome = () => {
+            contentArea.innerHTML = homepageContent;
+        };
 
-  <h2>Education</h2>
-  <p><strong>Assumption University of Thailand</strong></p>
-  <ul>
-    <li>Master of Science in Computer Science</li>
-    <li>Thesis: Sentiment Analysis of Consumer Reviews using Machine Learning</li>
-    <li>Published: <a href="https://ieeexplore.ieee.org/document/10202106" target="_blank">IEEE Xplore</a> (ISBN: 979-8-3503-0050-5, 10 August 2023)</li>
-    <li>Bachelor of Engineering in Computer Engineering</li>
-  </ul>
+        const renderBlogList = async () => {
+            contentArea.innerHTML = `
+                <h1 class="text-4xl font-bold mb-8">My Blog</h1>
+                <div id="posts-list-container" class="space-y-6">
+                    <p>Loading posts...</p>
+                </div>
+            `;
+            try {
+                const response = await fetch(`${API_URL}/api/posts`);
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                const posts = await response.json();
 
-  <div class="footer">
-    <p>🔗 Connect with me:</p>
-    <p>
-      <a href="https://www.linkedin.com/in/rizwanulrudra/" target="_blank">LinkedIn</a> |
-      <a href="https://twitter.com/rizwanulrudra" target="_blank">Twitter</a> |
-      <a href="https://github.com/riz007" target="_blank">GitHub</a> |
-      <a href="https://www.facebook.com/profile.php?id=61557583748360" target="_blank">Facebook</a>
-    </p>
-  </div>
+                const postsListHtml = posts.map(post => `
+                        <a href="/blog/${post.file}" class="post-link block">
+                            <div class="flex flex-col sm:flex-row items-baseline sm:items-center">
+                                <div class="text-sm text-gray-500 mb-1 sm:mb-0 sm:min-w-[120px]">${post.date}</div>
+                                <h2 class="text-lg font-medium ml-3">${post.title}</h2>
+                            </div>
+                        </a>
+                    `).join('');
+                document.getElementById('posts-list-container').innerHTML = postsListHtml || '<p>No posts found.</p>';
+                
+
+            } catch (error) {
+                contentArea.innerHTML = `
+                    <h1 class="text-4xl font-bold mb-8">My Blog</h1>
+                    <p class="text-red-500">Failed to load posts. Please check the server connection. Error: ${error.message}</p>
+                `;
+            }
+        };
+        
+        const renderPost = async (fileName) => {
+            contentArea.innerHTML = `<p>Loading post...</p>`;
+            try {
+                const response = await fetch(`${API_URL}/api/posts/${fileName}`);
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                const postContentMarkdown = await response.text();
+                const postContentHtml = marked.parse(postContentMarkdown);
+                
+                contentArea.innerHTML = `
+                    <a href="/blog" class="text-gray-500 hover:text-gray-900 transition-colors mb-8 inline-block">← Back to blog</a>
+                    <div class="markdown-content">
+                        ${postContentHtml}
+                    </div>
+                `;
+                
+
+            } catch (error) {
+                contentArea.innerHTML = `
+                    <a href="/blog" class="text-gray-500 hover:text-gray-900 transition-colors mb-8 inline-block">← Back to blog</a>
+                    <p class="text-red-500">Failed to load blog post. Please check the file name and server configuration. Error: ${error.message}</p>
+                `;
+            }
+        };
+
+        const renderLinksPage = async () => {
+            contentArea.innerHTML = `
+                <h1 class="text-4xl font-bold mb-8">Useful Links</h1>
+                <div id="links-container" class="space-y-4">
+                    <p>Loading links...</p>
+                </div>
+            `;
+            try {
+                const response = await fetch(`${API_URL}/links.json`);
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                const links = await response.json();
+
+                const linksHtml = `
+                    <ul class="space-y-4">
+                        ${links.map(link => `
+                            <li>
+                                <a href="${link.url}" target="_blank" rel="noopener noreferrer" class="text-lg font-medium text-blue-600 hover:text-blue-800 transition-colors">
+                                    <span class="mr-1">↗</span> ${link.title}
+                                </a>
+                            </li>
+                        `).join('')}
+                    </ul>
+                `;
+                document.getElementById('links-container').innerHTML = linksHtml;
+            } catch (error) {
+                contentArea.innerHTML = `
+                    <h1 class="text-4xl font-bold mb-8">Useful Links</h1>
+                    <p class="text-red-500">Failed to load links. Error: ${error.message}</p>
+                `;
+            }
+        };
+
+        const renderAlgorithmsPage = () => {
+            contentArea.innerHTML = `
+                <div class="markdown-content">
+                    <h1 class="text-4xl font-bold mb-8">Data Structure & Algorithms</h1>
+                    <p class="text-lg text-gray-700">This section is where I'll be sharing my writings on Data Structures and Algorithms. Stay tuned for detailed explanations and code implementations!</p>
+                </div>
+            `;
+        };
+
+        const router = () => {
+            const path = window.location.pathname;
+
+            if (path.startsWith('/blog/')) {
+                const fileName = path.substring(6); 
+                renderPost(fileName);
+            } else if (path === '/blog') {
+                renderBlogList();
+            } else if (path === '/dsa') {
+                renderAlgorithmsPage();
+            } else if (path === '/useful-links') {
+                renderLinksPage();
+            } else {
+                renderHome();
+            }
+        };
+
+        document.addEventListener('click', e => {
+            const link = e.target.closest('a');
+            
+            if (link && link.href.startsWith(window.location.origin) && link.target !== '_blank') {
+                e.preventDefault();
+                history.pushState({}, '', link.href);
+                router();
+            }
+        });
+
+        window.addEventListener('popstate', router);
+        
+        router();
+
+    </script>
 </body>
 </html>

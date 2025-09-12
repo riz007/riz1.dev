@@ -1,0 +1,22 @@
+[
+    {
+        "title": "MDN Web Docs",
+        "url": "https://developer.mozilla.org/"
+    },
+    {
+        "title": "A Tour of Go",
+        "url": "https://go.dev/tour/welcome/1"
+    },
+    {
+        "title": "freeCodeCamp",
+        "url": "https://www.freecodecamp.org/"
+    },
+    {
+        "title": "LeetCode",
+        "url": "https://leetcode.com/"
+    },
+    {
+        "title": "The Odin Project",
+        "url": "https://www.theodinproject.com/"
+    }
+]
