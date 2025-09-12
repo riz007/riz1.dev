@@ -17,6 +17,10 @@
       "dest": "/api/posts/[slug].js"
     },
     {
+      "src": "/links.json",
+      "dest": "/public/links.json"
+    },
+    {
       "src": "/(.*)",
       "dest": "/index.html"
     }
