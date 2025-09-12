@@ -13,10 +13,8 @@ module.exports = async (req, res) => {
     }
 
     const { slug } = req.query;
-    console.log('Backend received slug:', slug);
 
-    const postsDir = path.join(__dirname, '..', 'posts');
-    console.log('Calculated postsDir:', postsDir);
+    const postsDir = path.join(__dirname, '..', '..', 'posts');
 
     if (!slug || slug.includes('..') || slug.includes('/')) {
         res.writeHead(400, { 'Content-Type': 'text/plain' });
@@ -25,18 +23,13 @@ module.exports = async (req, res) => {
     }
 
     const filePath = path.join(postsDir, `${slug}.md`);
-    console.log('Attempting to read file from filePath:', filePath);
 
     try {
-        const filesInPostsDir = await fs.readdir(postsDir);
-        console.log('Files found in postsDir:', filesInPostsDir);
-
         const data = await fs.readFile(filePath, 'utf8');
         res.writeHead(200, { 'Content-Type': 'text/markdown' });
         res.end(data);
     } catch (err) {
-        console.error('Error reading post file:', err);
         res.writeHead(404, { 'Content-Type': 'text/plain' });
-        res.end(`Post not found: ${slug}. Error: ${err.message}`);
+        res.end('Post not found');
     }
 };
