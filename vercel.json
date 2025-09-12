@@ -13,8 +13,8 @@
       "dest": "/api/posts.js"
     },
     {
-      "src": "/api/posts/(?<slug>[^/]+)",
-      "dest": "/api/posts/[slug].js"
+      "src": "/api/posts/(.*)",
+      "dest": "/api/posts/[slug].js?slug=$1"
     },
     {
       "src": "/links.json",
