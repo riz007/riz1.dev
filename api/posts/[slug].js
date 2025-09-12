@@ -13,6 +13,8 @@ module.exports = async (req, res) => {
     }
 
     const { slug } = req.query;
+    console.log('Backend received slug:', slug);
+
     const postsDir = path.join(__dirname, '..', 'posts');
 
     if (!slug || slug.includes('..') || slug.includes('/')) {
