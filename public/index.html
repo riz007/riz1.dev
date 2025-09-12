@@ -308,7 +308,7 @@
             const path = window.location.pathname;
 
             if (path.startsWith('/blog/')) {
-                const fileName = path.substring(6); 
+                const fileName = path.substring(6).replace(/\.md$/, ''); 
                 renderPost(fileName);
             } else if (path === '/blog') {
                 renderBlogList();
