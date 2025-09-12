@@ -13,8 +13,22 @@ module.exports = async (req, res) => {
     }
 
     const { slug } = req.query;
-    
-    // For testing purposes, return a hardcoded string
-    res.writeHead(200, { 'Content-Type': 'text/plain' });
-    res.end(`Hello from API for slug: ${slug}`);
+    const postsDir = path.join(__dirname, '..', 'posts');
+
+    if (!slug || slug.includes('..') || slug.includes('/')) {
+        res.writeHead(400, { 'Content-Type': 'text/plain' });
+        res.end('Invalid file name');
+        return;
+    }
+
+    const filePath = path.join(postsDir, `${slug}.md`);
+
+    try {
+        const data = await fs.readFile(filePath, 'utf8');
+        res.writeHead(200, { 'Content-Type': 'text/markdown' });
+        res.end(data);
+    } catch (err) {
+        res.writeHead(404, { 'Content-Type': 'text/plain' });
+        res.end('Post not found');
+    }
 };
