@@ -158,6 +158,7 @@
         const contentArea = document.getElementById('content-area');
         const API_URL = '';
         const homepageContent = `
+            <img src="https://avatars.githubusercontent.com/u/12785997?v=4" alt="Rizwanul Islam Rudra" class="rounded-full w-32 h-32 mb-8 mx-auto">
             <h1 class="text-4xl font-bold mb-4">About Me</h1>
             <div class="text-lg text-gray-700 space-y-2">
             <p>👋 Hello, I'm Riz!</p>
@@ -249,6 +250,7 @@
                 const response = await fetch(`${API_URL}/api/posts/${fileName}`);
                 if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
                 const postContentMarkdown = await response.text();
+                console.log('Type of marked:', typeof marked);
                 const postContentHtml = marked.parse(postContentMarkdown);
                 
                 contentArea.innerHTML = `

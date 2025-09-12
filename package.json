@@ -1,4 +1,7 @@
 {
   "name": "riz1.dev",
-  "packageManager": "yarn@4.6.0"
+  "packageManager": "yarn@4.6.0",
+  "scripts": {
+    "start": "vercel dev"
+  }
 }
