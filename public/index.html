@@ -276,10 +276,7 @@
                 const response = await fetch(`${API_URL}/api/posts/${fileName}`);
                 if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
                 const postContentMarkdown = await response.text();
-                console.log('Type of marked:', typeof marked);
-                console.log('Markdown Content:', postContentMarkdown);
                 const postContentHtml = marked.parse(postContentMarkdown);
-                console.log('Parsed HTML Content:', postContentHtml);
                 
                 contentArea.innerHTML = `
                     <a href="/blog" class="text-gray-500 hover:text-gray-900 transition-colors mb-8 inline-block">← Back to blog</a>
@@ -343,7 +340,6 @@
 
             if (path.startsWith('/blog/')) {
                 const fileName = path.substring(6).replace(/\.md$/, ''); 
-                console.log('Frontend fileName for renderPost:', fileName);
                 renderPost(fileName);
             } else if (path === '/blog') {
                 renderBlogList();
