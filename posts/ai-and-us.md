@@ -1,3 +1,8 @@
+---
+title: "Why AI Will Not Replace Software Engineers Anytime Soon"
+description: "A breakdown of why AI is a tool, not a replacement, for software engineers, focusing on the human elements of the job."
+keywords: "AI, software engineering, job replacement, future of programming"
+---
 # Why AI Will Not Replace Software Engineers Anytime Soon  
 *Published on 2025-09-10 00:15*
 
@@ -57,4 +62,4 @@ So no, AI won’t “take over” software engineering. But it *will* reshape it
 - Learn continuously  
 - Use AI as an accelerator, not a crutch  
 
-At the end of the day, technology evolves, but the human drive to solve problems remains irreplaceable. And that’s why there’s still plenty of work to do.
+At the end of a day, technology evolves, but the human drive to solve problems remains irreplaceable. And that’s why there’s still plenty of work to do.

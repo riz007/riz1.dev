@@ -276,7 +276,37 @@
                 const response = await fetch(`${API_URL}/api/posts/${fileName}`);
                 if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
                 const postContentMarkdown = await response.text();
-                const postContentHtml = marked.parse(postContentMarkdown);
+
+                const match = postContentMarkdown.match(/---([\s\S]*?)---/);
+                const frontmatter = match ? match[1] : '';
+                const content = match ? postContentMarkdown.slice(match[0].length) : postContentMarkdown;
+
+                let title = fileName;
+                let description = "Rizwanul Islam Rudra's personal website and blog, focusing on software engineering, technical leadership, algorithms, and useful links.";
+                let keywords = "Rizwanul Islam Rudra, Software Engineer, Technical Lead, Blog, Algorithms, DSA, Programming, Web Development, JavaScript, Python, React, Node.js";
+
+                if (frontmatter) {
+                    const lines = frontmatter.split('\n');
+                    for (const line of lines) {
+                        const [key, ...value] = line.split(':');
+                        if (key && value) {
+                            const val = value.join(':').trim().replace(/"/g, '');
+                            if (key.trim() === 'title') title = val;
+                            if (key.trim() === 'description') description = val;
+                            if (key.trim() === 'keywords') keywords = val;
+                        }
+                    }
+                }
+
+                document.title = `${title} - Rizwanul Islam Rudra`;
+                document.querySelector('meta[name="description"]').setAttribute('content', description);
+                document.querySelector('meta[name="keywords"]').setAttribute('content', keywords);
+                document.querySelector('meta[property="og:title"]').setAttribute('content', `${title} - Rizwanul Islam Rudra`);
+                document.querySelector('meta[property="og:description"]').setAttribute('content', description);
+                document.querySelector('meta[name="twitter:title"]').setAttribute('content', `${title} - Rizwanul Islam Rudra`);
+                document.querySelector('meta[name="twitter:description"]').setAttribute('content', description);
+
+                const postContentHtml = marked.parse(content);
                 
                 contentArea.innerHTML = `
                     <a href="/blog" class="text-gray-500 hover:text-gray-900 transition-colors mb-8 inline-block">← Back to blog</a>
