@@ -1,0 +1,39 @@
+{
+  "nav": {
+    "home": "首页",
+    "blog": "博客",
+    "algorithms": "算法",
+    "links": "链接"
+  },
+  "footer": {
+    "copyright": "©2025 Rizwanul Islam Rudra"
+  },
+  "home": {
+    "eyebrow": "软件工程师 · 技术负责人",
+    "title": "Rizwanul Islam Rudra",
+    "subtitle": "专注可扩展系统、人本体验与高标准工程文化。",
+    "ctaPrimary": "阅读博客",
+    "ctaSecondary": "常用链接",
+    "focusTitle": "核心方向",
+    "focusBody": "工程、设计与产品策略协同，解决真实问题。",
+    "capabilitiesTitle": "能力",
+    "capabilitiesBody": "打造强团队，把复杂软件变得清晰可用。",
+    "experienceTitle": "经历",
+    "experienceBody": "从技术领导到系统扩展，持续在成长型团队里实践。"
+  },
+  "blog": {
+    "title": "文章",
+    "subtitle": "关于架构、领导力与可靠产品的思考。"
+  },
+  "links": {
+    "title": "常用链接",
+    "subtitle": "经常回访的资源清单。"
+  },
+  "dsa": {
+    "title": "数据结构与算法",
+    "lead": "坚实的基础是可持续工程的关键。",
+    "body1": "正确的数据结构帮助更快找到合适解法。",
+    "body2": "AI 是助手，但判断与权衡仍需要人。",
+    "body3": "这里会分享我的笔记、思考和实现。"
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "nav": {
+    "home": "Start",
+    "blog": "Blog",
+    "algorithms": "Algorithmen",
+    "links": "Links"
+  },
+  "footer": {
+    "copyright": "©2025 Rizwanul Islam Rudra"
+  },
+  "home": {
+    "eyebrow": "Software Engineer · Technical Lead",
+    "title": "Rizwanul Islam Rudra",
+    "subtitle": "Fokus auf skalierbare Systeme, menschenzentriertes UX und exzellente Engineering-Kultur.",
+    "ctaPrimary": "Blog lesen",
+    "ctaSecondary": "Nützliche Links",
+    "focusTitle": "Schwerpunkte",
+    "focusBody": "Engineering, Design und Produktstrategie greifen ineinander, um echte Probleme zu lösen.",
+    "capabilitiesTitle": "Kompetenzen",
+    "capabilitiesBody": "Teams stärken und komplexe Software klar und benutzbar machen.",
+    "experienceTitle": "Erfahrung",
+    "experienceBody": "Hands-on Führung, Skalierung und Wachstum in produktnahen Teams."
+  },
+  "blog": {
+    "title": "Texte",
+    "subtitle": "Gedanken zu Architektur, Führung und zuverlässigen Produkten."
+  },
+  "links": {
+    "title": "Nützliche Links",
+    "subtitle": "Ressourcen, zu denen ich immer wieder zurückkehre."
+  },
+  "dsa": {
+    "title": "Datenstrukturen & Algorithmen",
+    "lead": "Solide Grundlagen sind die Basis nachhaltiger Softwareentwicklung.",
+    "body1": "Die richtigen Strukturen bringen schneller zu guten Lösungen.",
+    "body2": "KI hilft, aber Entscheidungen und Abwägungen bleiben menschlich.",
+    "body3": "Hier teile ich Notizen, Erklärungen und Implementierungen."
+  }
+}

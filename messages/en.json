@@ -1,0 +1,39 @@
+{
+  "nav": {
+    "home": "Home",
+    "blog": "Blog",
+    "algorithms": "Algorithms",
+    "links": "Links"
+  },
+  "footer": {
+    "copyright": "©2025 Rizwanul Islam Rudra"
+  },
+  "home": {
+    "eyebrow": "Software Engineer · Technical Lead",
+    "title": "Rizwanul Islam Rudra",
+    "subtitle": "Focused on scalable systems, human-centered UX, and high-trust engineering culture.",
+    "ctaPrimary": "Read the blog",
+    "ctaSecondary": "Useful links",
+    "focusTitle": "Focus Areas",
+    "focusBody": "Engineering, design, and product strategy working together to solve real problems.",
+    "capabilitiesTitle": "Capabilities",
+    "capabilitiesBody": "Strengthening teams and making complex software feel clear and usable.",
+    "experienceTitle": "Experience",
+    "experienceBody": "Hands-on leadership across scaling systems and growing teams."
+  },
+  "blog": {
+    "title": "Writing",
+    "subtitle": "Thoughts on architecture, leadership, and building reliable products."
+  },
+  "links": {
+    "title": "Useful Links",
+    "subtitle": "Resources I keep coming back to."
+  },
+  "dsa": {
+    "title": "Data Structures & Algorithms",
+    "lead": "Strong fundamentals are the backbone of durable engineering.",
+    "body1": "The right data structures help you reach the best solution faster.",
+    "body2": "AI assists, but judgment and trade-offs still belong to humans.",
+    "body3": "This section will host my notes, explanations, and implementations."
+  }
+}
