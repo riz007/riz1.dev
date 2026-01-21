@@ -1,28 +1,8 @@
 {
-  "functions": {
-    "api/posts/[slug].js": {
-      "includeFiles": "posts/**"
-    },
-    "api/posts.js": {
-      "includeFiles": "posts/**"
-    }
-  },
   "routes": [
-    {
-      "src": "/api/posts",
-      "dest": "/api/posts.js"
-    },
-    {
-      "src": "/api/posts/(.*)",
-      "dest": "/api/posts/[slug].js?slug=$1"
-    },
     {
       "src": "/links.json",
       "dest": "/public/links.json"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
     }
   ]
 }
