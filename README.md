@@ -1,17 +1,18 @@
 # Rizfolio
 
-This is the source code for my personal portfolio website, Rizfolio. It's a simple, single-page application (SPA) built with vanilla JavaScript, Node.js, and Markdown.
+This is the source code for my personal portfolio website, Rizfolio. It is built with Next.js and supports localized routing with `next-intl`, plus Markdown-based blog content.
 
 ## Features
 
-*   **Single-Page Application (SPA):** The website is built as an SPA, which means that it loads a single HTML page and dynamically updates the content as the user navigates through the site. This provides a fast and smooth user experience.
-*   **Blog with Markdown:** The blog posts are written in Markdown and are dynamically rendered on the frontend. This makes it easy to write and manage blog content.
-*   **Simple Node.js Backend:** The backend is a simple Node.js server that serves the static files and provides a basic API for fetching blog posts.
+*   **Next.js App Router:** Server-rendered pages with optimized routing and performance.
+*   **Internationalization:** Locale-aware routes powered by `next-intl` middleware.
+*   **Markdown blog:** Posts live in `posts/` and are rendered at request time.
 
 ## Tech Stack
 
-*   **Frontend:** Vanilla JavaScript, Tailwind CSS, Marked.js
-*   **Backend:** Node.js
+*   **Framework:** Next.js (React 18)
+*   **i18n:** next-intl
+*   **Content:** Markdown with `gray-matter` and `remark`
 
 ## Getting Started
 
@@ -27,10 +28,10 @@ This is the source code for my personal portfolio website, Rizfolio. It's a simp
     yarn install
     ```
 
-3.  Start the server:
+3.  Start the dev server:
 
     ```bash
-    yarn start
+    yarn dev
     ```
 
 4.  Open your browser and navigate to `http://localhost:3000`.
