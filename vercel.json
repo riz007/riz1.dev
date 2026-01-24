@@ -1,9 +1,3 @@
 {
-  "outputDirectory": ".next",
-  "routes": [
-    {
-      "src": "/links.json",
-      "dest": "/public/links.json"
-    }
-  ]
+  "outputDirectory": ".next"
 }
