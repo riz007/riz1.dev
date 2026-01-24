@@ -1,9 +1,12 @@
-import { NextResponse } from "next/server";
+import createMiddleware from "next-intl/middleware";
+import { defaultLocale, locales } from "./i18n/routing";
 
-export function middleware() {
-  return NextResponse.next();
-}
+export default createMiddleware({
+  locales,
+  defaultLocale,
+  localePrefix: "always",
+});
 
 export const config = {
-  matcher: [],
+  matcher: ["/", "/(en|bn|th|zh|de)/:path*"],
 };
