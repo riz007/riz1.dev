@@ -8,8 +8,8 @@ export default async function HomePage({ params: { locale } }) {
   return (
     <div className="fade-in">
       <section className="hero">
-        <div>
-          <p className="hero-subtitle">{t("eyebrow")}</p>
+        <div className="hero-copy">
+          <p className="hero-eyebrow">{t("eyebrow")}</p>
           <h1 className="hero-title">{t("title")}</h1>
           <p className="hero-subtitle">{t("subtitle")}</p>
           <div className="hero-actions">
@@ -21,7 +21,7 @@ export default async function HomePage({ params: { locale } }) {
             </Link>
           </div>
         </div>
-        <div className="card stagger">
+        <div className="card hero-card stagger">
           <p className="section-title" style={{ marginBottom: "8px" }}>
             {t("focusTitle")}
           </p>
@@ -39,9 +39,9 @@ export default async function HomePage({ params: { locale } }) {
       <section className="section">
         <h2 className="section-title">{t("capabilitiesTitle")}</h2>
         <p className="section-lede">{t("capabilitiesBody")}</p>
-        <div className="grid cols-3 stagger">
+        <div className="grid cols-3 stagger capability-grid">
           {capabilityCards.map((card) => (
-            <div className="card" key={card.title}>
+            <div className="card capability-card" key={card.title}>
               <h3>{card.title}</h3>
               <p className="section-lede">{card.description}</p>
             </div>
@@ -53,7 +53,7 @@ export default async function HomePage({ params: { locale } }) {
       <section className="section">
         <h2 className="section-title">{t("experienceTitle")}</h2>
         <p className="section-lede">{t("experienceBody")}</p>
-        <div className="grid cols-2">
+        <div className="grid cols-2 experience-grid">
           {experience.map((item) => (
             <div className="card experience-item" key={`${item.role}-${item.company}`}>
               <h3>{item.role}</h3>

@@ -6,7 +6,7 @@ export default async function SiteFooter() {
   return (
     <footer className="container footer">
       <div>{t("copyright")}</div>
-      <div className="nav-links">
+      <div className="nav-links footer-links">
         <a href="https://github.com/riz007" target="_blank" rel="noreferrer">
           GitHub
         </a>

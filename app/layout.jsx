@@ -1,13 +1,13 @@
 import "./globals.css";
-import { Bricolage_Grotesque, Newsreader } from "next/font/google";
+import { Fraunces, Sora } from "next/font/google";
 
-const display = Newsreader({
+const display = Fraunces({
   subsets: ["latin"],
-  weight: ["400", "600", "700"],
+  weight: ["300", "400", "600", "700"],
   variable: "--font-display"
 });
 
-const body = Bricolage_Grotesque({
+const body = Sora({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
   variable: "--font-body"

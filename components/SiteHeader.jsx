@@ -7,12 +7,12 @@ export default async function SiteHeader({ locale }) {
   const t = await getTranslations("nav");
 
   return (
-    <header className="container">
-      <div className="nav">
+    <header className="site-header">
+      <div className="container nav">
         <Link className="brand" href={`/${locale}`}>
           riz1.dev
         </Link>
-        <nav className="nav-links">
+        <nav className="nav-links nav-primary">
           <Link className="nav-link" href={`/${locale}`}>
             {t("home")}
           </Link>
@@ -26,7 +26,7 @@ export default async function SiteHeader({ locale }) {
             {t("links")}
           </Link>
         </nav>
-        <div className="nav-links">
+        <div className="nav-links nav-actions">
           <ThemeToggle />
           <LocaleSwitcher locale={locale} />
         </div>
