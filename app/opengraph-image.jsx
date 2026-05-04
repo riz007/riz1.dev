@@ -80,6 +80,8 @@ export default function OGImage() {
         {/* Name */}
         <div
           style={{
+            display: "flex",
+            flexDirection: "column",
             color: "#1C1916",
             fontSize: 88,
             fontWeight: 300,
@@ -88,8 +90,7 @@ export default function OGImage() {
             marginBottom: 28,
           }}
         >
-          Rizwanul
-          <br />
+          <span>Rizwanul</span>
           <span style={{ fontStyle: "italic", color: "#B85C38" }}>Islam Rudra</span>
         </div>
 

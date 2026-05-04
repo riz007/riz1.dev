@@ -130,10 +130,10 @@ export default async function OGImage({ params }) {
           />
           <span>Rizwanul Islam Rudra</span>
           {date && (
-            <>
+            <span style={{ display: "flex", alignItems: "center", gap: 16 }}>
               <span style={{ color: "#E2DDD4" }}>·</span>
               <span>{date}</span>
-            </>
+            </span>
           )}
         </div>
       </div>
