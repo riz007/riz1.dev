@@ -12,7 +12,7 @@ export default async function SiteHeader({ locale }) {
         <Link className="brand" href={`/${locale}`}>
           riz1.dev
         </Link>
-        <nav className="nav-links nav-primary">
+        <nav className="nav-links nav-primary" aria-label="Primary navigation">
           <Link className="nav-link" href={`/${locale}`}>
             {t("home")}
           </Link>

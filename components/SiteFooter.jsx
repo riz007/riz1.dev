@@ -5,8 +5,8 @@ export default async function SiteFooter() {
 
   return (
     <footer className="container footer">
-      <div>{t("copyright")}</div>
-      <div className="nav-links footer-links">
+      <p className="footer-copy">{t("copyright")}</p>
+      <nav className="footer-nav" aria-label="Social links">
         <a href="https://github.com/riz007" target="_blank" rel="noreferrer">
           GitHub
         </a>
@@ -16,14 +16,10 @@ export default async function SiteFooter() {
         <a href="https://hashnode.com/@rizwanulrudra" target="_blank" rel="noreferrer">
           Hashnode
         </a>
-        <a
-          href="https://ieeexplore.ieee.org/document/10202106"
-          target="_blank"
-          rel="noreferrer"
-        >
+        <a href="https://ieeexplore.ieee.org/document/10202106" target="_blank" rel="noreferrer">
           IEEE
         </a>
-      </div>
+      </nav>
     </footer>
   );
 }

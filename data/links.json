@@ -1,22 +1,72 @@
 [
   {
+    "title": "Anthropic Claude Docs",
+    "url": "https://docs.anthropic.com",
+    "description": "Official API reference and guides for building with Claude models, tool use, and agentic systems."
+  },
+  {
+    "title": "OpenAI Platform Docs",
+    "url": "https://platform.openai.com/docs",
+    "description": "Complete reference for GPT models, Codex, Assistants API, structured outputs, and tool calling."
+  },
+  {
+    "title": "LangChain Documentation",
+    "url": "https://python.langchain.com/docs/introduction/",
+    "description": "Framework for building LLM-powered chains, agents, memory, and retrieval-augmented applications."
+  },
+  {
+    "title": "Hugging Face Docs",
+    "url": "https://huggingface.co/docs",
+    "description": "Hub, Transformers library, and ecosystem docs for open-source AI models, datasets, and spaces."
+  },
+  {
+    "title": "Papers With Code",
+    "url": "https://paperswithcode.com/",
+    "description": "Machine learning research papers with linked open-source implementations and benchmark results."
+  },
+  {
+    "title": "The Pragmatic Engineer",
+    "url": "https://newsletter.pragmaticengineer.com/",
+    "description": "Gergely Orosz's newsletter on software engineering, engineering leadership, and the industry at large."
+  },
+  {
+    "title": "System Design Primer",
+    "url": "https://github.com/donnemartin/system-design-primer",
+    "description": "Open-source guide to designing large-scale distributed systems with examples and interview prep."
+  },
+  {
+    "title": "Designing Data-Intensive Applications",
+    "url": "https://dataintensive.net/",
+    "description": "Martin Kleppmann's authoritative book on the engineering principles behind distributed data systems."
+  },
+  {
+    "title": "Architecture Patterns with Python",
+    "url": "https://www.cosmicpython.com/",
+    "description": "Free book on DDD, event-driven architecture, and ports & adapters patterns with practical Python examples."
+  },
+  {
     "title": "MDN Web Docs",
-    "url": "https://developer.mozilla.org/"
+    "url": "https://developer.mozilla.org/",
+    "description": "The definitive reference for web standards, HTML, CSS, JavaScript APIs, and browser compatibility."
   },
   {
     "title": "A Tour of Go",
-    "url": "https://go.dev/tour/welcome/1"
+    "url": "https://go.dev/tour/welcome/1",
+    "description": "Interactive, in-browser introduction to Go's syntax, concurrency primitives, and standard library."
   },
   {
     "title": "freeCodeCamp",
-    "url": "https://www.freecodecamp.org/"
+    "url": "https://www.freecodecamp.org/",
+    "description": "Free, project-based curriculum covering web development, data science, machine learning, and algorithms."
   },
   {
     "title": "LeetCode",
-    "url": "https://leetcode.com/"
+    "url": "https://leetcode.com/",
+    "description": "Coding challenges for algorithms, data structures, and system design — widely used for technical interviews."
   },
   {
     "title": "The Odin Project",
-    "url": "https://www.theodinproject.com/"
+    "url": "https://www.theodinproject.com/",
+    "description": "Full-stack web development curriculum built with projects, from absolute beginner to job-ready."
   }
 ]

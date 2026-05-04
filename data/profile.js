@@ -1,62 +1,67 @@
 export const skills = [
-  "System design",
   "Generative AI",
   "Agentic AI",
-  "Product architecture",
-  "Team leadership",
-  "API design",
-  "Distributed systems",
-  "Vue 3",
+  "Agentic AI Systems",
+  "Agentic Product Engineering",
+  "LLM Integration",
+  "RAG Systems",
+  "MCP / Tool Use",
+  "System Design",
+  "Distributed Systems",
+  "Product Architecture",
+  "API Design",
+  "Team Leadership",
   "React",
-  "Node.js",
+  "Vue 3",
   "TypeScript",
   "Python",
-  "SQL",
+  "Node.js",
   "Docker",
+  "SQL",
 ];
 
 export const capabilityCards = [
   {
-    title: "Engineering Systems",
+    title: "Agentic AI Engineering",
     description:
-      "Designing resilient services, performance-aware architectures, and developer-friendly platforms.",
+      "Designing and shipping agentic AI systems — multi-agent orchestration, RAG pipelines, LLM tool use, and production AI products that scale beyond the prototype.",
   },
   {
-    title: "UI/UX Craft",
+    title: "Systems Architecture",
     description:
-      "Translating complex workflows into simple, confident interfaces with a bias for clarity.",
+      "Building resilient distributed services and performance-aware platforms. From API design to infrastructure, optimised for developer experience and production reliability.",
   },
   {
     title: "Technical Leadership",
     description:
-      "Guiding teams with pragmatic process, mentorship, and product-aligned engineering strategy.",
+      "Guiding engineering teams with pragmatic process, mentorship, and product-aligned strategy. Bridging business objectives with sound technical decisions.",
   },
 ];
 
 export const experience = [
   {
     role: "Senior Software Developer (Tech Lead)",
-    company: "YPB Group International Company Ltd.",
-    range: "Apr 2021 - Present",
+    company: "Codeifai Ltd.",
+    range: "Apr 2021 – Present",
   },
   {
     role: "Senior Software Developer",
     company: "Manatal",
-    range: "Aug 2019 - Mar 2021",
+    range: "Aug 2019 – Mar 2021",
   },
   {
     role: "Software Engineer",
     company: "Pocket Playlab",
-    range: "Apr 2018 - May 2019",
+    range: "Apr 2018 – May 2019",
   },
   {
     role: "Software Engineer",
     company: "Cal-Comp Electronics (Thailand)",
-    range: "Sep 2016 - Mar 2018",
+    range: "Sep 2016 – Mar 2018",
   },
   {
     role: "Web Developer",
     company: "Taste Adventures Ltd.",
-    range: "Jun 2015 - Jun 2016",
+    range: "Jun 2015 – Jun 2016",
   },
 ];
