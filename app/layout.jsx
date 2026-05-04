@@ -1,5 +1,6 @@
 import "./globals.css";
 import { Fraunces, DM_Sans } from "next/font/google";
+import Script from "next/script";
 
 const display = Fraunces({
   subsets: ["latin"],
@@ -111,6 +112,18 @@ export default function RootLayout({ children }) {
       suppressHydrationWarning
     >
       <body suppressHydrationWarning>{children}</body>
+      <Script
+        src="https://www.googletagmanager.com/gtag/js?id=G-WCHT2DKSX2"
+        strategy="afterInteractive"
+      />
+      <Script id="gtag-init" strategy="afterInteractive">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-WCHT2DKSX2');
+        `}
+      </Script>
     </html>
   );
 }
