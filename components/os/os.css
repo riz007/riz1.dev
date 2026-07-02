@@ -195,7 +195,9 @@
   box-shadow: var(--shadow);
   overflow: hidden;
   min-width: 280px; min-height: 160px;
-  animation: winIn .32s cubic-bezier(.16, 1, .3, 1) both;
+  /* backwards (not both): a forwards-fill would pin `transform: none` forever
+     and override the inline Mission Control transform */
+  animation: winIn .32s cubic-bezier(.16, 1, .3, 1) backwards;
 }
 @keyframes winIn { from { opacity: 0; transform: translateY(12px) scale(.97); } to { opacity: 1; transform: none; } }
 .os-window.closing { animation: winOut .18s ease forwards; }
@@ -209,8 +211,43 @@
   box-shadow: 0 36px 80px -24px rgba(45, 55, 100, 0.5), 0 10px 24px -14px rgba(45, 55, 100, 0.35);
 }
 .os-window.max { border-radius: 0; }
-/* windows glide into snapped positions — but never while being dragged/resized */
-.os-window:not(.live) { transition: left .24s cubic-bezier(.2, .8, .2, 1), top .24s cubic-bezier(.2, .8, .2, 1), width .24s cubic-bezier(.2, .8, .2, 1), height .24s cubic-bezier(.2, .8, .2, 1); }
+/* windows glide into snapped/overview positions — but never while being dragged/resized */
+.os-window:not(.live) { transition: left .24s cubic-bezier(.2, .8, .2, 1), top .24s cubic-bezier(.2, .8, .2, 1), width .24s cubic-bezier(.2, .8, .2, 1), height .24s cubic-bezier(.2, .8, .2, 1), transform .42s cubic-bezier(.2, .8, .2, 1); }
+
+/* genie minimize — dive into the dock icon (targets set as CSS vars) */
+.os-window.minimizing {
+  animation: genie .33s cubic-bezier(.55, -0.02, .85, .4) forwards;
+  pointer-events: none;
+}
+@keyframes genie {
+  to { transform: translate(var(--min-tx, 0px), var(--min-ty, 320px)) scale(.04); opacity: 0; }
+}
+.os-window.restoring { animation: ungenie .32s cubic-bezier(.16, 1, .3, 1); }
+@keyframes ungenie {
+  from { transform: translate(var(--min-tx, 0px), var(--min-ty, 320px)) scale(.04); opacity: 0; }
+}
+
+/* mission control — windows scale into their grid slots, wallpaper recedes */
+.rudra-os .os-bg { transition: filter .4s ease; }
+.rudra-os.ov .os-bg { filter: brightness(.55) saturate(.85); }
+.os-window.ov { pointer-events: none; }
+.os-ov-layer { position: absolute; inset: 0; z-index: 650; animation: bootFade .2s ease both; }
+.os-ov-hit {
+  position: absolute;
+  background: transparent; border: none; border-radius: 16px;
+  display: flex; align-items: flex-end; justify-content: center;
+  padding-bottom: 2px;
+}
+.os-ov-hit:hover { background: rgba(139, 139, 255, 0.07); box-shadow: inset 0 0 0 1.5px rgba(139, 139, 255, 0.45); }
+.os-ov-label {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-size: 12px; font-weight: 500; color: var(--ink);
+  background: var(--panel-solid); border: 1px solid var(--edge-hi);
+  border-radius: 7px; padding: 4px 12px;
+  max-width: 85%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+}
+.os-ov-label-ico { color: var(--violet); font-size: 11px; }
 
 /* edge-tiling preview */
 .os-snap-preview {
@@ -225,6 +262,47 @@
 .os-snap-preview.left  { left: 10px; top: 10px; bottom: 10px; width: calc(50% - 15px); }
 .os-snap-preview.right { right: 10px; top: 10px; bottom: 10px; width: calc(50% - 15px); }
 .os-snap-preview.top   { inset: 8px; }
+
+/* split-view partner picker — offered on the empty half after tiling */
+.os-partner {
+  position: absolute; z-index: 99999;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px;
+  padding: 24px;
+  border: 1.5px dashed var(--edge-hi);
+  border-radius: 14px;
+  background: rgba(10, 11, 20, 0.3);
+  backdrop-filter: blur(7px) saturate(1.2);
+  -webkit-backdrop-filter: blur(7px) saturate(1.2);
+  animation: snapIn .2s ease both;
+}
+[data-theme="light"] .os-partner { background: rgba(240, 242, 252, 0.35); }
+.os-partner.left  { left: 10px; top: 10px; bottom: 10px; width: calc(50% - 15px); }
+.os-partner.right { right: 10px; top: 10px; bottom: 10px; width: calc(50% - 15px); }
+.os-partner-label { font-size: 13px; font-weight: 550; color: var(--ink); letter-spacing: -0.005em; }
+.os-partner-grid {
+  display: flex; flex-wrap: wrap; gap: 12px; justify-content: center;
+  max-width: 92%; max-height: 60%; overflow: auto;
+}
+.os-partner-card {
+  display: flex; flex-direction: column; align-items: center; gap: 9px;
+  background: var(--panel-2); border: 1px solid var(--edge-hi); border-radius: 13px;
+  padding: 14px 16px 12px; min-width: 110px; max-width: 156px;
+  transition: transform .16s cubic-bezier(.16, 1, .3, 1), border-color .16s;
+}
+.os-partner-card:hover { transform: translateY(-4px); border-color: var(--violet); }
+.os-partner-ico {
+  width: 42px; height: 42px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 19px; color: #fff;
+  background: linear-gradient(160deg, #8b8bff, #43e7d5);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 3px 9px rgba(0, 0, 0, 0.35);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+}
+.os-partner-t {
+  font-size: 11.5px; color: var(--ink-2);
+  max-width: 128px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.os-partner-hint { font-family: var(--mono); font-size: 10.5px; color: var(--ink-3); }
 
 .os-titlebar {
   position: relative;
@@ -297,17 +375,18 @@
   font-size: 21px; color: #fff; line-height: 1;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
 }
-/* per-app tile colours */
-.os-dock-item[data-app="terminal"]   { background: linear-gradient(160deg, #3a4157, #171a26); }
-.os-dock-item[data-app="terminal"] .os-dock-glyph { color: var(--cyan); }
-.os-dock-item[data-app="about"]      { background: linear-gradient(160deg, #9a8cff, #6a5aff); }
-.os-dock-item[data-app="projects"]   { background: linear-gradient(160deg, #4a9dff, #2ad4c3); }
-.os-dock-item[data-app="experience"] { background: linear-gradient(160deg, #ffb84b, #ff7a3c); }
-.os-dock-item[data-app="skills"]     { background: linear-gradient(160deg, #2dd4bf, #0d9488); }
-.os-dock-item[data-app="blog"]       { background: linear-gradient(160deg, #ff7a9c, #ff9a6b); }
-.os-dock-item[data-app="dsa"]        { background: linear-gradient(160deg, #a78bfa, #7c3aed); }
-.os-dock-item[data-app="links"]      { background: linear-gradient(160deg, #4ade80, #059669); }
-.os-dock-item[data-app="contact"]    { background: linear-gradient(160deg, #fb7185, #e11d48); }
+/* per-app tile colours (shared by the dock and the split-view picker) */
+.os-dock-item[data-app="terminal"],   .os-partner-ico[data-app="terminal"]   { background: linear-gradient(160deg, #3a4157, #171a26); }
+.os-dock-item[data-app="terminal"] .os-dock-glyph, .os-partner-ico[data-app="terminal"] { color: var(--cyan); }
+.os-dock-item[data-app="about"],      .os-partner-ico[data-app="about"]      { background: linear-gradient(160deg, #9a8cff, #6a5aff); }
+.os-dock-item[data-app="projects"],   .os-partner-ico[data-app="projects"]   { background: linear-gradient(160deg, #4a9dff, #2ad4c3); }
+.os-dock-item[data-app="experience"], .os-partner-ico[data-app="experience"] { background: linear-gradient(160deg, #ffb84b, #ff7a3c); }
+.os-dock-item[data-app="skills"],     .os-partner-ico[data-app="skills"]     { background: linear-gradient(160deg, #2dd4bf, #0d9488); }
+.os-dock-item[data-app="blog"],       .os-partner-ico[data-app="blog"]       { background: linear-gradient(160deg, #ff7a9c, #ff9a6b); }
+.os-dock-item[data-app="dsa"],        .os-partner-ico[data-app="dsa"]        { background: linear-gradient(160deg, #a78bfa, #7c3aed); }
+.os-dock-item[data-app="links"],      .os-partner-ico[data-app="links"]      { background: linear-gradient(160deg, #4ade80, #059669); }
+.os-dock-item[data-app="contact"],    .os-partner-ico[data-app="contact"]    { background: linear-gradient(160deg, #fb7185, #e11d48); }
+.os-partner-ico[data-app="capabilities"] { background: linear-gradient(160deg, #8b8bff, #43e7d5); }
 /* magnification — hovered tile grows, neighbours lean in */
 .os-dock-item:hover { transform: translateY(-12px) scale(1.22); }
 .os-dock-item:hover + .os-dock-item,

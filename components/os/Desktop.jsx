@@ -64,6 +64,10 @@ export default function Desktop({ locale, data }) {
   const [showHint, setShowHint] = useState(false);
   const [snapPreview, setSnapPreview] = useState(null);
   const [spotOpen, setSpotOpen] = useState(false);
+  // after tiling to one half, offer the remaining windows for the other half
+  const [partnerPick, setPartnerPick] = useState(null); // { side, excludeId }
+  // Mission Control: winId → { tx, ty, s, slot } while the overview is open
+  const [ovMap, setOvMap] = useState(null);
   const zTop = useRef(10);
   const uid = useRef(0);
   const runTimer = useRef(null);
@@ -94,6 +98,7 @@ export default function Desktop({ locale, data }) {
 
   const pingAgent = useCallback(() => {
     setRunning(true);
+    setOvMap(null); // opening anything exits Mission Control
     clearTimeout(runTimer.current);
     runTimer.current = setTimeout(() => setRunning(false), 750);
   }, []);
@@ -113,6 +118,15 @@ export default function Desktop({ locale, data }) {
         zTop.current += 1;
         if (existing) {
           setFocusId(existing.id);
+          if (existing.min) {
+            // reverse genie out of the dock
+            setTimeout(() => {
+              setWins((ws2) => ws2.map((w) => (w.id === existing.id ? { ...w, restoring: false } : w)));
+            }, 330);
+            return ws.map((w) =>
+              w.id === existing.id ? { ...w, min: false, restoring: true, z: zTop.current } : w
+            );
+          }
           return ws.map((w) => (w.id === existing.id ? { ...w, min: false, z: zTop.current } : w));
         }
         const meta = APPS.find((a) => a.id === appId);
@@ -142,6 +156,14 @@ export default function Desktop({ locale, data }) {
         zTop.current += 1;
         if (existing) {
           setFocusId(existing.id);
+          if (existing.min) {
+            setTimeout(() => {
+              setWins((ws2) => ws2.map((w) => (w.id === existing.id ? { ...w, restoring: false } : w)));
+            }, 330);
+            return ws.map((w) =>
+              w.id === existing.id ? { ...w, min: false, restoring: true, z: zTop.current } : w
+            );
+          }
           return ws.map((w) => (w.id === existing.id ? { ...w, min: false, z: zTop.current } : w));
         }
         const vw = window.innerWidth;
@@ -176,8 +198,35 @@ export default function Desktop({ locale, data }) {
     setTimeout(() => setWins((ws) => ws.filter((w) => w.id !== id)), 200);
   }, []);
 
+  /* minimize with a genie-style dive into the window's dock icon */
   const minimizeWin = useCallback((id) => {
-    setWins((ws) => ws.map((w) => (w.id === id ? { ...w, min: true } : w)));
+    setWins((ws) =>
+      ws.map((w) => {
+        if (w.id !== id) return w;
+        const el = document.querySelector(`.os-window[data-winid="${id}"]`);
+        const dockEl = document.querySelector(
+          `.os-dock-item[data-app="${w.app === "reader" ? "blog" : w.app}"]`
+        );
+        let tx = 0;
+        let ty = 320;
+        if (el) {
+          const r = el.getBoundingClientRect();
+          if (dockEl) {
+            const d = dockEl.getBoundingClientRect();
+            tx = d.x + d.width / 2 - (r.x + r.width / 2);
+            ty = d.y + d.height / 2 - (r.y + r.height / 2);
+          } else {
+            ty = window.innerHeight - (r.y + r.height / 2);
+          }
+        }
+        return { ...w, minimizing: true, minTx: tx, minTy: ty };
+      })
+    );
+    setTimeout(() => {
+      setWins((ws) =>
+        ws.map((w) => (w.id === id ? { ...w, minimizing: false, min: true } : w))
+      );
+    }, 330);
   }, []);
 
   const maximizeWin = useCallback((id) => {
@@ -192,8 +241,9 @@ export default function Desktop({ locale, data }) {
     setWins((ws) => ws.map((w) => (w.id === id ? { ...w, ...size, snapped: null } : w)));
   }, []);
 
-  /* edge tiling: left/right halves with Sequoia-style margins; top maximizes */
-  const snapWin = useCallback((id, zone) => {
+  /* edge tiling: left/right halves with Sequoia-style margins; top maximizes.
+     opts.suggest=false skips the partner picker (used by the picker itself). */
+  const snapWin = useCallback((id, zone, opts = {}) => {
     const vw = window.innerWidth;
     const sh = window.innerHeight - 36;
     const M = 10; // outer margin
@@ -209,9 +259,14 @@ export default function Desktop({ locale, data }) {
           zone === "left"
             ? { x: M, y: M, w: half, h: sh - M * 2 }
             : { x: M + half + G * 2, y: M, w: half, h: sh - M * 2 };
-        return { ...w, ...rect, snapped: zone, prevW, prevH, max: false };
+        return { ...w, ...rect, snapped: zone, prevW, prevH, max: false, min: false };
       })
     );
+    if ((zone === "left" || zone === "right") && opts.suggest !== false) {
+      setPartnerPick({ side: zone === "left" ? "right" : "left", excludeId: id });
+    } else {
+      setPartnerPick(null);
+    }
   }, []);
 
   /* boot sequence */
@@ -271,19 +326,85 @@ export default function Desktop({ locale, data }) {
 
   const switchLang = useCallback((code) => router.push(`/${code}`), [router]);
 
+  /* Mission Control — lay every open window out in a centred grid.
+     Geometry comes from state (not DOM rects), so windows mid-transition
+     still map to correct slots. */
+  const closeOverview = useCallback(() => setOvMap(null), []);
+
+  const winsRef = useRef(wins);
+  winsRef.current = wins;
+
+  const openOverview = useCallback(() => {
+    if (window.matchMedia("(max-width: 720px)").matches) return;
+    const top = 36;
+    const vw = window.innerWidth;
+    const vh = window.innerHeight - top;
+    const open = winsRef.current.filter((w) => !w.min && !w.closing && !w.minimizing);
+    if (!open.length) return;
+    const n = open.length;
+    const cols = Math.ceil(Math.sqrt(n));
+    const rows = Math.ceil(n / cols);
+    const pad = 44;
+    const gapX = 26;
+    const gapY = 30;
+    const labelH = 34;
+    const cellW = (vw - pad * 2 - gapX * (cols - 1)) / cols;
+    const cellH = (vh - pad * 2 - gapY * (rows - 1)) / rows;
+    const map = {};
+    open.forEach((w, i) => {
+      const r = w.max
+        ? { x: 0, y: top, w: vw, h: vh }
+        : { x: w.x, y: w.y + top, w: w.w, h: w.h };
+      const row = Math.floor(i / cols);
+      const colInRow = i - row * cols;
+      const lastRowCount = n - (rows - 1) * cols;
+      const offsetX = row === rows - 1 ? ((cols - lastRowCount) * (cellW + gapX)) / 2 : 0;
+      const slotX = pad + offsetX + colInRow * (cellW + gapX);
+      const slotY = top + pad + row * (cellH + gapY);
+      const s = Math.min(cellW / r.w, (cellH - labelH) / r.h, 0.9);
+      map[w.id] = {
+        tx: slotX + cellW / 2 - (r.x + r.w / 2),
+        ty: slotY + (cellH - labelH) / 2 - (r.y + r.h / 2),
+        s,
+        slot: { x: slotX, y: slotY, w: cellW, h: cellH },
+      };
+    });
+    setOvMap(map);
+  }, []);
+
   /* global keys — ⌘K / ⌘Space open Spotlight (macOS itself usually owns
-     literal ⌘Space, so ⌘K is the reliable binding) */
+     literal ⌘Space, so ⌘K is the reliable binding); ⌃↑ / ⌃↓ for Mission Control */
   useEffect(() => {
     const onKey = (e) => {
-      if (e.key === "Escape") { setCtx(null); setLangOpen(false); setSpotOpen(false); }
+      if (e.key === "Escape") { setCtx(null); setLangOpen(false); setSpotOpen(false); setPartnerPick(null); closeOverview(); }
       if ((e.metaKey || e.ctrlKey) && (e.key.toLowerCase() === "k" || e.code === "Space")) {
         e.preventDefault();
         setSpotOpen((o) => !o);
       }
+      if (e.ctrlKey && e.key === "ArrowUp") { e.preventDefault(); openOverview(); }
+      if (e.ctrlKey && e.key === "ArrowDown") { e.preventDefault(); closeOverview(); }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, []);
+  }, [openOverview, closeOverview]);
+
+  /* trackpad gesture: two-finger swipe up on the desktop background opens
+     the overview, swipe down closes it (browsers can't see OS-level
+     three-finger swipes, so the wheel stream is the faithful equivalent) */
+  const wheelAcc = useRef({ v: 0, t: null });
+  useEffect(() => {
+    const onWheel = (e) => {
+      if (e.target.closest(".os-window, .os-dock, .os-spot, .os-menubar, .os-partner")) return;
+      const a = wheelAcc.current;
+      a.v += e.deltaY;
+      clearTimeout(a.t);
+      a.t = setTimeout(() => { a.v = 0; }, 260);
+      if (a.v < -140) { a.v = 0; openOverview(); }
+      else if (a.v > 140) { a.v = 0; closeOverview(); }
+    };
+    window.addEventListener("wheel", onWheel, { passive: true });
+    return () => { window.removeEventListener("wheel", onWheel); clearTimeout(wheelAcc.current.t); };
+  }, [openOverview, closeOverview]);
 
   const onCtxMenu = (e) => {
     if (e.target.closest(".os-window")) return;
@@ -330,11 +451,15 @@ export default function Desktop({ locale, data }) {
 
   const openIds = new Set(wins.filter((w) => !w.closing).map((w) => w.app));
 
+  const partnerCands = partnerPick
+    ? wins.filter((w) => !w.closing && w.id !== partnerPick.excludeId)
+    : [];
+
   const identity = data.identity;
   const dockApps = DOCK.map((id) => APPS.find((a) => a.id === id)).filter(Boolean);
 
   return (
-    <div className="rudra-os" onContextMenu={onCtxMenu} onClick={() => { setCtx(null); setLangOpen(false); }}>
+    <div className={`rudra-os${ovMap ? " ov" : ""}`} onContextMenu={onCtxMenu} onClick={() => { setCtx(null); setLangOpen(false); setPartnerPick(null); }}>
       {/* ambient background */}
       <div className="os-bg" aria-hidden="true">
         <div className="os-blob a" /><div className="os-blob b" /><div className="os-blob c" />
@@ -380,6 +505,7 @@ export default function Desktop({ locale, data }) {
             win={w}
             focused={focusId === w.id && !w.min}
             isMobile={isMobile}
+            ov={ovMap ? ovMap[w.id] : null}
             onFocus={focusWin}
             onClose={closeWin}
             onMinimize={minimizeWin}
@@ -408,7 +534,60 @@ export default function Desktop({ locale, data }) {
             )}
           </Window>
         ))}
+
+        {/* split-view partner picker — fill the other half */}
+        {partnerPick && !isMobile && partnerCands.length > 0 && (
+          <div
+            className={`os-partner ${partnerPick.side}`}
+            role="dialog"
+            aria-label="Choose a window for the other side"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="os-partner-label">Choose a window for this side</div>
+            <div className="os-partner-grid">
+              {partnerCands.map((w) => (
+                <button
+                  key={w.id}
+                  className="os-partner-card"
+                  onClick={() => {
+                    snapWin(w.id, partnerPick.side, { suggest: false });
+                    focusWin(w.id);
+                  }}
+                >
+                  <span className="os-partner-ico" data-app={w.app === "reader" ? "blog" : w.app} aria-hidden="true">
+                    {w.icon}
+                  </span>
+                  <span className="os-partner-t">{w.title}</span>
+                </button>
+              ))}
+            </div>
+            <div className="os-partner-hint">esc to dismiss</div>
+          </div>
+        )}
       </div>
+
+      {/* mission control — click targets + labels above the scaled windows */}
+      {ovMap && (
+        <div className="os-ov-layer" onClick={closeOverview}>
+          {Object.entries(ovMap).map(([wid, m]) => {
+            const w = wins.find((x) => String(x.id) === wid);
+            if (!w) return null;
+            return (
+              <button
+                key={wid}
+                className="os-ov-hit"
+                style={{ left: m.slot.x, top: m.slot.y, width: m.slot.w, height: m.slot.h }}
+                onClick={(e) => { e.stopPropagation(); closeOverview(); focusWin(w.id); }}
+              >
+                <span className="os-ov-label">
+                  <span className="os-ov-label-ico" aria-hidden="true">{w.icon}</span>
+                  {w.title}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+      )}
 
       {/* first-load hint */}
       {showHint && !isMobile && (
@@ -439,6 +618,7 @@ export default function Desktop({ locale, data }) {
       {ctx && (
         <div className="os-ctx" style={{ left: ctx.x, top: ctx.y }} onClick={(e) => e.stopPropagation()}>
           <button onClick={() => { setSpotOpen(true); setCtx(null); }}>Search <kbd>⌘K</kbd></button>
+          <button onClick={() => { setCtx(null); openOverview(); }}>Mission Control <kbd>⌃↑</kbd></button>
           <button onClick={() => { openApp("terminal"); setCtx(null); }}>Open terminal</button>
           <button onClick={() => { openApp("about"); setCtx(null); }}>About</button>
           <button onClick={() => { openApp("projects"); setCtx(null); }}>Projects</button>

@@ -10,6 +10,7 @@ export default function Window({
   win,
   focused,
   isMobile,
+  ov,
   onFocus,
   onClose,
   onMinimize,
@@ -102,15 +103,26 @@ export default function Window({
     e.currentTarget.addEventListener("pointerup", onPU);
   };
 
-  const style = isMobile
+  const base = isMobile
     ? { zIndex: win.z }
     : win.max
     ? { left: 0, top: 0, width: "100%", height: "100%", zIndex: win.z }
     : { left: win.x, top: win.y, width: win.w, height: win.h, zIndex: win.z };
 
+  const style = {
+    ...base,
+    // genie targets for minimize/restore animations
+    ...(win.minimizing || win.restoring
+      ? { "--min-tx": `${win.minTx || 0}px`, "--min-ty": `${win.minTy || 0}px` }
+      : {}),
+    // Mission Control slot transform
+    ...(ov ? { transform: `translate(${ov.tx}px, ${ov.ty}px) scale(${ov.s})` } : {}),
+  };
+
   return (
     <section
-      className={`os-window${focused ? " focused" : ""}${win.max ? " max" : ""}${win.min ? " min" : ""}${win.closing ? " closing" : ""}${live ? " live" : ""}`}
+      data-winid={win.id}
+      className={`os-window${focused ? " focused" : ""}${win.max ? " max" : ""}${win.min ? " min" : ""}${win.closing ? " closing" : ""}${live ? " live" : ""}${win.minimizing ? " minimizing" : ""}${win.restoring ? " restoring" : ""}${ov ? " ov" : ""}`}
       style={style}
       onPointerDown={() => onFocus(win.id)}
       role="dialog"
