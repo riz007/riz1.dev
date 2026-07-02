@@ -7,6 +7,14 @@ export default async function SiteFooter() {
     <footer className="container footer">
       <p className="footer-copy">{t("copyright")}</p>
       <nav className="footer-nav" aria-label="Social links">
+        <a href="mailto:rizwanulrudra@gmail.com">Email</a>
+        <a
+          href="https://www.linkedin.com/in/rizwanulrudra/"
+          target="_blank"
+          rel="noreferrer"
+        >
+          LinkedIn
+        </a>
         <a href="https://github.com/riz007" target="_blank" rel="noreferrer">
           GitHub
         </a>

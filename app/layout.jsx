@@ -1,5 +1,5 @@
 import "./globals.css";
-import { Fraunces, DM_Sans } from "next/font/google";
+import { Fraunces, DM_Sans, Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import Script from "next/script";
 
 const display = Fraunces({
@@ -14,6 +14,20 @@ const body = DM_Sans({
   subsets: ["latin"],
   weight: ["300", "400", "500"],
   variable: "--font-body",
+  display: "swap",
+});
+
+const osDisplay = Space_Grotesk({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-os",
+  display: "swap",
+});
+
+const mono = JetBrains_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-mono",
   display: "swap",
 });
 
@@ -108,7 +122,7 @@ export default function RootLayout({ children }) {
   return (
     <html
       lang="en"
-      className={`${display.variable} ${body.variable}`}
+      className={`${display.variable} ${body.variable} ${osDisplay.variable} ${mono.variable}`}
       suppressHydrationWarning
     >
       <body suppressHydrationWarning>{children}</body>
