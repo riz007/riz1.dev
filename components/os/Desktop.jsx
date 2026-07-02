@@ -1,10 +1,11 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { APPS, DOCK, AppContent, Reader, dockIcon } from "./apps";
 import Window from "./Window";
 import Terminal from "./Terminal";
+import Spotlight from "./Spotlight";
 import "./os.css";
 
 const LOCALES = ["en", "bn", "th", "zh", "de"];
@@ -61,6 +62,8 @@ export default function Desktop({ locale, data }) {
   const [ctx, setCtx] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
   const [showHint, setShowHint] = useState(false);
+  const [snapPreview, setSnapPreview] = useState(null);
+  const [spotOpen, setSpotOpen] = useState(false);
   const zTop = useRef(10);
   const uid = useRef(0);
   const runTimer = useRef(null);
@@ -186,7 +189,29 @@ export default function Desktop({ locale, data }) {
     setWins((ws) => ws.map((w) => (w.id === id ? { ...w, ...pos } : w)));
   }, []);
   const resizeWin = useCallback((id, size) => {
-    setWins((ws) => ws.map((w) => (w.id === id ? { ...w, ...size } : w)));
+    setWins((ws) => ws.map((w) => (w.id === id ? { ...w, ...size, snapped: null } : w)));
+  }, []);
+
+  /* edge tiling: left/right halves with Sequoia-style margins; top maximizes */
+  const snapWin = useCallback((id, zone) => {
+    const vw = window.innerWidth;
+    const sh = window.innerHeight - 36;
+    const M = 10; // outer margin
+    const G = 5;  // half-gap between tiles
+    setWins((ws) =>
+      ws.map((w) => {
+        if (w.id !== id) return w;
+        const prevW = w.snapped ? w.prevW : w.w;
+        const prevH = w.snapped ? w.prevH : w.h;
+        if (zone === "top") return { ...w, max: true, prevW, prevH };
+        const half = Math.floor((vw - M * 2 - G * 2) / 2);
+        const rect =
+          zone === "left"
+            ? { x: M, y: M, w: half, h: sh - M * 2 }
+            : { x: M + half + G * 2, y: M, w: half, h: sh - M * 2 };
+        return { ...w, ...rect, snapped: zone, prevW, prevH, max: false };
+      })
+    );
   }, []);
 
   /* boot sequence */
@@ -246,21 +271,62 @@ export default function Desktop({ locale, data }) {
 
   const switchLang = useCallback((code) => router.push(`/${code}`), [router]);
 
-  /* global keys */
+  /* global keys — ⌘K / ⌘Space open Spotlight (macOS itself usually owns
+     literal ⌘Space, so ⌘K is the reliable binding) */
   useEffect(() => {
     const onKey = (e) => {
-      if (e.key === "Escape") { setCtx(null); setLangOpen(false); }
-      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") { e.preventDefault(); openApp("terminal"); }
+      if (e.key === "Escape") { setCtx(null); setLangOpen(false); setSpotOpen(false); }
+      if ((e.metaKey || e.ctrlKey) && (e.key.toLowerCase() === "k" || e.code === "Space")) {
+        e.preventDefault();
+        setSpotOpen((o) => !o);
+      }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [openApp]);
+  }, []);
 
   const onCtxMenu = (e) => {
     if (e.target.closest(".os-window")) return;
     e.preventDefault();
     setCtx({ x: Math.min(e.clientX, window.innerWidth - 190), y: Math.min(e.clientY, window.innerHeight - 220) });
   };
+
+  /* everything Spotlight can find */
+  const spotItems = useMemo(
+    () => [
+      ...APPS.map((a) => ({
+        type: "app",
+        label: a.title,
+        hint: "open window",
+        icon: a.icon,
+        run: () => openApp(a.id),
+      })),
+      ...data.posts.map((p) => ({
+        type: "post",
+        label: p.title,
+        hint: `${p.date} · ${p.readingTime} min read`,
+        icon: "✎",
+        run: () => openReader(p),
+      })),
+      ...data.projects.map((p) => ({
+        type: "repo",
+        label: p.name,
+        hint: p.tagline,
+        icon: "❒",
+        run: () => window.open(p.url, "_blank", "noopener"),
+      })),
+      ...data.links.map((lk) => ({
+        type: "link",
+        label: lk.title,
+        hint: lk.url.replace(/^https?:\/\//, "").split("/")[0],
+        icon: "⚯",
+        run: () => window.open(lk.url, "_blank", "noopener"),
+      })),
+      { type: "action", label: "Toggle appearance", hint: "light / dark", icon: "◐", run: () => setTheme("toggle") },
+      { type: "action", label: "Email Rizwanul", hint: data.identity.email, icon: "✉", run: () => { window.location.href = `mailto:${data.identity.email}`; } },
+    ],
+    [data, openApp, openReader, setTheme]
+  );
 
   const openIds = new Set(wins.filter((w) => !w.closing).map((w) => w.app));
 
@@ -282,6 +348,7 @@ export default function Desktop({ locale, data }) {
         <button className="os-menu-item os-menu-desktop" onClick={() => openApp("projects")}>projects</button>
         <button className="os-menu-item os-menu-desktop" onClick={() => openApp("terminal")}>terminal</button>
         <div className="os-menubar-spacer" />
+        <button className="os-mbtn" onClick={(e) => { e.stopPropagation(); setSpotOpen(true); }} aria-label="Search (⌘K)">⌕</button>
         <span className={`os-status${running ? " running" : ""}`}>
           <span className="os-status-dot" />{running ? "running" : "idle"}
         </span>
@@ -304,6 +371,9 @@ export default function Desktop({ locale, data }) {
 
       {/* windows */}
       <div className="os-surface">
+        {snapPreview && !isMobile && (
+          <div className={`os-snap-preview ${snapPreview}`} aria-hidden="true" />
+        )}
         {wins.map((w) => (
           <Window
             key={w.id}
@@ -316,6 +386,8 @@ export default function Desktop({ locale, data }) {
             onMaximize={maximizeWin}
             onMove={moveWin}
             onResize={resizeWin}
+            onSnapPreview={setSnapPreview}
+            onSnap={snapWin}
           >
             {w.app === "terminal" ? (
               <Terminal
@@ -340,8 +412,11 @@ export default function Desktop({ locale, data }) {
 
       {/* first-load hint */}
       {showHint && !isMobile && (
-        <div className="os-hint">tip: type <b>open projects</b> in the terminal, or press <b>⌘K</b></div>
+        <div className="os-hint">tip: press <b>⌘K</b> to search · drag a window to a screen edge to tile it</div>
       )}
+
+      {/* spotlight */}
+      {spotOpen && <Spotlight items={spotItems} onClose={() => setSpotOpen(false)} />}
 
       {/* dock */}
       <nav className="os-dock" aria-label="Application dock" onClick={(e) => e.stopPropagation()}>
@@ -363,7 +438,8 @@ export default function Desktop({ locale, data }) {
       {/* context menu */}
       {ctx && (
         <div className="os-ctx" style={{ left: ctx.x, top: ctx.y }} onClick={(e) => e.stopPropagation()}>
-          <button onClick={() => { openApp("terminal"); setCtx(null); }}>Open terminal <kbd>⌘K</kbd></button>
+          <button onClick={() => { setSpotOpen(true); setCtx(null); }}>Search <kbd>⌘K</kbd></button>
+          <button onClick={() => { openApp("terminal"); setCtx(null); }}>Open terminal</button>
           <button onClick={() => { openApp("about"); setCtx(null); }}>About</button>
           <button onClick={() => { openApp("projects"); setCtx(null); }}>Projects</button>
           <button onClick={() => { openApp("blog"); setCtx(null); }}>Writing</button>

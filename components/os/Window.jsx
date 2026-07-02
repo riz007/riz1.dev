@@ -1,8 +1,10 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 const DOCK_SAFE = 96;
+const MENUBAR = 36;
+const SNAP_EDGE = 14;
 
 export default function Window({
   win,
@@ -14,18 +16,31 @@ export default function Window({
   onMaximize,
   onMove,
   onResize,
+  onSnapPreview,
+  onSnap,
   children,
 }) {
   const drag = useRef(null);
+  // suppresses the position transition while the user is actively dragging/resizing
+  const [live, setLive] = useState(false);
 
   const startDrag = (e) => {
     // let the traffic-light buttons receive their clicks untouched
     if (e.target.closest(".os-lights")) return;
     if (isMobile || win.max) return;
     onFocus(win.id);
-    const startX = e.clientX;
-    const startY = e.clientY;
-    drag.current = { startX, startY, ox: win.x, oy: win.y };
+    let ox = win.x;
+    let oy = win.y;
+    if (win.snapped) {
+      // dragging a tiled window away restores its pre-snap size under the cursor
+      const rw = win.prevW || Math.min(480, window.innerWidth - 32);
+      const rh = win.prevH || 380;
+      ox = Math.min(Math.max(8, Math.round(e.clientX - rw / 2)), window.innerWidth - rw - 8);
+      oy = Math.max(0, e.clientY - MENUBAR - 19);
+      onMove(win.id, { x: ox, y: oy, w: rw, h: rh, snapped: null });
+    }
+    drag.current = { startX: e.clientX, startY: e.clientY, ox, oy, zone: null };
+    setLive(true);
     try { e.currentTarget.setPointerCapture(e.pointerId); } catch {}
   };
 
@@ -40,16 +55,30 @@ export default function Window({
       x: Math.max(-win.w + 120, Math.min(nx, maxX)),
       y: Math.max(0, Math.min(ny, maxY)),
     });
+    // edge zones: sides tile to half-screen, the top edge maximizes
+    let zone = null;
+    if (e.clientX <= SNAP_EDGE) zone = "left";
+    else if (e.clientX >= window.innerWidth - SNAP_EDGE) zone = "right";
+    else if (e.clientY <= MENUBAR + 8) zone = "top";
+    if (zone !== d.zone) {
+      d.zone = zone;
+      onSnapPreview(zone);
+    }
   };
 
   const endDrag = (e) => {
+    const zone = drag.current?.zone;
     drag.current = null;
+    setLive(false);
+    onSnapPreview(null);
+    if (zone) onSnap(win.id, zone);
     try { e.currentTarget.releasePointerCapture(e.pointerId); } catch {}
   };
 
   const startResize = (e) => {
     e.stopPropagation();
     onFocus(win.id);
+    setLive(true);
     const startX = e.clientX;
     const startY = e.clientY;
     const ow = win.w;
@@ -59,11 +88,12 @@ export default function Window({
 
     const onPM = (ev) => {
       onResize(win.id, {
-        w: Math.max(260, rs.ow + (ev.clientX - rs.startX)),
-        h: Math.max(150, rs.oh + (ev.clientY - rs.startY)),
+        w: Math.max(280, rs.ow + (ev.clientX - rs.startX)),
+        h: Math.max(160, rs.oh + (ev.clientY - rs.startY)),
       });
     };
     const onPU = (ev) => {
+      setLive(false);
       try { e.currentTarget.releasePointerCapture(ev.pointerId); } catch {}
       e.currentTarget.removeEventListener("pointermove", onPM);
       e.currentTarget.removeEventListener("pointerup", onPU);
@@ -80,7 +110,7 @@ export default function Window({
 
   return (
     <section
-      className={`os-window${focused ? " focused" : ""}${win.max ? " max" : ""}${win.min ? " min" : ""}${win.closing ? " closing" : ""}`}
+      className={`os-window${focused ? " focused" : ""}${win.max ? " max" : ""}${win.min ? " min" : ""}${win.closing ? " closing" : ""}${live ? " live" : ""}`}
       style={style}
       onPointerDown={() => onFocus(win.id)}
       role="dialog"

@@ -209,6 +209,22 @@
   box-shadow: 0 36px 80px -24px rgba(45, 55, 100, 0.5), 0 10px 24px -14px rgba(45, 55, 100, 0.35);
 }
 .os-window.max { border-radius: 0; }
+/* windows glide into snapped positions — but never while being dragged/resized */
+.os-window:not(.live) { transition: left .24s cubic-bezier(.2, .8, .2, 1), top .24s cubic-bezier(.2, .8, .2, 1), width .24s cubic-bezier(.2, .8, .2, 1), height .24s cubic-bezier(.2, .8, .2, 1); }
+
+/* edge-tiling preview */
+.os-snap-preview {
+  position: absolute; z-index: 5;
+  background: rgba(139, 139, 255, 0.13);
+  border: 1.5px solid rgba(139, 139, 255, 0.5);
+  border-radius: 14px;
+  pointer-events: none;
+  animation: snapIn .16s ease both;
+}
+@keyframes snapIn { from { opacity: 0; transform: scale(.99); } to { opacity: 1; } }
+.os-snap-preview.left  { left: 10px; top: 10px; bottom: 10px; width: calc(50% - 15px); }
+.os-snap-preview.right { right: 10px; top: 10px; bottom: 10px; width: calc(50% - 15px); }
+.os-snap-preview.top   { inset: 8px; }
 
 .os-titlebar {
   position: relative;
@@ -588,6 +604,63 @@
 }
 .os-hint b { color: var(--violet); }
 @keyframes hintIn { from { opacity: 0; transform: translateX(-50%) translateY(6px); } to { opacity: 1; transform: translateX(-50%); } }
+
+/* ── spotlight ──────────────────────────────────────────────── */
+.os-spot-backdrop {
+  position: absolute; inset: 0; z-index: 800;
+  background: rgba(5, 6, 12, 0.35);
+  backdrop-filter: blur(9px) saturate(1.2);
+  -webkit-backdrop-filter: blur(9px) saturate(1.2);
+  display: flex; justify-content: center; align-items: flex-start;
+  padding: 15vh 16px 0;
+  animation: bootFade .14s ease both;
+}
+[data-theme="light"] .os-spot-backdrop { background: rgba(30, 34, 60, 0.22); }
+.os-spot {
+  width: min(560px, 100%);
+  background: var(--panel);
+  backdrop-filter: blur(50px) saturate(2);
+  -webkit-backdrop-filter: blur(50px) saturate(2);
+  border: 1px solid var(--edge-hi);
+  border-radius: 16px;
+  box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.7);
+  overflow: hidden;
+  animation: spotIn .2s cubic-bezier(.16, 1, .3, 1) both;
+}
+@keyframes spotIn { from { opacity: 0; transform: translateY(-10px) scale(.97); } to { opacity: 1; } }
+.os-spot-inputrow { display: flex; align-items: center; gap: 10px; padding: 13px 16px; border-bottom: 1px solid var(--edge); }
+.os-spot-glass { font-size: 18px; color: var(--ink-3); }
+.os-spot-input {
+  flex: 1; background: none; border: none; outline: none;
+  color: var(--ink); font-size: 16.5px; font-family: var(--ui);
+  caret-color: var(--violet);
+}
+.os-spot-input::placeholder { color: var(--ink-3); }
+.os-spot-esc { font-family: var(--mono); font-size: 10px; color: var(--ink-3); border: 1px solid var(--edge-hi); padding: 2px 6px; border-radius: 5px; }
+.os-spot-list { list-style: none; margin: 0; padding: 6px; max-height: 46vh; overflow: auto; }
+.os-spot-list::-webkit-scrollbar { width: 8px; }
+.os-spot-list::-webkit-scrollbar-thumb { background: var(--edge-hi); border-radius: 8px; }
+.os-spot-item {
+  display: flex; width: 100%; align-items: center; gap: 11px;
+  padding: 9px 10px; background: none; border: none; border-radius: 9px;
+  text-align: left; color: var(--ink-2);
+}
+.os-spot-item.sel { background: rgba(139, 139, 255, 0.16); }
+[data-theme="light"] .os-spot-item.sel { background: rgba(93, 93, 255, 0.12); }
+.os-spot-ico {
+  width: 27px; height: 27px; border-radius: 7px; flex-shrink: 0;
+  background: var(--panel-2); border: 1px solid var(--edge);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; color: var(--violet);
+}
+.os-spot-label { font-size: 13.5px; font-weight: 500; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 55%; }
+.os-spot-hint { flex: 1; font-size: 11.5px; color: var(--ink-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.os-spot-badge {
+  font-family: var(--mono); font-size: 9.5px; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--ink-3); border: 1px solid var(--edge); border-radius: 4px; padding: 2px 5px; flex-shrink: 0;
+}
+.os-spot-empty { padding: 22px 18px; font-size: 13px; color: var(--ink-3); }
+.os-spot-foot { display: flex; gap: 16px; padding: 9px 16px; border-top: 1px solid var(--edge); font-family: var(--mono); font-size: 10.5px; color: var(--ink-3); }
 
 /* ── reduced motion ─────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
