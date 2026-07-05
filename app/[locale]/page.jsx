@@ -49,9 +49,9 @@ async function getContributions() {
 
 export async function generateMetadata({ params: { locale } }) {
   return {
-    title: "Rizwanul Islam Rudra — Forward Deployed AI Engineer",
+    title: "Rizwanul Islam Rudra — Staff Frontend Engineer & Technical Lead",
     description:
-      "Forward Deployed AI Engineer and Tech Lead specializing in agentic AI systems, RAG pipelines, LLM integration, and scalable product engineering. Based in Bangkok.",
+      "Staff frontend engineer and technical lead in Bangkok with 10+ years across the software lifecycle. Frontend architecture, design systems, and AI-powered product experiences with TypeScript, Vue, React, and LLMs.",
     alternates: {
       canonical: `${BASE}/en`,
       languages: {
@@ -77,10 +77,15 @@ const personSchema = {
   "@type": "Person",
   name: "Rizwanul Islam Rudra",
   url: BASE,
-  jobTitle: "Forward Deployed AI Engineer",
+  jobTitle: "Staff Frontend Engineer & Technical Lead",
   description:
-    "Forward Deployed AI Engineer and Tech Lead specializing in agentic AI systems, RAG pipelines, LLM integration, and scalable product engineering.",
+    "Staff frontend engineer and technical lead with 10+ years across the software lifecycle — frontend architecture, design systems, and AI-powered product experiences. Based in Bangkok.",
   email: "mailto:rizwanulrudra@gmail.com",
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Bangkok",
+    addressCountry: "TH",
+  },
   sameAs: [
     "https://github.com/riz007",
     "https://www.linkedin.com/in/rizwanulrudra/",
@@ -89,17 +94,23 @@ const personSchema = {
     "https://ieeexplore.ieee.org/document/10202106",
   ],
   knowsAbout: [
+    "Frontend Architecture",
+    "Design Systems",
+    "Web Performance",
+    "Accessibility",
+    "TypeScript",
+    "Vue.js",
+    "React",
+    "Next.js",
     "Generative AI",
     "Agentic AI Systems",
     "Retrieval-Augmented Generation",
     "LLM Integration",
     "System Design",
     "Distributed Systems",
-    "React",
-    "Vue.js",
-    "TypeScript",
-    "Python",
+    "Engineering Leadership",
     "Node.js",
+    "Python",
   ],
   worksFor: { "@type": "Organization", name: "Codeifai Ltd." },
 };
@@ -125,12 +136,13 @@ export default async function HomePage({ params: { locale } }) {
   const data = {
     identity: {
       name: "Rizwanul Islam Rudra",
-      role: "Forward Deployed AI Engineer · Tech Lead",
+      role: "Staff Frontend Engineer · Technical Lead",
       location: "Bangkok, Thailand",
-      status: "open to hard problems",
-      focus: "agentic AI · systems",
+      status: "open to staff & lead roles",
+      focus: "frontend experience · AI",
+      education: "MSc Computer Science · IEEE-published",
       bio: t("subtitle"),
-      stack: "React · TypeScript · Python · Node",
+      stack: "TypeScript · Vue · React · Node · Python",
       email: "rizwanulrudra@gmail.com",
       github: "https://github.com/riz007",
       linkedin: "https://www.linkedin.com/in/rizwanulrudra/",

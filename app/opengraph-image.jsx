@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "Rizwanul Islam Rudra — Forward Deployed AI Engineer";
+export const alt = "Rizwanul Islam Rudra — Staff Frontend Engineer & Technical Lead";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -8,116 +8,134 @@ export default function OGImage() {
   return new ImageResponse(
     <div
       style={{
-        background: "#F8F5F0",
         width: "100%",
         height: "100%",
         display: "flex",
         flexDirection: "column",
-        padding: "0 80px 64px",
-        fontFamily: "Georgia, serif",
-        position: "relative",
-        overflow: "hidden",
+        backgroundColor: "#0c0d18",
+        backgroundImage:
+          "radial-gradient(circle at 12% 8%, rgba(91,77,255,0.4), transparent 52%), radial-gradient(circle at 90% 95%, rgba(45,212,191,0.28), transparent 50%), radial-gradient(circle at 70% 20%, rgba(255,107,170,0.12), transparent 45%)",
+        fontFamily: "sans-serif",
       }}
     >
-      {/* Terracotta top stripe */}
-      <div
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          right: 0,
-          height: 6,
-          background: "#B85C38",
-        }}
-      />
-
-      {/* Faint background number */}
-      <div
-        style={{
-          position: "absolute",
-          top: -60,
-          right: -30,
-          fontSize: 520,
-          fontWeight: 300,
-          fontStyle: "italic",
-          color: "#E2DDD4",
-          lineHeight: 1,
-          letterSpacing: -30,
-          userSelect: "none",
-        }}
-      >
-        riz
-      </div>
-
-      {/* Content area */}
+      {/* menu bar */}
       <div
         style={{
           display: "flex",
-          flexDirection: "column",
-          justifyContent: "flex-end",
-          flex: 1,
-          position: "relative",
-          zIndex: 1,
+          alignItems: "center",
+          justifyContent: "space-between",
+          height: 52,
+          padding: "0 36px",
+          backgroundColor: "rgba(255,255,255,0.04)",
+          borderBottom: "1px solid rgba(255,255,255,0.09)",
         }}
       >
-        {/* Eyebrow */}
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 12,
-            color: "#B85C38",
-            fontSize: 18,
-            letterSpacing: 4,
-            textTransform: "uppercase",
-            marginBottom: 24,
-          }}
-        >
-          <div style={{ width: 32, height: 1, background: "#B85C38" }} />
-          Forward Deployed AI Engineer · Tech Lead
+        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+          <div
+            style={{
+              width: 20,
+              height: 20,
+              borderRadius: 6,
+              background: "linear-gradient(135deg, #8b8bff, #43e7d5)",
+            }}
+          />
+          <div style={{ color: "#f2f3f8", fontSize: 20, fontWeight: 700 }}>RudraOS</div>
         </div>
+        <div style={{ color: "#a2a7bd", fontSize: 18, letterSpacing: 2 }}>riz1.dev</div>
+      </div>
 
-        {/* Name */}
+      {/* window card */}
+      <div
+        style={{
+          flex: 1,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: "44px 60px 60px",
+        }}
+      >
         <div
           style={{
             display: "flex",
             flexDirection: "column",
-            color: "#1C1916",
-            fontSize: 88,
-            fontWeight: 300,
-            lineHeight: 0.95,
-            letterSpacing: -4,
-            marginBottom: 28,
+            width: "100%",
+            borderRadius: 20,
+            backgroundColor: "rgba(28,30,44,0.85)",
+            border: "1px solid rgba(255,255,255,0.16)",
+            boxShadow: "0 40px 90px rgba(0,0,0,0.6)",
+            overflow: "hidden",
           }}
         >
-          <span>Rizwanul</span>
-          <span style={{ fontStyle: "italic", color: "#B85C38" }}>Islam Rudra</span>
-        </div>
+          {/* titlebar */}
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              height: 58,
+              padding: "0 26px",
+              borderBottom: "1px solid rgba(255,255,255,0.09)",
+              backgroundColor: "rgba(255,255,255,0.03)",
+            }}
+          >
+            <div style={{ display: "flex", gap: 12 }}>
+              <div style={{ width: 16, height: 16, borderRadius: 999, backgroundColor: "#ff5f57" }} />
+              <div style={{ width: 16, height: 16, borderRadius: 999, backgroundColor: "#febc2e" }} />
+              <div style={{ width: 16, height: 16, borderRadius: 999, backgroundColor: "#28c840" }} />
+            </div>
+            <div
+              style={{
+                flex: 1,
+                display: "flex",
+                justifyContent: "center",
+                color: "#a2a7bd",
+                fontSize: 19,
+              }}
+            >
+              about.md
+            </div>
+            <div style={{ width: 72 }} />
+          </div>
 
-        {/* Subtitle */}
-        <div
-          style={{
-            color: "#78746D",
-            fontSize: 22,
-            lineHeight: 1.6,
-            maxWidth: 620,
-            marginBottom: 36,
-          }}
-        >
-          Building agentic AI systems, scalable infrastructure, and
-          human-centered product experiences.
-        </div>
-
-        {/* Domain */}
-        <div
-          style={{
-            color: "#B5B0A7",
-            fontSize: 16,
-            letterSpacing: 4,
-            textTransform: "uppercase",
-          }}
-        >
-          riz1.dev
+          {/* body */}
+          <div style={{ display: "flex", flexDirection: "column", padding: "42px 52px 46px" }}>
+            <div
+              style={{
+                color: "#8b8bff",
+                fontSize: 20,
+                letterSpacing: 5,
+                textTransform: "uppercase",
+                marginBottom: 22,
+              }}
+            >
+              Staff Frontend Engineer · Technical Lead
+            </div>
+            <div
+              style={{
+                color: "#f2f3f8",
+                fontSize: 76,
+                fontWeight: 700,
+                lineHeight: 1.05,
+                letterSpacing: -2,
+                marginBottom: 26,
+              }}
+            >
+              Rizwanul Islam Rudra
+            </div>
+            <div
+              style={{
+                color: "#a2a7bd",
+                fontSize: 26,
+                lineHeight: 1.5,
+                maxWidth: 860,
+                marginBottom: 34,
+              }}
+            >
+              Frontend architecture, design systems, and AI-powered product experiences — based in Bangkok.
+            </div>
+            <div style={{ color: "#43e7d5", fontSize: 20, letterSpacing: 2 }}>
+              TypeScript · Vue · React · Next.js · LLMs · RAG · Agentic AI
+            </div>
+          </div>
         </div>
       </div>
     </div>,

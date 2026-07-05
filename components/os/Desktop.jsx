@@ -44,7 +44,7 @@ function ContributionField({ levels }) {
 
 const BOOT_LINES = [
   "mounting /about /projects /experience",
-  "loading knowledge base — 18 skills indexed",
+  "loading knowledge base — 20 skills indexed",
   "linking tools: writing · algorithms · links",
   "agent online",
 ];

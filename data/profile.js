@@ -1,40 +1,41 @@
 export const skills = [
+  "TypeScript",
+  "Vue 3",
+  "React",
+  "Next.js",
+  "Frontend Architecture",
+  "Design Systems",
+  "Web Performance",
+  "Accessibility",
+  "Developer Experience",
+  "Node.js",
+  "Python",
   "Generative AI",
-  "Agentic AI",
   "Agentic AI Systems",
-  "Agentic Product Engineering",
-  "LLM Integration",
   "RAG Systems",
+  "LLM Integration",
   "MCP / Tool Use",
   "System Design",
   "Distributed Systems",
-  "Product Architecture",
-  "API Design",
-  "Team Leadership",
-  "React",
-  "Vue 3",
-  "TypeScript",
-  "Python",
-  "Node.js",
-  "Docker",
-  "SQL",
+  "Engineering Leadership",
+  "Mentoring",
 ];
 
 export const capabilityCards = [
   {
-    title: "Agentic AI Engineering",
+    title: "Frontend Architecture & Experience",
     description:
-      "Designing and shipping agentic AI systems — multi-agent orchestration, RAG pipelines, LLM tool use, and production AI products that scale beyond the prototype.",
+      "Design systems, performance, accessibility, and developer experience with TypeScript, Vue, React, and Next.js. The frontend is more than a presentation layer — it's where product experience, APIs, security, and data come together.",
   },
   {
-    title: "Systems Architecture",
+    title: "AI-Powered Product Engineering",
     description:
-      "Building resilient distributed services and performance-aware platforms. From API design to infrastructure, optimised for developer experience and production reliability.",
+      "LLMs, RAG pipelines, and agentic workflows applied to real business problems — AI features that improve the product and developer productivity instead of adding complexity.",
   },
   {
-    title: "Technical Leadership",
+    title: "Engineering Leadership",
     description:
-      "Guiding engineering teams with pragmatic process, mentorship, and product-aligned strategy. Bridging business objectives with sound technical decisions.",
+      "Defining technical direction, establishing engineering standards, and mentoring engineers. A decade of working across the lifecycle with product, design, and backend teams to deliver with confidence.",
   },
 ];
 

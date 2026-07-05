@@ -483,6 +483,7 @@
 .about-social-link:hover { color: var(--violet); border-color: var(--violet); transform: translateY(-1px); }
 .about-prompt { font-family: var(--mono); font-size: 12px; color: var(--ink-2); border-top: 1px solid var(--edge); padding-top: 14px; }
 .about-prompt .c { color: var(--cyan); }
+.about-legal { font-size: 10.5px; color: var(--ink-3); letter-spacing: .01em; }
 
 /* experience */
 .exp { display: flex; flex-direction: column; }

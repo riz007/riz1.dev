@@ -73,7 +73,7 @@ export default async function BlogPostPage({ params: { locale, slug } }) {
         "@type": "Person",
         name: "Rizwanul Islam Rudra",
         url: BASE,
-        jobTitle: "Forward Deployed AI Engineer",
+        jobTitle: "Staff Frontend Engineer & Technical Lead",
       },
       publisher: {
         "@type": "Person",

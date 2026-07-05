@@ -9,21 +9,21 @@
     "copyright": "©2026 Rizwanul Islam Rudra"
   },
   "home": {
-    "eyebrow": "Forward Deployed AI Engineer · Tech Lead",
+    "eyebrow": "Staff Frontend Engineer · Technical Lead",
     "title": "Rizwanul Islam Rudra",
-    "subtitle": "Building agentic AI systems, scalable infrastructure, and human-centered product experiences that bridge cutting-edge AI with real-world software.",
+    "subtitle": "I lead frontend engineering for a SaaS platform — defining technical direction, setting engineering standards, and shipping product experiences that scale. To me the frontend is more than a presentation layer: it's where product, APIs, security, and data meet — and where AI has to earn its place in the product.",
     "ctaPrimary": "Read the blog",
     "ctaSecondary": "Useful links",
     "focusTitle": "Focus Areas",
-    "focusBody": "Agentic AI, product engineering, and distributed systems working together to solve real problems at scale.",
+    "focusBody": "Frontend architecture, AI-powered product features, and the engineering leadership to ship them with confidence.",
     "capabilitiesTitle": "Capabilities",
-    "capabilitiesBody": "Bridging generative AI capabilities with reliable engineering — from agentic pipelines and RAG systems to the distributed infrastructure that ships them to production.",
+    "capabilitiesBody": "Frontend experience and AI-powered features, backed by engineering leadership — maintainable, performant, accessible, and built to evolve.",
     "experienceTitle": "Experience",
-    "experienceBody": "A decade of hands-on engineering leadership across AI-powered products, scaling systems, and growing cross-functional teams."
+    "experienceBody": "Ten-plus years across the full software lifecycle — from architecture and production code to mentoring engineers and leading cross-functional initiatives."
   },
   "blog": {
     "title": "Writing",
-    "subtitle": "Thoughts on architecture, leadership, and building reliable products."
+    "subtitle": "Software engineering, AI, system design, and modern web development — practical insights over hot takes."
   },
   "links": {
     "title": "Useful Links",

@@ -37,22 +37,27 @@ export const metadata = {
   metadataBase: new URL(BASE_URL),
 
   title: {
-    default: "Rizwanul Islam Rudra — Forward Deployed AI Engineer",
+    default: "Rizwanul Islam Rudra — Staff Frontend Engineer & Technical Lead",
     template: "%s | Rizwanul Islam Rudra",
   },
 
   description:
-    "Forward Deployed AI Engineer and Tech Lead specializing in agentic AI systems, RAG pipelines, LLM integration, and scalable product engineering. Based in Bangkok.",
+    "Staff frontend engineer and technical lead in Bangkok with 10+ years across the software lifecycle. Frontend architecture, design systems, and AI-powered product experiences with TypeScript, Vue, React, and LLMs.",
 
   keywords: [
-    "Forward Deployed AI Engineer",
-    "Agentic AI",
-    "Agentic AI Systems",
-    "Agentic Product Engineering",
+    "Staff Frontend Engineer",
+    "Frontend Technical Lead",
+    "Frontend Architecture",
+    "Design Systems",
+    "TypeScript",
+    "Vue.js",
+    "React",
+    "Next.js",
+    "AI-Powered Applications",
     "RAG Systems",
     "LLM Integration",
-    "Generative AI",
-    "Software Engineering Leader",
+    "Agentic AI",
+    "Engineering Leadership",
     "Tech Lead Bangkok",
     "Rizwanul Islam Rudra",
   ],
@@ -71,24 +76,24 @@ export const metadata = {
     alternateLocale: ["bn_BD", "de_DE", "th_TH", "zh_CN"],
     url: BASE_URL,
     siteName: "riz1.dev",
-    title: "Rizwanul Islam Rudra — Forward Deployed AI Engineer",
+    title: "Rizwanul Islam Rudra — Staff Frontend Engineer & Technical Lead",
     description:
-      "Forward Deployed AI Engineer and Tech Lead specializing in agentic AI systems, RAG pipelines, LLM integration, and scalable product engineering.",
+      "Frontend architecture, design systems, and AI-powered product experiences — built maintainable, performant, and accessible. 10+ years, based in Bangkok.",
     images: [
       {
         url: "/opengraph-image",
         width: 1200,
         height: 630,
-        alt: "Rizwanul Islam Rudra — Forward Deployed AI Engineer",
+        alt: "Rizwanul Islam Rudra — Staff Frontend Engineer & Technical Lead",
       },
     ],
   },
 
   twitter: {
     card: "summary_large_image",
-    title: "Rizwanul Islam Rudra — Forward Deployed AI Engineer",
+    title: "Rizwanul Islam Rudra — Staff Frontend Engineer & Technical Lead",
     description:
-      "Forward Deployed AI Engineer and Tech Lead specializing in agentic AI systems, RAG pipelines, and scalable product engineering.",
+      "Frontend architecture, design systems, and AI-powered product experiences — 10+ years, based in Bangkok.",
     images: ["/opengraph-image"],
     creator: "@riz007",
   },

@@ -3,7 +3,7 @@
 /* Window registry — order defines the dock. Terminal is rendered specially. */
 export const APPS = [
   { id: "terminal",     title: "agent://terminal", icon: "▸", w: 480, h: 340 },
-  { id: "about",        title: "about.md",         icon: "◈", w: 460, h: 430 },
+  { id: "about",        title: "about.md",         icon: "◈", w: 480, h: 500 },
   { id: "projects",     title: "~/projects",       icon: "❒", w: 560, h: 500 },
   { id: "experience",   title: "experience.log",   icon: "❯", w: 440, h: 420 },
   { id: "skills",       title: "stack.json",       icon: "⬡", w: 440, h: 340 },
@@ -73,6 +73,7 @@ function About({ identity, onOpen }) {
         <span><b>location</b> {identity.location}</span>
         <span><b>status</b> {identity.status}</span>
         <span><b>focus</b> {identity.focus}</span>
+        {identity.education && <span><b>education</b> {identity.education}</span>}
       </div>
       <div className="about-social">
         <a className="about-social-link" href={identity.github} target="_blank" rel="noreferrer">GitHub ↗</a>
@@ -82,6 +83,7 @@ function About({ identity, onOpen }) {
       <p className="about-prompt">
         <span className="c">agent{">"}</span> want the tour? run <button className="os-link" style={{ background: "none", border: "none", padding: 0 }} onClick={() => onOpen("projects")}>projects</button>, <button className="os-link" style={{ background: "none", border: "none", padding: 0 }} onClick={() => onOpen("experience")}>experience</button>, or <button className="os-link" style={{ background: "none", border: "none", padding: 0 }} onClick={() => onOpen("blog")}>writing</button>.
       </p>
+      <p className="about-legal">Opinions are my own, not my employers&apos; — past or present.</p>
     </div>
   );
 }

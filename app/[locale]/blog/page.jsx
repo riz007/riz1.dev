@@ -8,7 +8,7 @@ export async function generateMetadata({ params: { locale } }) {
   return {
     title: "Writing",
     description:
-      "Technical blog on agentic AI systems, RAG pipelines, software architecture, and forward deployed AI engineering by Rizwanul Islam Rudra.",
+      "Technical blog on frontend architecture, AI-powered applications, system design, and engineering leadership by Rizwanul Islam Rudra.",
     alternates: {
       canonical: `${BASE}/en/blog`,
       languages: {
@@ -25,7 +25,7 @@ export async function generateMetadata({ params: { locale } }) {
       url: `${BASE}/${locale}/blog`,
       title: "Writing — Rizwanul Islam Rudra",
       description:
-        "Technical blog on agentic AI systems, RAG pipelines, software architecture, and forward deployed AI engineering.",
+        "Technical blog on frontend architecture, AI-powered applications, system design, and engineering leadership.",
     },
   };
 }
