@@ -49,9 +49,9 @@ async function getContributions() {
 
 export async function generateMetadata({ params: { locale } }) {
   return {
-    title: "Rizwanul Islam Rudra — Staff Frontend Engineer & Technical Lead",
+    title: "Rizwanul Islam Rudra — Senior Software Engineer & Technical Lead",
     description:
-      "Staff frontend engineer and technical lead in Bangkok with 10+ years across the software lifecycle. Frontend architecture, design systems, and AI-powered product experiences with TypeScript, Vue, React, and LLMs.",
+      "Senior software engineer and technical lead in Bangkok with 10+ years across the software lifecycle. Frontend architecture, design systems, and AI-powered product experiences with TypeScript, Vue, React, and LLMs.",
     alternates: {
       canonical: `${BASE}/en`,
       languages: {
@@ -77,9 +77,9 @@ const personSchema = {
   "@type": "Person",
   name: "Rizwanul Islam Rudra",
   url: BASE,
-  jobTitle: "Staff Frontend Engineer & Technical Lead",
+  jobTitle: "Senior Software Engineer & Technical Lead",
   description:
-    "Staff frontend engineer and technical lead with 10+ years across the software lifecycle — frontend architecture, design systems, and AI-powered product experiences. Based in Bangkok.",
+    "Senior software engineer and technical lead with 10+ years across the software lifecycle — frontend architecture, design systems, and AI-powered product experiences. Based in Bangkok.",
   email: "mailto:rizwanulrudra@gmail.com",
   address: {
     "@type": "PostalAddress",
@@ -136,7 +136,7 @@ export default async function HomePage({ params: { locale } }) {
   const data = {
     identity: {
       name: "Rizwanul Islam Rudra",
-      role: "Staff Frontend Engineer · Technical Lead",
+      role: "Senior Software Engineer · Technical Lead",
       location: "Bangkok, Thailand",
       status: "open to staff & lead roles",
       focus: "frontend experience · AI",

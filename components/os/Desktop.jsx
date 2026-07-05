@@ -326,6 +326,15 @@ export default function Desktop({ locale, data }) {
 
   const switchLang = useCallback((code) => router.push(`/${code}`), [router]);
 
+  /* prefetch the other locale routes as soon as the menu opens,
+     so the actual switch is near-instant */
+  useEffect(() => {
+    if (!langOpen) return;
+    LOCALES.forEach((l) => {
+      if (l !== locale) router.prefetch(`/${l}`);
+    });
+  }, [langOpen, locale, router]);
+
   /* Mission Control — lay every open window out in a centred grid.
      Geometry comes from state (not DOM rects), so windows mid-transition
      still map to correct slots. */

@@ -37,15 +37,15 @@ export const metadata = {
   metadataBase: new URL(BASE_URL),
 
   title: {
-    default: "Rizwanul Islam Rudra — Staff Frontend Engineer & Technical Lead",
+    default: "Rizwanul Islam Rudra — Senior Software Engineer & Technical Lead",
     template: "%s | Rizwanul Islam Rudra",
   },
 
   description:
-    "Staff frontend engineer and technical lead in Bangkok with 10+ years across the software lifecycle. Frontend architecture, design systems, and AI-powered product experiences with TypeScript, Vue, React, and LLMs.",
+    "Senior software engineer and technical lead in Bangkok with 10+ years across the software lifecycle. Frontend architecture, design systems, and AI-powered product experiences with TypeScript, Vue, React, and LLMs.",
 
   keywords: [
-    "Staff Frontend Engineer",
+    "Senior Software Engineer",
     "Frontend Technical Lead",
     "Frontend Architecture",
     "Design Systems",
@@ -76,7 +76,7 @@ export const metadata = {
     alternateLocale: ["bn_BD", "de_DE", "th_TH", "zh_CN"],
     url: BASE_URL,
     siteName: "riz1.dev",
-    title: "Rizwanul Islam Rudra — Staff Frontend Engineer & Technical Lead",
+    title: "Rizwanul Islam Rudra — Senior Software Engineer & Technical Lead",
     description:
       "Frontend architecture, design systems, and AI-powered product experiences — built maintainable, performant, and accessible. 10+ years, based in Bangkok.",
     images: [
@@ -84,14 +84,14 @@ export const metadata = {
         url: "/opengraph-image",
         width: 1200,
         height: 630,
-        alt: "Rizwanul Islam Rudra — Staff Frontend Engineer & Technical Lead",
+        alt: "Rizwanul Islam Rudra — Senior Software Engineer & Technical Lead",
       },
     ],
   },
 
   twitter: {
     card: "summary_large_image",
-    title: "Rizwanul Islam Rudra — Staff Frontend Engineer & Technical Lead",
+    title: "Rizwanul Islam Rudra — Senior Software Engineer & Technical Lead",
     description:
       "Frontend architecture, design systems, and AI-powered product experiences — 10+ years, based in Bangkok.",
     images: ["/opengraph-image"],
