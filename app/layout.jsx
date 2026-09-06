@@ -11,11 +11,15 @@ export const metadata = {
   },
 
   description:
-    "Senior software engineer and technical lead in Bangkok with 10+ years across the software lifecycle. Frontend architecture, design systems, and AI-powered product experiences with TypeScript, Vue, React, and LLMs.",
+    "Senior software engineer and technical lead in Bangkok with 10+ years across the software lifecycle — software engineering, system design, agentic AI systems, and engineering leadership, with TypeScript, Vue, React, Node, Python, and LLMs.",
 
   keywords: [
     "Senior Software Engineer",
-    "Frontend Technical Lead",
+    "Technical Lead",
+    "Software Architecture",
+    "System Design",
+    "Agentic AI Systems",
+    "AI Engineering",
     "Frontend Architecture",
     "Design Systems",
     "TypeScript",
@@ -47,7 +51,7 @@ export const metadata = {
     siteName: "riz1.dev",
     title: "Rizwanul Islam Rudra — Senior Software Engineer & Technical Lead",
     description:
-      "Frontend architecture, design systems, and AI-powered product experiences — built maintainable, performant, and accessible. 10+ years, based in Bangkok.",
+      "Software engineering and system design, agentic AI systems, and the technical leadership to ship them — maintainable, performant, and built to evolve. 10+ years, based in Bangkok.",
     images: [
       {
         url: "/opengraph-image",
@@ -62,7 +66,7 @@ export const metadata = {
     card: "summary_large_image",
     title: "Rizwanul Islam Rudra — Senior Software Engineer & Technical Lead",
     description:
-      "Frontend architecture, design systems, and AI-powered product experiences — 10+ years, based in Bangkok.",
+      "Software engineering, system design, and agentic AI systems — 10+ years, based in Bangkok.",
     images: ["/opengraph-image"],
     creator: "@riz007",
   },

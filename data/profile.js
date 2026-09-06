@@ -23,19 +23,19 @@ export const skills = [
 
 export const capabilityCards = [
   {
-    title: "Frontend Architecture & Experience",
+    title: "Software Engineering & System Design",
     description:
-      "Design systems, performance, accessibility, and developer experience with TypeScript, Vue, React, and Next.js. The frontend is more than a presentation layer — it's where product experience, APIs, security, and data come together.",
+      "Architecture and production engineering across the stack — TypeScript, Vue, React, Node, and Python. Designing systems, APIs, and data flows that stay maintainable, performant, and accessible as they grow, and knowing which trade-offs are worth making.",
   },
   {
-    title: "AI-Powered Product Engineering",
+    title: "AI & Agentic AI Systems",
     description:
-      "LLMs, RAG pipelines, and agentic workflows applied to real business problems — AI features that improve the product and developer productivity instead of adding complexity.",
+      "LLM integration, RAG pipelines, tool use, and multi-step agentic workflows applied to real business problems — including the orchestration, evaluation, and guardrails that decide whether an AI feature survives contact with production.",
   },
   {
-    title: "Engineering Leadership",
+    title: "Technical Leadership",
     description:
-      "Defining technical direction, establishing engineering standards, and mentoring engineers. A decade of working across the lifecycle with product, design, and backend teams to deliver with confidence.",
+      "Setting technical direction, establishing engineering standards, and mentoring engineers. A decade of working across the lifecycle with product, design, and backend teams to deliver with confidence.",
   },
 ];
 

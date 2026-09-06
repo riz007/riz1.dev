@@ -1,12 +1,15 @@
+import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 
-export default async function SiteFooter() {
+export default async function SiteFooter({ locale = "en" }) {
   const t = await getTranslations("footer");
 
   return (
     <footer className="container footer">
       <p className="footer-copy">{t("copyright")}</p>
       <nav className="footer-nav" aria-label="Social links">
+        <Link href={`/${locale}/profile`}>Profile</Link>
+        <a href="/feed.xml">RSS</a>
         <a href="mailto:rizwanulrudra@gmail.com">Email</a>
         <a
           href="https://www.linkedin.com/in/rizwanulrudra/"

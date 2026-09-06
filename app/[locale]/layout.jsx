@@ -32,7 +32,7 @@ export default async function LocaleLayout({ children, params: { locale } }) {
           <div className="shell">
             <SiteHeader locale={locale} />
             <main className="container page">{children}</main>
-            <SiteFooter />
+            <SiteFooter locale={locale} />
           </div>
         </NextIntlClientProvider>
         <Script
