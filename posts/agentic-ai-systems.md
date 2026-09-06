@@ -2,6 +2,7 @@
 title: "Patterns in Agentic AI Systems — What Production Actually Looks Like"
 date: 2026-02-10
 description: "A practical look at the architectures, failure modes, and engineering trade-offs that define real-world agentic AI deployments."
+tags: ["Agentic AI", "AI Engineering", "System Design"]
 ---
 
 # Patterns in Agentic AI Systems — What Production Actually Looks Like

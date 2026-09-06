@@ -1,4 +1,4 @@
-import { getTranslations } from "next-intl/server";
+import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 import { ComplexityChart, AlgorithmsInAI, WhyItStillMatters } from "../../../components/DsaVisuals";
 
 const BASE = "https://riz1.dev";
@@ -9,7 +9,7 @@ export async function generateMetadata({ params: { locale } }) {
     description:
       "Data structures and algorithms explained for modern software engineers and AI systems builders — complexity analysis, why DSA powers AI, and interactive visualizations.",
     alternates: {
-      canonical: `${BASE}/en/dsa`,
+      canonical: `${BASE}/${locale}/dsa`,
       languages: {
         "x-default": `${BASE}/en/dsa`,
         en: `${BASE}/en/dsa`,
@@ -29,7 +29,8 @@ export async function generateMetadata({ params: { locale } }) {
   };
 }
 
-export default async function DsaPage() {
+export default async function DsaPage({ params: { locale } }) {
+  unstable_setRequestLocale(locale);
   const t = await getTranslations("dsa");
 
   return (

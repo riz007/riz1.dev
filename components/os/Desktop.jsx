@@ -404,6 +404,9 @@ export default function Desktop({ locale, data }) {
   useEffect(() => {
     const onWheel = (e) => {
       if (e.target.closest(".os-window, .os-dock, .os-spot, .os-menubar, .os-partner")) return;
+      // once the reader has scrolled past the desktop, the wheel belongs to the
+      // profile document below it, not to Mission Control
+      if (window.scrollY > 8) return;
       const a = wheelAcc.current;
       a.v += e.deltaY;
       clearTimeout(a.t);
@@ -602,6 +605,11 @@ export default function Desktop({ locale, data }) {
       {showHint && !isMobile && (
         <div className="os-hint">tip: press <b>⌘K</b> to search · drag a window to a screen edge to tile it</div>
       )}
+
+      {/* invitation down to the readable profile document below the desktop */}
+      <a className="os-scroll-cue" href="#profile">
+        read the full profile <i aria-hidden="true">↓</i>
+      </a>
 
       {/* spotlight */}
       {spotOpen && <Spotlight items={spotItems} onClose={() => setSpotOpen(false)} />}

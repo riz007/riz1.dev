@@ -1,13 +1,11 @@
 ---
-title: "Monolith vs Microservices — a practical guide for startups and small teams
-"
+title: "Monolith vs Microservices — a practical guide for startups and small teams"
+date: 2025-09-25
 description: "Practical trade-offs between monolith vs microservices, concrete patterns (including the modular monolith), a migration strategy, and a checklist to help you decide"
-keywords: "monolith architecture, software engineering, microservices, software architecture"
+tags: ["System Design", "Architecture"]
 ---
 # Monolith vs Microservices — a practical guide for startups and small teams
   
-*Published on 2025-09-25 21:13*
-
 **TL;DR:** Microservices are powerful but costly. For small teams (≈5 engineers) or early-stage startups, start with a **modular monolith**: design clear module boundaries, keep deployments simple, and extract services only when the operational and business benefits clearly outweigh the added cost.
 
 ---

@@ -2,6 +2,7 @@
 title: "What It Means to Be a Forward Deployed AI Engineer"
 date: 2026-05-04
 description: "The role sits at the edge between product, engineering, and customer — and it is reshaping what senior engineers actually do."
+tags: ["AI Engineering", "Career"]
 ---
 
 # What It Means to Be a Forward Deployed AI Engineer

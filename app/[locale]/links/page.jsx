@@ -1,4 +1,4 @@
-import { getTranslations } from "next-intl/server";
+import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 import links from "../../../data/links.json";
 
 const BASE = "https://riz1.dev";
@@ -9,7 +9,7 @@ export async function generateMetadata({ params: { locale } }) {
     description:
       "A curated collection of resources on AI engineering, agentic systems, software architecture, and engineering craft — tools and references Rizwanul Islam Rudra finds valuable.",
     alternates: {
-      canonical: `${BASE}/en/links`,
+      canonical: `${BASE}/${locale}/links`,
       languages: {
         "x-default": `${BASE}/en/links`,
         en: `${BASE}/en/links`,
@@ -29,7 +29,8 @@ export async function generateMetadata({ params: { locale } }) {
   };
 }
 
-export default async function LinksPage() {
+export default async function LinksPage({ params: { locale } }) {
+  unstable_setRequestLocale(locale);
   const t = await getTranslations("links");
 
   return (
