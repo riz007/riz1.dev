@@ -24,9 +24,13 @@
   --os:          var(--font-os, system-ui, sans-serif);
   --ui:          -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", system-ui, sans-serif;
 
-  position: fixed;
-  inset: 0;
-  z-index: 900;
+  /* The OS is the first viewport, not a fixed overlay — the readable profile
+     document scrolls up underneath it. Breaks out of .container's max-width. */
+  position: relative;
+  z-index: 1;
+  height: 100svh;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
   overflow: hidden;
   background: var(--void);
   color: var(--ink);
@@ -53,10 +57,33 @@
   --shadow:      0 28px 60px -22px rgba(45, 55, 100, 0.4), 0 8px 20px -12px rgba(45, 55, 100, 0.3);
 }
 
-/* hide the editorial site chrome while the OS is mounted */
-.os-active .site-header,
-.os-active .footer { display: none !important; }
-.os-active, .os-active body { overflow: hidden; }
+/* The OS supplies its own menubar, so the editorial header is redundant while
+   it is mounted. The page itself stays scrollable — the profile document below
+   the desktop is the crawlable and screen-reader-accessible homepage. */
+.os-active .site-header { display: none !important; }
+.os-active .page { padding-top: 0; }
+
+/* scroll cue — sits above the dock, invites the reader down to the profile */
+.os-scroll-cue {
+  position: absolute;
+  left: 50%; bottom: 92px;
+  transform: translateX(-50%);
+  z-index: 480;
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 7px 14px;
+  border: 1px solid var(--edge-hi); border-radius: 999px;
+  background: var(--bar);
+  backdrop-filter: blur(30px) saturate(1.8);
+  -webkit-backdrop-filter: blur(30px) saturate(1.8);
+  color: var(--ink-2);
+  font-family: var(--mono); font-size: 11px; letter-spacing: .04em;
+  text-decoration: none;
+  transition: color .2s ease, border-color .2s ease, transform .2s ease;
+}
+.os-scroll-cue:hover { color: var(--ink); border-color: var(--violet); }
+.os-scroll-cue i { font-style: normal; animation: cueBob 2.4s ease-in-out infinite; }
+@keyframes cueBob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(3px); } }
+@media (max-width: 720px) { .os-scroll-cue { bottom: 78px; } }
 
 .rudra-os * { box-sizing: border-box; }
 .rudra-os button { font-family: inherit; cursor: pointer; }

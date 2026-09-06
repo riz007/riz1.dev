@@ -2,6 +2,7 @@
 title: "RAG Systems in Production: Beyond the Basics"
 date: 2026-04-30
 description: "Once you move past the naive retrieve-and-generate pattern, building a reliable RAG system is primarily an engineering problem."
+tags: ["RAG", "AI Engineering", "System Design"]
 ---
 
 # RAG Systems in Production: Beyond the Basics

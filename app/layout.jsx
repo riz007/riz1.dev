@@ -1,35 +1,4 @@
 import "./globals.css";
-import { Fraunces, DM_Sans, Space_Grotesk, JetBrains_Mono } from "next/font/google";
-import Script from "next/script";
-
-const display = Fraunces({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
-  style: ["normal", "italic"],
-  variable: "--font-display",
-  display: "swap",
-});
-
-const body = DM_Sans({
-  subsets: ["latin"],
-  weight: ["300", "400", "500"],
-  variable: "--font-body",
-  display: "swap",
-});
-
-const osDisplay = Space_Grotesk({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-os",
-  display: "swap",
-});
-
-const mono = JetBrains_Mono({
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  variable: "--font-mono",
-  display: "swap",
-});
 
 const BASE_URL = "https://riz1.dev";
 
@@ -112,6 +81,11 @@ export const metadata = {
 
   alternates: {
     canonical: `${BASE_URL}/en`,
+    types: {
+      "application/rss+xml": [
+        { url: `${BASE_URL}/feed.xml`, title: "riz1.dev — Writing" },
+      ],
+    },
     languages: {
       "x-default": `${BASE_URL}/en`,
       en: `${BASE_URL}/en`,
@@ -123,26 +97,10 @@ export const metadata = {
   },
 };
 
+/* The <html> element lives in app/[locale]/layout.jsx so `lang` can carry the
+   real locale — a single hardcoded lang="en" mislabels every translated page
+   for both search engines and screen readers. This layout is the required
+   root wrapper and deliberately renders nothing of its own. */
 export default function RootLayout({ children }) {
-  return (
-    <html
-      lang="en"
-      className={`${display.variable} ${body.variable} ${osDisplay.variable} ${mono.variable}`}
-      suppressHydrationWarning
-    >
-      <body suppressHydrationWarning>{children}</body>
-      <Script
-        src="https://www.googletagmanager.com/gtag/js?id=G-WCHT2DKSX2"
-        strategy="afterInteractive"
-      />
-      <Script id="gtag-init" strategy="afterInteractive">
-        {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-WCHT2DKSX2');
-        `}
-      </Script>
-    </html>
-  );
+  return children;
 }

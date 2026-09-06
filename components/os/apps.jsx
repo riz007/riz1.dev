@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect, useState } from "react";
+
 /* Window registry — order defines the dock. Terminal is rendered specially. */
 export const APPS = [
   { id: "terminal",     title: "agent://terminal", icon: "▸", w: 480, h: 340 },
@@ -41,6 +43,21 @@ export function AppContent({ id, data, onOpen, onReadPost }) {
 /* In-OS markdown reader. The canonical, crawlable page stays at /blog/<slug>;
    the footer links to it for sharing. */
 export function Reader({ post, l }) {
+  /* Post bodies are fetched when a reader window opens rather than shipped
+     with the desktop, so the homepage payload stays flat as posts accumulate. */
+  const [body, setBody] = useState(post.contentHtml || null);
+  const [failed, setFailed] = useState(false);
+
+  useEffect(() => {
+    if (body) return undefined;
+    let alive = true;
+    fetch(`/api/posts/${post.slug}`)
+      .then((r) => (r.ok ? r.json() : Promise.reject(new Error(String(r.status)))))
+      .then((d) => alive && setBody(d.contentHtml))
+      .catch(() => alive && setFailed(true));
+    return () => { alive = false; };
+  }, [post.slug, body]);
+
   return (
     <article className="reader">
       <header className="reader-head">
@@ -48,7 +65,15 @@ export function Reader({ post, l }) {
         <h1 className="reader-title">{post.title}</h1>
         {post.description && <p className="reader-desc">{post.description}</p>}
       </header>
-      <div className="os-prose" dangerouslySetInnerHTML={{ __html: post.contentHtml }} />
+      {body ? (
+        <div className="os-prose" dangerouslySetInnerHTML={{ __html: body }} />
+      ) : (
+        <p className="os-muted">
+          {failed
+            ? "Could not load this post here — open the permalink below."
+            : "Loading…"}
+        </p>
+      )}
       <footer className="reader-foot">
         <a className="os-link" href={`${l.blogBase}/${post.slug}`} target="_blank" rel="noreferrer">
           permalink — {`riz1.dev${l.blogBase}/${post.slug}`} ↗

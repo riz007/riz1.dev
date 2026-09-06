@@ -1,9 +1,10 @@
-import { getTranslations } from "next-intl/server";
+import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 import { capabilityCards, experience, skills } from "../../data/profile";
 import { projects } from "../../data/projects";
-import { getAllPostsFull } from "../../lib/posts";
+import { getPostsIndex } from "../../lib/posts";
 import links from "../../data/links.json";
 import Desktop from "../../components/os/Desktop";
+import ProfileArticle from "../../components/ProfileArticle";
 
 const BASE = "https://riz1.dev";
 
@@ -53,7 +54,7 @@ export async function generateMetadata({ params: { locale } }) {
     description:
       "Senior software engineer and technical lead in Bangkok with 10+ years across the software lifecycle. Frontend architecture, design systems, and AI-powered product experiences with TypeScript, Vue, React, and LLMs.",
     alternates: {
-      canonical: `${BASE}/en`,
+      canonical: `${BASE}/${locale}`,
       languages: {
         "x-default": `${BASE}/en`,
         en: `${BASE}/en`,
@@ -125,10 +126,12 @@ const SOCIALS = [
 ];
 
 export default async function HomePage({ params: { locale } }) {
+  unstable_setRequestLocale(locale);
   const t = await getTranslations("home");
+  const tb = await getTranslations("blog");
   const td = await getTranslations("dsa");
   const [posts, liveProjects, contributions] = await Promise.all([
-    getAllPostsFull(),
+    getPostsIndex(),
     getLiveProjects(),
     getContributions(),
   ]);
@@ -172,6 +175,28 @@ export default async function HomePage({ params: { locale } }) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
       />
       <Desktop locale={locale} data={data} />
+      <ProfileArticle
+        locale={locale}
+        identity={data.identity}
+        experience={experience}
+        capabilities={capabilityCards}
+        skills={skills}
+        projects={liveProjects}
+        posts={posts}
+        copy={{
+          ctaPrimary: t("ctaPrimary"),
+          ctaSecondary: t("ctaSecondary"),
+          focusTitle: t("focusTitle"),
+          focusBody: t("focusBody"),
+          capabilitiesTitle: t("capabilitiesTitle"),
+          capabilitiesBody: t("capabilitiesBody"),
+          experienceTitle: t("experienceTitle"),
+          experienceBody: t("experienceBody"),
+          blogTitle: tb("title"),
+          blogSubtitle: tb("subtitle"),
+          dsaTitle: td("title"),
+        }}
+      />
     </>
   );
 }
