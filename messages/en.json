@@ -11,13 +11,13 @@
   "home": {
     "eyebrow": "Senior Software Engineer · Technical Lead",
     "title": "Rizwanul Islam Rudra",
-    "subtitle": "I lead frontend engineering for a SaaS platform — defining technical direction, setting engineering standards, and shipping product experiences that scale. To me the frontend is more than a presentation layer: it's where product, APIs, security, and data meet — and where AI has to earn its place in the product.",
+    "subtitle": "I lead engineering for a SaaS platform and work across the full software lifecycle — architecture, production code, and the teams that ship it. My focus now is AI and agentic systems: designing them, integrating them into real products, and making them reliable enough to run in production.",
     "ctaPrimary": "Read the blog",
     "ctaSecondary": "Useful links",
     "focusTitle": "Focus Areas",
-    "focusBody": "Frontend architecture, AI-powered product features, and the engineering leadership to ship them with confidence.",
+    "focusBody": "Software engineering and system design, agentic AI systems, and the technical leadership to take them from prototype to production.",
     "capabilitiesTitle": "Capabilities",
-    "capabilitiesBody": "Frontend experience and AI-powered features, backed by engineering leadership — maintainable, performant, accessible, and built to evolve.",
+    "capabilitiesBody": "Engineering breadth across the stack, AI and agentic systems, and the leadership to ship them — maintainable, performant, and built to evolve.",
     "experienceTitle": "Experience",
     "experienceBody": "Ten-plus years across the full software lifecycle — from architecture and production code to mentoring engineers and leading cross-functional initiatives."
   },

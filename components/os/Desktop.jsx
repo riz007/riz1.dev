@@ -304,12 +304,25 @@ export default function Desktop({ locale, data }) {
     if (!booted || opened.current) return;
     opened.current = true;
     const vw = window.innerWidth;
+    const vh = window.innerHeight;
+    /* The hero owns the left column, so the opening windows are placed to keep
+       clear of it — otherwise the desktop's <h1> is covered on first paint,
+       which is the one view search engines and first-time visitors get. */
     if (window.matchMedia("(max-width: 720px)").matches) {
       openApp("about");
       openApp("terminal");
-    } else {
+    } else if (vw >= 1200 && vh >= 800) {
       openApp("terminal", { x: 60, y: 70 });
       openApp("about", { x: Math.min(580, vw - 500), y: 130 });
+      setShowHint(true);
+      setTimeout(() => setShowHint(false), 6000);
+    } else if (vw >= 1024) {
+      // short screen: one window, kept to the right half
+      openApp("about", { x: Math.max(Math.round(vw * 0.5) + 8, vw - 500), y: 96 });
+      setShowHint(true);
+      setTimeout(() => setShowHint(false), 6000);
+    } else {
+      // too narrow to place a window beside the hero — leave the desktop clear
       setShowHint(true);
       setTimeout(() => setShowHint(false), 6000);
     }
@@ -404,9 +417,6 @@ export default function Desktop({ locale, data }) {
   useEffect(() => {
     const onWheel = (e) => {
       if (e.target.closest(".os-window, .os-dock, .os-spot, .os-menubar, .os-partner")) return;
-      // once the reader has scrolled past the desktop, the wheel belongs to the
-      // profile document below it, not to Mission Control
-      if (window.scrollY > 8) return;
       const a = wheelAcc.current;
       a.v += e.deltaY;
       clearTimeout(a.t);
@@ -485,6 +495,7 @@ export default function Desktop({ locale, data }) {
         <button className="os-menu-item os-menu-desktop" onClick={() => openApp("projects")}>projects</button>
         <button className="os-menu-item os-menu-desktop" onClick={() => openApp("terminal")}>terminal</button>
         <div className="os-menubar-spacer" />
+        <a className="os-menu-switch" href={`/${locale}/profile`}>HTML version →</a>
         <button className="os-mbtn" onClick={(e) => { e.stopPropagation(); setSpotOpen(true); }} aria-label="Search (⌘K)">⌕</button>
         <span className={`os-status${running ? " running" : ""}`}>
           <span className="os-status-dot" />{running ? "running" : "idle"}
@@ -508,6 +519,21 @@ export default function Desktop({ locale, data }) {
 
       {/* windows */}
       <div className="os-surface">
+        {/* The homepage's actual <h1> and bio, painted onto the desktop.
+            Also the first thing in the stacked list on mobile, which is the
+            rendering Google indexes. */}
+        <div className="os-hero">
+          <p className="os-hero-eyebrow">{identity.role}</p>
+          <h1 className="os-hero-name">{identity.name}</h1>
+          <p className="os-hero-bio">{identity.bio}</p>
+          <p className="os-hero-links">
+            <a href={`/${locale}/profile`}>Full profile →</a>
+            <a href={`/${locale}/blog`}>Writing →</a>
+            <a href={identity.github} target="_blank" rel="noreferrer">GitHub ↗</a>
+            <a href={identity.linkedin} target="_blank" rel="noreferrer">LinkedIn ↗</a>
+          </p>
+        </div>
+
         {snapPreview && !isMobile && (
           <div className={`os-snap-preview ${snapPreview}`} aria-hidden="true" />
         )}
@@ -605,11 +631,6 @@ export default function Desktop({ locale, data }) {
       {showHint && !isMobile && (
         <div className="os-hint">tip: press <b>⌘K</b> to search · drag a window to a screen edge to tile it</div>
       )}
-
-      {/* invitation down to the readable profile document below the desktop */}
-      <a className="os-scroll-cue" href="#profile">
-        read the full profile <i aria-hidden="true">↓</i>
-      </a>
 
       {/* spotlight */}
       {spotOpen && <Spotlight items={spotItems} onClose={() => setSpotOpen(false)} />}

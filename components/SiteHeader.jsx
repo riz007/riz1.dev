@@ -16,6 +16,9 @@ export default async function SiteHeader({ locale }) {
           <Link className="nav-link" href={`/${locale}`}>
             {t("home")}
           </Link>
+          <Link className="nav-link" href={`/${locale}/profile`}>
+            Profile
+          </Link>
           <Link className="nav-link" href={`/${locale}/blog`}>
             {t("blog")}
           </Link>

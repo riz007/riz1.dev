@@ -19,6 +19,7 @@ export default function ProfileArticle({ locale, identity, copy, experience, cap
           <dl className="profile-facts">
             <div><dt>Location</dt><dd>{identity.location}</dd></div>
             <div><dt>Focus</dt><dd>{identity.focus}</dd></div>
+            <div><dt>Practice</dt><dd>{identity.practice}</dd></div>
             <div><dt>Stack</dt><dd>{identity.stack}</dd></div>
             <div><dt>Education</dt><dd>{identity.education}</dd></div>
           </dl>
@@ -105,7 +106,7 @@ export default function ProfileArticle({ locale, identity, copy, experience, cap
         <section className="profile-sec" aria-labelledby="h-contact">
           <h2 className="profile-h2" id="h-contact">Contact</h2>
           <p className="profile-body">
-            Open to staff and lead roles. Reach me at{" "}
+            Always glad to talk engineering, system design, or agentic AI. Reach me at{" "}
             <a href={`mailto:${identity.email}`}>{identity.email}</a>, or on{" "}
             <a href={identity.linkedin} target="_blank" rel="noreferrer">LinkedIn</a> and{" "}
             <a href={identity.github} target="_blank" rel="noreferrer">GitHub</a>.

@@ -96,7 +96,7 @@ function About({ identity, onOpen }) {
       <p className="about-bio">{identity.bio}</p>
       <div className="about-meta">
         <span><b>location</b> {identity.location}</span>
-        <span><b>status</b> {identity.status}</span>
+        <span><b>practice</b> {identity.practice}</span>
         <span><b>focus</b> {identity.focus}</span>
         {identity.education && <span><b>education</b> {identity.education}</span>}
       </div>

@@ -979,7 +979,8 @@ img {
 
 .footer-nav {
   display: flex;
-  gap: 20px;
+  flex-wrap: wrap;
+  gap: 10px 20px;
 }
 
 .footer-nav a {
@@ -1060,17 +1061,29 @@ img {
 }
 
 /* ─────────────────────────────────────────────────────────────
-   HOMEPAGE PROFILE — the readable document below RudraOS.
-   Server-rendered and crawlable; also the only homepage a screen
-   reader or a no-JS visitor ever sees.
+   PROFILE PAGE — the plain-HTML counterpart to RudraOS at
+   /[locale]/profile, and the version screen readers and no-JS
+   visitors get.
    ───────────────────────────────────────────────────────────── */
 
-.profile {
-  border-top: 1px solid var(--line);
-  padding: 72px 0 24px;
+.view-switch {
+  margin-bottom: 28px;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
 }
+.view-switch a {
+  color: var(--ink-2);
+  text-decoration: none;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 2px;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+.view-switch a:hover { color: var(--accent); border-color: var(--accent); }
 
-.profile-inner { width: min(1080px, 92vw); margin-inline: auto; }
+.profile { padding: 0 0 24px; }
+
+.profile-inner { width: 100%; margin-inline: auto; }
 
 .profile-eyebrow {
   font-family: var(--font-mono, monospace);

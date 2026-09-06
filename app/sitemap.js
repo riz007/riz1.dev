@@ -7,6 +7,7 @@ const LOCALES = ["en", "bn", "th", "zh", "de"];
    self-canonical page and belongs in the sitemap. */
 const TRANSLATED_ROUTES = [
   { path: "",       priority: 1.0, changeFrequency: "weekly"  },
+  { path: "/profile", priority: 0.9, changeFrequency: "monthly" },
   { path: "/blog",  priority: 0.9, changeFrequency: "weekly"  },
   { path: "/dsa",   priority: 0.7, changeFrequency: "monthly" },
   { path: "/links", priority: 0.6, changeFrequency: "monthly" },
