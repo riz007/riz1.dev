@@ -9,9 +9,6 @@ import { identityFor } from "../../../data/identity";
 const BASE = "https://riz1.dev";
 const LOCALES = ["en", "bn", "th", "zh", "de"];
 
-/* The plain-HTML counterpart to RudraOS: the same person, the same content,
-   rendered as an ordinary document. Linked from the desktop's menu bar and
-   hero, and the page that carries the homepage's topical weight. */
 export async function generateMetadata({ params: { locale } }) {
   const languages = Object.fromEntries(
     LOCALES.map((l) => [l, `${BASE}/${l}/profile`])
@@ -92,7 +89,7 @@ export default async function ProfilePage({ params: { locale } }) {
           experienceBody: t("experienceBody"),
           blogTitle: tb("title"),
           blogSubtitle: tb("subtitle"),
-          dsaTitle: td("title"),
+          dsaTitle: t("ctaTertiary"),
         }}
       />
     </>

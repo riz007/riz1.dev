@@ -1,13 +1,7 @@
 import Link from "next/link";
 
-/* The crawlable, readable half of the homepage.
-   RudraOS occupies the first viewport; this is the real document underneath it
-   — server-rendered, semantic, and reachable by scrolling, which is what makes
-   it legitimate content rather than text hidden behind an overlay. It is also
-   the only version of the homepage available to screen readers and to anyone
-   who never opens a window. */
 export default function ProfileArticle({ locale, identity, copy, experience, capabilities, skills, projects, posts }) {
-  const featured = projects.filter((p) => p.featured).slice(0, 3);
+  const featured = projects.filter((p) => p.featured);
 
   return (
     <section className="profile" id="profile" aria-label="Profile">
@@ -66,7 +60,15 @@ export default function ProfileArticle({ locale, identity, copy, experience, cap
                   <a href={p.url} target="_blank" rel="noreferrer">{p.name}</a>
                 </h3>
                 <p>{p.description}</p>
-                <p className="profile-stack">{p.stack.join(" · ")}</p>
+                <p className="profile-stack">
+                  {p.stack.join(" · ")}
+                  {p.demo && (
+                    <>
+                      {" · "}
+                      <a href={p.demo} target="_blank" rel="noreferrer">live demo ↗</a>
+                    </>
+                  )}
+                </p>
               </article>
             ))}
           </div>

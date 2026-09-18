@@ -1,17 +1,26 @@
-/* Curated open-source projects surfaced in the RudraOS ~/projects window.
-   Static fields are the source of truth for copy; stars/description are
-   refreshed from the GitHub API at request time (ISR) when available. */
-
 export const projects = [
   {
-    repo: "larb",
-    name: "Larb",
-    tagline: "The autonomous coding agent",
+    repo: "mcp-apps-ui",
+    name: "MCP Apps UI",
+    tagline: "Component kit for MCP Apps",
     description:
-      "A model-agnostic autonomous coding agent for the terminal — sandboxed execution, TUI, and pluggable LLM backends (Anthropic, OpenAI, Ollama).",
-    stack: ["TypeScript", "Node.js", "LLM"],
-    topics: ["agentic", "coding-agent", "sandbox", "tui"],
-    url: "https://github.com/riz007/larb",
+      "React components and Tailwind 4 design tokens for building MCP Apps in Claude, with a Storybook reference. Unofficial, not affiliated with Anthropic.",
+    stack: ["TypeScript", "React", "Tailwind"],
+    topics: ["mcp", "model-context-protocol", "react", "storybook"],
+    url: "https://github.com/riz007/mcp-apps-ui",
+    demo: "https://riz007.github.io/mcp-apps-ui/",
+    featured: true,
+    stars: 0,
+  },
+  {
+    repo: "checkoutkit",
+    name: "CheckoutKit",
+    tagline: "Agentic Commerce Protocol framework",
+    description:
+      "An open-source TypeScript framework for the Agentic Commerce Protocol — the plumbing agents need to complete a purchase on a user's behalf.",
+    stack: ["TypeScript"],
+    topics: ["acp", "agentic-commerce", "ai-agents"],
+    url: "https://github.com/riz007/checkoutkit",
     featured: true,
     stars: 0,
   },
@@ -28,6 +37,18 @@ export const projects = [
     stars: 7,
   },
   {
+    repo: "larb",
+    name: "Larb",
+    tagline: "The autonomous coding agent",
+    description:
+      "A model-agnostic autonomous coding agent for the terminal — sandboxed execution, TUI, and pluggable LLM backends (Anthropic, OpenAI, Ollama).",
+    stack: ["TypeScript", "Node.js", "LLM"],
+    topics: ["agentic", "coding-agent", "sandbox", "tui"],
+    url: "https://github.com/riz007/larb",
+    featured: true,
+    stars: 0,
+  },
+  {
     repo: "architect-os",
     name: "Architect OS",
     tagline: "AI-native engineering operating system",
@@ -38,6 +59,30 @@ export const projects = [
     url: "https://github.com/riz007/architect-os",
     featured: true,
     stars: 1,
+  },
+  {
+    repo: "nitpick",
+    name: "Nitpick",
+    tagline: "Adversarial QA agent",
+    description:
+      "An independent adversarial QA agent for AI-generated and human code — reviews against the spec rather than the diff, and returns a verdict. Professionally picky.",
+    stack: ["TypeScript", "MCP"],
+    topics: ["qa", "adversarial-testing", "agent", "mcp"],
+    url: "https://github.com/riz007/nitpick",
+    featured: false,
+    stars: 0,
+  },
+  {
+    repo: "lekha",
+    name: "Lekha",
+    tagline: "Next-generation Bengali typing",
+    description:
+      "A modern Bengali writing surface — fast phonetic input built on Nuxt 4 and Tiptap.",
+    stack: ["TypeScript", "Nuxt"],
+    topics: ["bengali", "editor"],
+    url: "https://github.com/riz007/lekha",
+    featured: false,
+    stars: 0,
   },
   {
     repo: "optiscript",
@@ -60,18 +105,6 @@ export const projects = [
     stack: ["TypeScript", "React", "MapLibre"],
     topics: ["pwa", "kalman-filter", "offline-first"],
     url: "https://github.com/riz007/flightmap",
-    featured: false,
-    stars: 0,
-  },
-  {
-    repo: "lekha",
-    name: "Lekha",
-    tagline: "Next-generation Bengali typing",
-    description:
-      "A modern Bengali writing surface — fast phonetic input built on Nuxt 4 and Tiptap.",
-    stack: ["TypeScript", "Nuxt"],
-    topics: ["bengali", "editor"],
-    url: "https://github.com/riz007/lekha",
     featured: false,
     stars: 0,
   },

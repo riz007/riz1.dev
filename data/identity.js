@@ -1,5 +1,4 @@
-/* Shared identity block — the desktop hero and the /profile page must agree,
-   so neither owns this copy. `bio` is locale-dependent and passed in. */
+/* Shared by the desktop hero and /profile. bio is locale-dependent. */
 export function identityFor(bio) {
   return {
     name: "Rizwanul Islam Rudra",

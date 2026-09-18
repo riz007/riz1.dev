@@ -40,11 +40,8 @@ export function AppContent({ id, data, onOpen, onReadPost }) {
   }
 }
 
-/* In-OS markdown reader. The canonical, crawlable page stays at /blog/<slug>;
-   the footer links to it for sharing. */
 export function Reader({ post, l }) {
-  /* Post bodies are fetched when a reader window opens rather than shipped
-     with the desktop, so the homepage payload stays flat as posts accumulate. */
+  /* Body is fetched on open, not shipped with the desktop. */
   const [body, setBody] = useState(post.contentHtml || null);
   const [failed, setFailed] = useState(false);
 
@@ -125,7 +122,8 @@ function Projects({ projects, github }) {
     <div className="proj">
       <div className="os-eyebrow">open source — live from github</div>
       {featured.map((p) => (
-        <a className="proj-card featured" href={p.url} target="_blank" rel="noreferrer" key={p.repo}>
+        <div className="proj-slot" key={p.repo}>
+        <a className="proj-card featured" href={p.url} target="_blank" rel="noreferrer">
           <div className="proj-top">
             <span className="proj-name">{p.name}</span>
             <span className="proj-meta">
@@ -144,6 +142,12 @@ function Projects({ projects, github }) {
             {p.topics.slice(0, 4).map((tp) => <span key={tp}>{tp}</span>)}
           </div>
         </a>
+        {p.demo && (
+          <a className="proj-demo" href={p.demo} target="_blank" rel="noreferrer">
+            live demo ↗
+          </a>
+        )}
+        </div>
       ))}
       {more.length > 0 && (
         <>

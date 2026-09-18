@@ -14,8 +14,7 @@ export async function generateMetadata({ params: { locale } }) {
     description:
       "Technical blog on frontend architecture, AI-powered applications, system design, and engineering leadership by Rizwanul Islam Rudra.",
     alternates: {
-      // this route's copy is genuinely translated, so each locale is its own
-      // indexable page — a canonical pointing at /en would cancel the hreflang set
+      // Translated route: self-canonical, so the hreflang set holds.
       canonical: `${BASE}/${locale}/blog`,
       languages: { "x-default": `${BASE}/en/blog`, ...languages },
       types: {

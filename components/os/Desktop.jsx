@@ -10,6 +10,8 @@ import "./os.css";
 
 const LOCALES = ["en", "bn", "th", "zh", "de"];
 const THEME_KEY = "theme-preference";
+const PALETTE_KEY = "palette-preference";
+const PALETTES = ["ember", "vermilion", "cobalt", "garden", "plum"];
 
 /* GitHub contribution calendar as ambient desktop art — pure decoration,
    sits behind the windows and fades toward the edges. */
@@ -59,6 +61,8 @@ export default function Desktop({ locale, data }) {
   const [clock, setClock] = useState("");
   const [running, setRunning] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
+  const [palOpen, setPalOpen] = useState(false);
+  const [palette, setPalette] = useState("ember");
   const [ctx, setCtx] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
   const [showHint, setShowHint] = useState(false);
@@ -75,6 +79,7 @@ export default function Desktop({ locale, data }) {
   /* mount: mark OS active, size class, clock */
   useEffect(() => {
     document.documentElement.classList.add("os-active");
+    setPalette(document.documentElement.getAttribute("data-palette") || "ember");
     const mq = window.matchMedia("(max-width: 720px)");
     const apply = () => setIsMobile(mq.matches);
     apply();
@@ -305,9 +310,7 @@ export default function Desktop({ locale, data }) {
     opened.current = true;
     const vw = window.innerWidth;
     const vh = window.innerHeight;
-    /* The hero owns the left column, so the opening windows are placed to keep
-       clear of it — otherwise the desktop's <h1> is covered on first paint,
-       which is the one view search engines and first-time visitors get. */
+    /* Opening windows keep clear of the hero column. */
     if (window.matchMedia("(max-width: 720px)").matches) {
       openApp("about");
       openApp("terminal");
@@ -317,12 +320,10 @@ export default function Desktop({ locale, data }) {
       setShowHint(true);
       setTimeout(() => setShowHint(false), 6000);
     } else if (vw >= 1024) {
-      // short screen: one window, kept to the right half
       openApp("about", { x: Math.max(Math.round(vw * 0.5) + 8, vw - 500), y: 96 });
       setShowHint(true);
       setTimeout(() => setShowHint(false), 6000);
     } else {
-      // too narrow to place a window beside the hero — leave the desktop clear
       setShowHint(true);
       setTimeout(() => setShowHint(false), 6000);
     }
@@ -335,6 +336,14 @@ export default function Desktop({ locale, data }) {
     const next = mode === "toggle" ? (cur === "dark" ? "light" : "dark") : mode;
     document.documentElement.setAttribute("data-theme", next);
     localStorage.setItem(THEME_KEY, next);
+  }, []);
+
+  const setPal = useCallback((id) => {
+    setPalette(id);
+    document.documentElement.setAttribute("data-palette", id);
+    try {
+      localStorage.setItem(PALETTE_KEY, id);
+    } catch {}
   }, []);
 
   const switchLang = useCallback((code) => router.push(`/${code}`), [router]);
@@ -398,7 +407,7 @@ export default function Desktop({ locale, data }) {
      literal ⌘Space, so ⌘K is the reliable binding); ⌃↑ / ⌃↓ for Mission Control */
   useEffect(() => {
     const onKey = (e) => {
-      if (e.key === "Escape") { setCtx(null); setLangOpen(false); setSpotOpen(false); setPartnerPick(null); closeOverview(); }
+      if (e.key === "Escape") { setCtx(null); setLangOpen(false); setPalOpen(false); setSpotOpen(false); setPartnerPick(null); closeOverview(); }
       if ((e.metaKey || e.ctrlKey) && (e.key.toLowerCase() === "k" || e.code === "Space")) {
         e.preventDefault();
         setSpotOpen((o) => !o);
@@ -481,7 +490,7 @@ export default function Desktop({ locale, data }) {
   const dockApps = DOCK.map((id) => APPS.find((a) => a.id === id)).filter(Boolean);
 
   return (
-    <div className={`rudra-os${ovMap ? " ov" : ""}`} onContextMenu={onCtxMenu} onClick={() => { setCtx(null); setLangOpen(false); setPartnerPick(null); }}>
+    <div className={`rudra-os${ovMap ? " ov" : ""}`} onContextMenu={onCtxMenu} onClick={() => { setCtx(null); setLangOpen(false); setPalOpen(false); setPartnerPick(null); }}>
       {/* ambient background */}
       <div className="os-bg" aria-hidden="true">
         <div className="os-blob a" /><div className="os-blob b" /><div className="os-blob c" />
@@ -495,12 +504,39 @@ export default function Desktop({ locale, data }) {
         <button className="os-menu-item os-menu-desktop" onClick={() => openApp("projects")}>projects</button>
         <button className="os-menu-item os-menu-desktop" onClick={() => openApp("terminal")}>terminal</button>
         <div className="os-menubar-spacer" />
-        <a className="os-menu-switch" href={`/${locale}/profile`}>HTML version →</a>
+        <a className="os-menu-switch" href={`/${locale}/profile`}>
+          <span className="os-switch-long">HTML version →</span>
+          <span className="os-switch-short">HTML →</span>
+        </a>
         <button className="os-mbtn" onClick={(e) => { e.stopPropagation(); setSpotOpen(true); }} aria-label="Search (⌘K)">⌕</button>
         <span className={`os-status${running ? " running" : ""}`}>
           <span className="os-status-dot" />{running ? "running" : "idle"}
         </span>
         <button className="os-mbtn" onClick={(e) => { e.stopPropagation(); setTheme("toggle"); }}>◐</button>
+        <div className="os-lang os-pal" onClick={(e) => e.stopPropagation()}>
+          <button
+            className="os-mbtn os-pal-btn"
+            onClick={() => setPalOpen((o) => !o)}
+            aria-label="Colour"
+          >
+            <span className="os-pal-dot" />
+          </button>
+          {palOpen && (
+            <div className="os-lang-menu os-pal-menu">
+              {PALETTES.map((id) => (
+                <button
+                  key={id}
+                  className={id === palette ? "active" : ""}
+                  onClick={() => { setPal(id); setPalOpen(false); }}
+                >
+                  <span className="os-pal-sw" data-p={id} />
+                  {id}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+
         <div className="os-lang" onClick={(e) => e.stopPropagation()}>
           <button className="os-mbtn" onClick={() => setLangOpen((o) => !o)}>{locale}</button>
           {langOpen && (
@@ -519,9 +555,6 @@ export default function Desktop({ locale, data }) {
 
       {/* windows */}
       <div className="os-surface">
-        {/* The homepage's actual <h1> and bio, painted onto the desktop.
-            Also the first thing in the stacked list on mobile, which is the
-            rendering Google indexes. */}
         <div className="os-hero">
           <p className="os-hero-eyebrow">{identity.role}</p>
           <h1 className="os-hero-name">{identity.name}</h1>

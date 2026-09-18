@@ -13,8 +13,6 @@ function escapeXml(value) {
     .replace(/'/g, "&apos;");
 }
 
-/* Full-content RSS 2.0 feed — the distribution channel a dev blog is expected
-   to expose, and how aggregators, readers and newsletters pick posts up. */
 export async function GET() {
   const index = await getPostsIndex();
   const posts = await Promise.all(index.map((p) => getPostBySlug(p.slug)));

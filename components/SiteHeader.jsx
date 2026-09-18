@@ -2,36 +2,38 @@ import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import LocaleSwitcher from "./LocaleSwitcher";
 import ThemeToggle from "./ThemeToggle";
+import PaletteSwitcher from "./PaletteSwitcher";
 
+/* The wordmark is a link, not an <h1> — each page has its own content <h1>. */
 export default async function SiteHeader({ locale }) {
   const t = await getTranslations("nav");
 
   return (
-    <header className="site-header">
-      <div className="container nav">
-        <Link className="brand" href={`/${locale}`}>
+    <header className="mast">
+      <div className="mast-inner">
+        <p className="mast-line">
+          Bangkok · Software engineering, system design &amp; agentic AI
+        </p>
+
+        <Link className="mast-name" href={`/${locale}`}>
           riz1.dev
         </Link>
-        <nav className="nav-links nav-primary" aria-label="Primary navigation">
-          <Link className="nav-link" href={`/${locale}`}>
-            {t("home")}
-          </Link>
-          <Link className="nav-link" href={`/${locale}/profile`}>
-            Profile
-          </Link>
-          <Link className="nav-link" href={`/${locale}/blog`}>
-            {t("blog")}
-          </Link>
-          <Link className="nav-link" href={`/${locale}/dsa`}>
-            {t("algorithms")}
-          </Link>
-          <Link className="nav-link" href={`/${locale}/links`}>
-            {t("links")}
-          </Link>
-        </nav>
-        <div className="nav-links nav-actions">
-          <ThemeToggle />
-          <LocaleSwitcher locale={locale} />
+
+        <div className="mast-bar">
+          <nav className="mast-nav" aria-label="Primary">
+            <ul>
+              <li><Link href={`/${locale}`}>{t("home")}</Link></li>
+              <li><Link href={`/${locale}/profile`}>Profile</Link></li>
+              <li><Link href={`/${locale}/blog`}>{t("blog")}</Link></li>
+              <li><Link href={`/${locale}/dsa`}>{t("algorithms")}</Link></li>
+              <li><Link href={`/${locale}/links`}>{t("links")}</Link></li>
+            </ul>
+          </nav>
+          <div className="mast-actions">
+            <PaletteSwitcher />
+            <ThemeToggle />
+            <LocaleSwitcher locale={locale} />
+          </div>
         </div>
       </div>
     </header>
