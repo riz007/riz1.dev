@@ -101,10 +101,7 @@ export const metadata = {
   },
 };
 
-/* The <html> element lives in app/[locale]/layout.jsx so `lang` can carry the
-   real locale — a single hardcoded lang="en" mislabels every translated page
-   for both search engines and screen readers. This layout is the required
-   root wrapper and deliberately renders nothing of its own. */
+/* <html> lives in app/[locale]/layout.jsx so lang carries the real locale. */
 export default function RootLayout({ children }) {
   return children;
 }

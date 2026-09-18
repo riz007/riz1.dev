@@ -16,9 +16,7 @@ export async function generateMetadata({ params: { slug, locale } }) {
     return {
       title: post.title,
       description: post.description,
-      // Post bodies exist only in English. Declaring hreflang alternates for
-      // locales that serve identical English text makes the cluster untrustworthy,
-      // so every locale canonicalises to the one real version instead.
+      // English-only bodies: no hreflang, canonical to /en.
       alternates: { canonical: `${BASE}/en/blog/${slug}` },
       keywords: post.tags,
       authors: [{ name: "Rizwanul Islam Rudra", url: BASE }],
@@ -62,14 +60,11 @@ export default async function BlogPostPage({ params: { locale, slug } }) {
       "@type": "BlogPosting",
       headline: post.title,
       description: post.description || "",
-      // Google discards Article dates it cannot parse — these are full ISO 8601
       datePublished: post.isoDateTime,
       dateModified: post.isoDateTime,
-      // the body is English at every locale prefix
       inLanguage: "en",
       keywords: post.tags.join(", "),
       timeRequired: `PT${post.readingTime}M`,
-      // the per-post OG image already exists; Article rich results want it declared
       image: [ogImage],
       url: `${BASE}/en/blog/${slug}`,
       mainEntityOfPage: { "@type": "WebPage", "@id": `${BASE}/en/blog/${slug}` },

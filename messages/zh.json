@@ -19,7 +19,8 @@
     "capabilitiesTitle": "能力",
     "capabilitiesBody": "覆盖整个技术栈的工程能力、AI 与智能体系统，以及交付它们所需的领导力——易维护、高性能，并为演进而构建。",
     "experienceTitle": "经历",
-    "experienceBody": "十余年贯穿软件开发全生命周期——从架构与生产代码，到指导工程师与带领跨职能团队。"
+    "experienceBody": "十余年贯穿软件开发全生命周期——从架构与生产代码，到指导工程师与带领跨职能团队。",
+    "ctaTertiary": "算法"
   },
   "blog": {
     "title": "文章",

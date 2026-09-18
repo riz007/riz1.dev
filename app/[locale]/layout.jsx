@@ -9,15 +9,11 @@ import SiteHeader from "../../components/SiteHeader";
 
 const BASE = "https://riz1.dev";
 
-/* Pre-rendering every locale at build time. Without this the pages opt into
-   dynamic rendering the moment next-intl reads the request locale, which is
-   why the homepage was served with `cache-control: no-store` on every hit. */
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
 
-/* [locale] otherwise matches any first path segment, so /anything rendered a
-   200 with lang="anything" — a soft 404 that search engines will happily index. */
+/* Without this, /anything resolves as a locale and returns 200. */
 export const dynamicParams = false;
 
 export default async function LocaleLayout({ children, params: { locale } }) {
@@ -27,6 +23,19 @@ export default async function LocaleLayout({ children, params: { locale } }) {
 
   return (
     <html lang={locale} className={fontVariables} suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "(function(){try{var d=document.documentElement;" +
+              "var t=localStorage.getItem('theme-preference')||" +
+              "(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');" +
+              "d.setAttribute('data-theme',t);" +
+              "d.setAttribute('data-palette',localStorage.getItem('palette-preference')||'ember');" +
+              "}catch(e){}})()",
+          }}
+        />
+      </head>
       <body suppressHydrationWarning>
         <NextIntlClientProvider messages={messages}>
           <div className="shell">

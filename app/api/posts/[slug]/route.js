@@ -1,9 +1,6 @@
 import { getPostBySlug, getPostSlugs } from "../../../../lib/posts";
 
-/* Rendered post HTML for the RudraOS reader, fetched on demand.
-   Previously every post's full HTML was serialised into the homepage payload,
-   which grew the document linearly with each new article. Statically generated
-   at build time, so opening a post still costs one cached edge request. */
+/* Rendered post HTML for the reader, fetched on demand. */
 export const dynamic = "force-static";
 
 export async function generateStaticParams() {

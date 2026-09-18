@@ -1,8 +1,7 @@
 import "./globals.css";
 import { fontVariables } from "./fonts";
 
-/* Root-level 404 — reached only for paths outside the /[locale] tree, which
-   render without the locale layout and therefore need their own document. */
+/* Outside the /[locale] tree, so it carries its own document. */
 export const metadata = {
   title: "Page not found",
   robots: { index: false, follow: true },

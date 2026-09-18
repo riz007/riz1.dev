@@ -1,0 +1,112 @@
+/* Tokens for both surfaces. Palettes change hue and chroma only — lightness
+   is fixed so contrast holds across grades. See design.md. */
+
+:root {
+  --font-display: var(--font-fraunces), ui-serif, Georgia, serif;
+  --font-body:    var(--font-spectral), ui-serif, Georgia, serif;
+  --font-mono:    var(--font-jetbrains), ui-monospace, SFMono-Regular, monospace;
+
+  --text-xs:        0.75rem;
+  --text-sm:        0.875rem;
+  --text-base:      1.0625rem;
+  --text-lg:        1.25rem;
+  --text-xl:        1.5rem;
+  --text-2xl:       2rem;
+  --text-3xl:       2.75rem;
+  --text-4xl:       clamp(2.25rem, 5vw, 3.5rem);
+  --text-display-s: clamp(2.5rem, 6vw, 4rem);
+  --text-display:   clamp(2.75rem, 7.5vw, 5.5rem);
+
+  --measure: 65ch;
+
+  --space-3xs: 0.25rem;
+  --space-2xs: 0.5rem;
+  --space-xs:  0.75rem;
+  --space-sm:  1rem;
+  --space-md:  1.5rem;
+  --space-lg:  2.5rem;
+  --space-xl:  4rem;
+  --space-2xl: 6rem;
+  --space-3xl: 9rem;
+  --page-gutter: clamp(1.25rem, 4vw, 3rem);
+
+  --radius-sm:   2px;
+  --radius-md:   4px;
+  --radius-pill: 999px;
+  --rule-hair:   1px;
+  --rule-bold:   2.5px;
+
+  --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in:     cubic-bezier(0.7, 0, 0.84, 0);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 120ms;
+  --dur-base: 220ms;
+  --dur-slow: 420ms;
+
+  /* Ember — the default grade */
+  --hue-n:     80;
+  --hue-a:     41;
+  --hue-a2:    62;
+  --chroma-a:  0.129;
+  --tint-0:    0.003;
+  --tint-1:    0.007;
+  --tint-2:    0.014;
+}
+
+[data-palette="vermilion"] {
+  --hue-n: 52; --hue-a: 28; --hue-a2: 44;
+  --chroma-a: 0.190; --tint-0: 0.004; --tint-1: 0.010; --tint-2: 0.018;
+}
+
+[data-palette="cobalt"] {
+  --hue-n: 250; --hue-a: 262; --hue-a2: 232;
+  --chroma-a: 0.150; --tint-0: 0.004; --tint-1: 0.009; --tint-2: 0.016;
+}
+
+[data-palette="garden"] {
+  --hue-n: 132; --hue-a: 150; --hue-a2: 118;
+  --chroma-a: 0.130; --tint-0: 0.004; --tint-1: 0.009; --tint-2: 0.016;
+}
+
+[data-palette="plum"] {
+  --hue-n: 332; --hue-a: 340; --hue-a2: 310;
+  --chroma-a: 0.150; --tint-0: 0.004; --tint-1: 0.009; --tint-2: 0.016;
+}
+
+:root {
+  --color-paper:      oklch(97.1% var(--tint-1) var(--hue-n));
+  --color-paper-2:    oklch(99.1% var(--tint-0) var(--hue-n));
+  --color-paper-3:    oklch(93.6% var(--tint-2) var(--hue-n));
+  --color-rule:       oklch(89.9% var(--tint-2) var(--hue-n));
+  --color-ink:        oklch(21.6% var(--tint-1) var(--hue-n));
+  --color-ink-2:      oklch(56.0% var(--tint-2) var(--hue-n));
+  --color-ink-3:      oklch(75.9% var(--tint-2) var(--hue-n));
+  --color-accent:     oklch(57.9% var(--chroma-a) var(--hue-a));
+  --color-accent-ink: oklch(52.0% var(--chroma-a) var(--hue-a));
+  --color-accent-2:   oklch(52.0% calc(var(--chroma-a) * 0.78) var(--hue-a2));
+  --color-accent-lo:  oklch(57.9% var(--chroma-a) var(--hue-a) / 0.10);
+  --color-focus:      oklch(55.0% calc(var(--chroma-a) * 1.24) var(--hue-a));
+  --color-code-bg:    oklch(24% var(--tint-1) var(--hue-n));
+  --color-code-ink:   oklch(93% var(--tint-0) var(--hue-n));
+  --color-signal:     oklch(58% 0.130 78);
+  --color-danger:     oklch(52% 0.180 22);
+}
+
+[data-theme="dark"] {
+  --color-paper:      oklch(15.0% calc(var(--tint-1) * 1.6) var(--hue-n));
+  --color-paper-2:    oklch(19.0% calc(var(--tint-1) * 1.7) var(--hue-n));
+  --color-paper-3:    oklch(24.0% calc(var(--tint-1) * 1.6) var(--hue-n));
+  --color-rule:       oklch(32.0% calc(var(--tint-1) * 1.3) var(--hue-n));
+  --color-ink:        oklch(94.0% var(--tint-0) var(--hue-n));
+  --color-ink-2:      oklch(72.0% var(--tint-1) var(--hue-n));
+  --color-ink-3:      oklch(52.0% var(--tint-1) var(--hue-n));
+  --color-accent:     oklch(70.0% calc(var(--chroma-a) * 0.86) calc(var(--hue-a) + 4));
+  --color-accent-ink: oklch(74.0% calc(var(--chroma-a) * 0.86) calc(var(--hue-a) + 4));
+  --color-accent-2:   oklch(78.0% calc(var(--chroma-a) * 0.66) var(--hue-a2));
+  --color-accent-lo:  oklch(70.0% calc(var(--chroma-a) * 0.86) var(--hue-a) / 0.14);
+  --color-focus:      oklch(72.0% calc(var(--chroma-a) * 1.05) var(--hue-a));
+  --color-code-bg:    oklch(11.0% var(--tint-1) var(--hue-n));
+  --color-code-ink:   oklch(90.0% var(--tint-0) var(--hue-n));
+  --color-signal:     oklch(76% 0.130 78);
+  --color-danger:     oklch(68% 0.165 22);
+}
