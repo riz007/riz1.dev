@@ -4,17 +4,15 @@ import { getPostBySlug } from "../../../../lib/posts";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
+/* size and contentType must be repeated here: when generateImageMetadata is
+   present Next ignores the module-level exports, and without them it emits no
+   og:image:width/height, which LinkedIn needs to render a large card. */
 export async function generateImageMetadata({ params }) {
   try {
     const post = await getPostBySlug(params.slug);
-    return [
-      {
-        id: params.slug,
-        alt: post.data.title,
-      },
-    ];
+    return [{ id: params.slug, alt: post.data.title, size, contentType }];
   } catch {
-    return [{ id: params.slug, alt: "Blog post" }];
+    return [{ id: params.slug, alt: "Blog post", size, contentType }];
   }
 }
 
