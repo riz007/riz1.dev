@@ -812,6 +812,41 @@ img {
   line-height: 1.7;
 }
 
+/* tables — GFM */
+.prose table {
+  width: 100%;
+  margin: 28px 0;
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--ink-2);
+}
+
+.prose thead th {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-align: left;
+  color: var(--ink-3);
+  padding: 0 16px 10px 0;
+  border-bottom: 1px solid var(--line-hard);
+  white-space: nowrap;
+}
+
+.prose tbody td {
+  padding: 11px 16px 11px 0;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+
+.prose tbody tr:last-child td { border-bottom: none; }
+
+.prose tbody td:first-child { color: var(--ink); }
+
+.prose table code { font-size: 0.8125em; }
+
 /* ─────────────────────────────────────────────────────────────
    DSA VISUALIZATIONS
 ───────────────────────────────────────────────────────────── */

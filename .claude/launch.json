@@ -4,8 +4,12 @@
     {
       "name": "rizdev",
       "runtimeExecutable": "corepack",
-      "runtimeArgs": ["yarn", "dev"],
-      "port": 3000
+      "runtimeArgs": [
+        "yarn",
+        "dev"
+      ],
+      "port": 3000,
+      "autoPort": true
     }
   ]
 }
