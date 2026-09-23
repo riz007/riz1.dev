@@ -1,11 +1,11 @@
 ---
-title: "How to use Jev properly: three systems the demos skipped"
-description: "A menu recommender, a telemedicine triage line, and a game referee — with working TypeScript, verified API details, and the decomposition result that explains why most Jev demos underperform."
+title: "How to Use Jev Properly: Three Systems the Demos Skipped"
+description: "A menu recommender, a telemedicine triage line, and a game referee, with working TypeScript, verified API details, and the decomposition result that explains why most Jev demos underperform."
 date: 2026-09-23
 tags: [jev, typesafe, system-one, typescript, architecture]
 ---
 
-# How to use Jev properly: three systems the demos skipped
+# How to Use Jev Properly: Three Systems the Demos Skipped
 
 TypeSafe came out of stealth on September 15th with a $40M seed led by DCVC and
 a model that doesn't write anything. Eight days later the catalogues have filled
@@ -19,7 +19,7 @@ Those demos answer two questions well. Is it fast? Yes. Will it stay inside a
 schema? Yes, structurally. They don't touch the question you actually have,
 which is _where in my product does this go, and how would I know it worked._
 
-I've shipped one thing with it — a gatekeeper that sits between my Enter key and
+I've shipped one thing with it: a gatekeeper that sits between my Enter key and
 Zsh and decides whether the command I just typed is about to ruin my day. Most
 of what I learned came from the failures. This is the post I wanted to read
 first: what Jev is exactly, the one published result that should change how you
@@ -44,7 +44,7 @@ POST https://api.typesafe.ai/v1/systemone
 Authorization: Bearer $TYPESAFE_API_KEY
 ```
 
-A fair number of write-ups have this as `/v1/decide`. It isn't — it's
+A fair number of write-ups have this as `/v1/decide`. It isn't. It's
 `/v1/systemone`, and the current model is `jev-1.13.0` behind the `jev-latest`
 alias.
 
@@ -64,7 +64,7 @@ isn't unlikely, it's unrepresentable. No JSON parsing, no schema retries, no
 One gotcha worth knowing before you design around it: **`noul` answers carry no
 confidence field.** Only `choice` and `score` do. In the SDK's own types,
 `NoulResponse` is just `{ type, noul }`. If your control flow routes on
-confidence, your noul questions can't participate — you threshold the
+confidence, your noul questions can't participate. You threshold the
 probability itself and accept that 0.5 is ambiguous rather than uncertain.
 
 Confidence, where it exists, is derived from the shape of the distribution
@@ -81,7 +81,7 @@ TypeSafe's headline claim is 40–200× faster and 40–400× cheaper than front
 LLMs, peaking at 193.6× and 444.6×. Read those with the company's own caveat
 attached: the workflows were built by its model-capabilities team, and TypeSafe
 says the figures likely sit at the high end of real-world results. The number I
-find more useful is an outside one — Browserbase measured Stagehand's `Act`
+find more useful is an outside one. Browserbase measured Stagehand's `Act`
 median latency dropping from 1.97s to 0.46s after moving the decision to Jev.
 
 ## The one rule: decompose, then decide in code
@@ -89,14 +89,14 @@ median latency dropping from 1.97s to 0.46s after moving the decision to Jev.
 The most useful published result about Jev isn't a speed benchmark.
 
 [The Daily Brief](https://www.beri.net/article/typesafe-jev-typed-decision-model-calibration-decomposition-shadow-eval)
-ran it over a 2,000-email phishing corpus and asked the obvious question —
-_is this phishing?_ — and got **62.6%** accuracy: 43.2% of the real
+ran it over a 2,000-email phishing corpus and asked the obvious question
+(_is this phishing?_) and got **62.6%** accuracy: 43.2% of the real
 phishing caught, 18.0% of legitimate mail flagged. Claude Haiku 4.5, asked that
 same single question, got 81.3%.
 
-Then they restructured it. Five narrow questions instead of one broad one —
+Then they restructured it. Five narrow questions instead of one broad one:
 shortened URLs, free-mail domains claiming organisational affiliation, that kind
-of thing — feeding a logistic regression trained on 1,000 labelled examples and
+of thing. Those fed a logistic regression trained on 1,000 labelled examples and
 tested on the other 1,000. Same model, same emails: **95.0%.**
 
 The caveats are real and worth stating. That corpus has synthetic bodies and
@@ -126,14 +126,14 @@ state alone. Reconciliation is your job, in your language, every time.
 ## Write criteria about properties, not examples
 
 Before the builds, the one skill that actually separates a working Jev call from
-a flaky one. Typed output feels like the prompt went away. It didn't — it moved
+a flaky one. Typed output feels like the prompt went away. It didn't. It moved
 into `criteria`, and it got stricter, because now the wording has to carry the
 entire decision boundary.
 
 My first risk rubric for the shell gatekeeper named example commands at each
 level. Reasonable, and wrong. Naming examples turns the question into "which of
-these is this most like?", so you get a nearest-match rather than a judgement —
-and since a `score` answer hands back the matching level as a `legend` string, my
+these is this most like?", so you get a nearest-match rather than a judgement.
+And since a `score` answer hands back the matching level as a `legend` string, my
 banner started quoting commands the user never typed.
 
 Rewriting the levels to describe **blast radius and reversibility** instead of
@@ -177,7 +177,7 @@ const res = await client.systemOne({
 ```
 
 One broad question over sixty options. It will return something plausible, and
-it has three problems. You can't debug it — when it recommends badly there's no
+it has three problems. You can't debug it. When it recommends badly there's no
 signal to inspect, just a distribution over sixty labels. It puts **allergens**
 in the hands of a probabilistic model. And it wastes your own database, where
 prep time and availability are already facts.
@@ -201,7 +201,7 @@ const eligible = menu.filter(
 ```
 
 **Step two, ask Jev only what code can't see.** The instinct is one request per
-dish. Don't — Jev evaluates one state, so put the whole shortlist in state and
+dish. Don't. Jev evaluates one state, so put the whole shortlist in state and
 ask a `choice` question per _axis_ instead of per dish. One round trip, and the
 `probabilities` map becomes a soft score for every candidate on every axis:
 
@@ -212,7 +212,7 @@ const client = new TypeSafeClient();
 const shortlist = eligible.slice(0, 8);
 
 const candidates = Object.fromEntries(
-  shortlist.map((d) => [d.id, `${d.name} — ${d.description}`]),
+  shortlist.map((d) => [d.id, `${d.name}: ${d.description}`]),
 );
 
 const { answers } = await client.systemOne({
@@ -284,7 +284,7 @@ return confident ? ranked.slice(0, 1) : ranked.slice(0, 3);
 ```
 
 Cost, from published pricing: a shortlist of eight plus the diner's note runs
-around 1,200 input tokens, so 1,200 × $0.042/M ≈ **$0.00005 a diner — about five
+around 1,200 input tokens, so 1,200 × $0.042/M ≈ **$0.00005 a diner, about five
 cents per thousand.** Output is free, so the four questions are free.
 
 ## Build two: a telemedicine triage line
@@ -298,7 +298,7 @@ unregulated diagnostic device built on a model whose own documentation says it
 struggles with indirection.
 
 Decompose into red flags. Each one is a narrow, independently inspectable `noul`
-about what the patient _described_ — not about what they have:
+about what the patient _described_, not about what they have:
 
 ```ts
 const RED_FLAGS = {
@@ -354,7 +354,7 @@ if (tripped.length > 0) {
 ```
 
 The cast on `Object.keys` isn't decoration. `answers` is keyed by your question
-names, so under `strict` a plain `string` can't index it — which is the type
+names, so under `strict` a plain `string` can't index it, which is the type
 system doing its job, and worth keeping rather than reaching for `any`.
 
 `because: tripped` matters as much as the threshold. The clinician sees which
@@ -367,7 +367,7 @@ Three more rules this domain forces, all of which generalise:
 "Jev is not a calculator," it "recognizes the shape of an answer rather than
 tallying, and the error grows with the size of the thing being counted," and it
 "reads dates as text, not as ordered quantities." So durations, ages and dose
-intervals get computed in code and handed over as structured fields — and never
+intervals get computed in code and handed over as structured fields, and never
 spliced into the question string, which the docs call out as an anti-pattern:
 
 ```ts
@@ -429,7 +429,7 @@ Three reasons Jev is specifically the right tool, rather than a smaller LLM:
 
 **The outcomes are authored.** A room has, say, six things that can happen.
 `choice` over six labelled outcomes means the referee physically cannot invent a
-seventh. It cannot hallucinate an item the game doesn't contain — not because the
+seventh. It cannot hallucinate an item the game doesn't contain. Not because the
 prompt asked nicely, but because the option set is the type.
 
 **The latency budget is a feel budget.** Roughly 100–300ms reads as responsive;
@@ -438,7 +438,7 @@ Browserbase's measured 0.46s median on a harder task suggests the low end is
 reachable.
 
 **Turns are cheap and there are thousands of them.** At ~800 input tokens per
-turn, a 40-turn session costs 32,000 × $0.042/M ≈ $0.0013 — about **$1.34 per
+turn, a 40-turn session costs 32,000 × $0.042/M ≈ $0.0013, about **$1.34 per
 thousand sessions.**
 
 The room is data:
@@ -468,7 +468,7 @@ const room = {
 ```
 
 Two of those outcomes are doing quiet work. `nothing_happens` and `not_in_world`
-are the escape hatches — TypeSafe's docs recommend giving `choice` questions
+are the escape hatches. TypeSafe's docs recommend giving `choice` questions
 explicit boundary and none-of-these options, and in a game they're free, because
 both are perfectly good narration.
 
@@ -510,7 +510,7 @@ question and the inventory are unrelated: one is a judgement and the other is a
 fact. So the fact wins.
 
 ```ts
-const outcome = answers.outcome.choice; // typed Outcome — never a seventh value
+const outcome = answers.outcome.choice; // typed Outcome, never a seventh value
 const required = REQUIRES[outcome] ?? [];
 
 // Possession is a fact. Jev never gets a vote on the inventory.
@@ -524,7 +524,7 @@ rather than a silent `undefined` at 2am.
 
 Here's the part I think makes games genuinely underrated as a place to _learn_
 this model rather than just show it off. Low confidence has a diegetic fallback.
-In most products an uncertain model is a UX problem — a spinner, a disclaimer, a
+In most products an uncertain model is a UX problem: a spinner, a disclaimer, a
 "did you mean." In a game, uncertainty is already a sentence:
 
 ```ts
@@ -559,7 +559,7 @@ model.** My first working gatekeeper took ~850ms per command. The model was
 ~350ms of that. The rest was DNS, TCP and TLS, paid fresh on every single
 invocation, because a shell hook spawns a new process per command and a new
 process has no connection to anything. A tiny daemon holding one warm connection
-took it to ~400ms, and the remainder was geography — one round trip to Oregon
+took it to ~400ms, and the remainder was geography: one round trip to Oregon
 from a machine 220ms away.
 
 When a model answers in 150ms, your own plumbing becomes the dominant cost, and
@@ -570,7 +570,7 @@ service, verify you're reusing connections before you believe any latency win.
 
 Shadow eval, and it's almost free. Run Jev against decisions you already have
 ground truth for, in parallel with the system you already trust, changing
-nothing. The phishing study's full run — 5,721 calls — cost **$0.176** at list
+nothing. The phishing study's full run, 5,721 calls, cost **$0.176** at list
 price.
 
 At that price there's no excuse for shipping on vibes. Take last quarter's
@@ -579,11 +579,11 @@ accuracy to find _your_ thresholds instead of copying the ones in this post. Min
 are policies I wrote down, not properties of the world.
 
 The honest counterpoint, from a commenter on that same study: a LoRA fine-tune of
-Qwen3-4B reached 97.4% on the identical task with better calibration — 0.010
-error — in eighteen minutes on consumer hardware. If your task is fixed and you
+Qwen3-4B reached 97.4% on the identical task with better calibration (0.010
+error) in eighteen minutes on consumer hardware. If your task is fixed and you
 have labels, a small fine-tune may well beat Jev outright. Jev's real advantage
-is that you can change the question — rewrite criteria, add a level, swap an
-option set — without retraining anything. That's worth a lot in a product still
+is that you can change the question, rewriting criteria, adding a level or
+swapping an option set, without retraining anything. That's worth a lot in a product still
 finding its shape and very little in a pipeline that settled a year ago.
 
 ## The shape of it
@@ -626,5 +626,5 @@ Figures cited as TypeSafe's own are self-reported and not independently
 reproduced.
 
 _The shell gatekeeper is Rust, MIT, one 2.4MB binary, and works with no API key
-at all — it falls back to a rule engine. [Source on
+at all. It falls back to a rule engine. [Source on
 GitHub](https://github.com/riz007/yolo-shell)._
