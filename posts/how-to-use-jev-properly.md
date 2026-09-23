@@ -61,6 +61,14 @@ answers is part of the request.** Hand `choice` six options and a seventh answer
 isn't unlikely, it's unrepresentable. No JSON parsing, no schema retries, no
 "respond only with one of the following, I mean it this time."
 
+Be precise about what that buys you, because it's easy to oversell. The schema
+constrains the output space, not the answer's correctness. Jev can still pick the
+wrong one of your six options, misread the input, or hand back a judgement you
+disagree with. What it cannot do is return a seventh option, or return prose
+where you asked for an enum. That's a narrower guarantee than "it can't
+hallucinate," and it's still worth a lot, because it's the class of failure that
+usually needs retry logic and a parser.
+
 One gotcha worth knowing before you design around it: **`noul` answers carry no
 confidence field.** Only `choice` and `score` do. In the SDK's own types,
 `NoulResponse` is just `{ type, noul }`. If your control flow routes on
@@ -71,6 +79,22 @@ Confidence, where it exists, is derived from the shape of the distribution
 rather than being a second opinion. For N options it's
 `(N · p_max − 1) / (N − 1)`: concentrated on one outcome means confident, spread
 out means uncertain.
+
+Now the part you should read before you set a single threshold. TypeSafe's whole
+pitch is that these numbers are _calibrated_, trained for with something they
+call Reinforcement Learning for Calibrated Decisions. Treat that as a claim, not
+a property. They haven't published the method, a reward function, or a
+reliability diagram, and two independent calibration checks found Jev poorly
+calibrated out of the box: an expected calibration error of 0.107 out of
+distribution, against a 0.024 noise floor. The direction of the error isn't even
+consistent across question types, with `noul` running underconfident while
+`choice` and `score` run overconfident. On one deliberately unanswerable task it
+was 44.7% accurate while reporting an average probability of 0.74.
+
+That doesn't make the numbers useless. It makes them numbers you have to fit
+thresholds against on your own data, rather than constants you can lift from a
+blog post. Including this one: every threshold below is a policy I chose, not a
+calibrated cut-off, and you should expect to move them.
 
 The published numbers, as of today: **$0.042 per million input tokens, output
 free.** 64k tokens per request, of which 32k covers `state` plus your longest
@@ -96,26 +120,42 @@ same single question, got 81.3%.
 
 Then they restructured it. Five narrow questions instead of one broad one:
 shortened URLs, free-mail domains claiming organisational affiliation, that kind
-of thing. Those fed a logistic regression trained on 1,000 labelled examples and
-tested on the other 1,000. Same model, same emails: **95.0%.**
+of thing. Those five signals fed a logistic regression trained on 1,000 labelled
+examples and tested on the other 1,000. That pipeline scored **95.0%**.
 
-The caveats are real and worth stating. That corpus has synthetic bodies and
-labels derived from URL reputation feeds rather than human judgement, so the
-signal concentrates in senders and links. And the 95% is _Jev plus your labels
-plus a regression you maintain_, not the model on its own.
+Read the second number carefully, because it is not Jev's accuracy. It is Jev's
+five signals, plus a thousand labelled emails, plus a classifier you fit and then
+maintain. The study puts it bluntly: the 95% is not Jev, it is Jev plus your
+labelled data plus a regression you maintain. The corpus matters too. PhishNChips
+v5.2 has synthetic bodies and labels derived from URL reputation feeds rather
+than human judgement, so the signal concentrates in senders and links.
 
-But the direction matches TypeSafe's own guidance exactly: "Broad questions hide
-several judgments behind one answer. Atomic questions expose those judgments so
-you can inspect, tune, and combine them in code."
+Which is exactly why I find the number useful. The lesson isn't that Jev is
+accurate. It's that the same model, on the same data, is worth 32 more points
+when you stop asking it to be the classifier and start using it as a source of
+signals you combine yourself. That's an architecture result, not a benchmark.
+
+It also matches TypeSafe's own guidance: "Broad questions hide several judgments
+behind one answer. Atomic questions expose those judgments so you can inspect,
+tune, and combine them in code."
 
 So here's the rule, and the rest of this post is just three applications of it:
 
 > **Jev is not a classifier you call. It's a feature extractor you combine.**
 
-Ask it many narrow things it can genuinely see. Get back calibrated numbers.
-Make the decision in ordinary code you can unit-test. The architecture is what
-makes this affordable: a dozen questions cost you one round trip, not twelve,
-because they're evaluated in a single parallel pass rather than in sequence.
+Ask it many narrow things it can genuinely see. Get back typed numerical
+signals. Make the decision in ordinary code you can unit-test. The architecture
+is what makes this affordable: a dozen questions cost you one round trip, not
+twelve, because they're evaluated in a single parallel pass rather than in
+sequence.
+
+In practice that's three layers, and keeping them straight is most of the job:
+
+- **Facts** stay in deterministic code. Allergens, inventory, dates, arithmetic.
+- **Judgement** goes to Jev. The fuzzy call you'd otherwise hard-code badly.
+- **The decision** comes back to deterministic code, where you can test it.
+
+All three builds below are applications of those three lines.
 
 Which leads straight to the corollary that cost me the most debugging time:
 **the answers do not constrain each other.** There's no token stream, so
@@ -157,8 +197,8 @@ to all three of the builds below.
 
 ## Build one: a menu recommender
 
-Neither big catalogue has a single food or restaurant project, which is strange,
-because it's close to an ideal fit: a finite authored option set, genuinely fuzzy
+I couldn't find a food or restaurant project in either catalogue, which is
+strange, because it's close to an ideal fit: a finite authored option set, genuinely fuzzy
 human input, and a decision that has to feel instant.
 
 Here's the version you'd write first, and why it fails:
@@ -289,13 +329,15 @@ cents per thousand.** Output is free, so the four questions are free.
 
 ## Build two: a telemedicine triage line
 
-Also absent from both catalogues, and I suspect the reason is that this is where
-being wrong is worst. Which makes it the best place to show the discipline.
+I couldn't find this one in either catalogue either, and I suspect the reason is
+that it's where being wrong is worst. Which makes it the best place to show the discipline.
 
 Scope first, and it isn't negotiable: **Jev routes, it does not diagnose.** The
-output is which queue and how fast, never what's wrong. Anything else is an
-unregulated diagnostic device built on a model whose own documentation says it
-struggles with indirection.
+output is which queue and how fast, never what's wrong. Anything past routing
+starts moving toward clinical decision support, which depending on your
+jurisdiction, your intended use and the claims you make around it may bring
+regulatory obligations you hadn't planned for. And you'd be building it on a
+model whose own documentation says it struggles with indirection.
 
 Decompose into red flags. Each one is a narrow, independently inspectable `noul`
 about what the patient _described_, not about what they have:
@@ -333,11 +375,13 @@ single most important line in this post:
 
 **Never average red flags.** Averaging is the instinct, and it dilutes a true
 positive into nothing. Six flags where one reads 0.82 and five read near zero
-average to 0.14. That's a heart attack rounded down to routine.
+average to 0.14. One genuinely concerning signal gets rounded down to routine by
+five that simply didn't apply, which is the exact failure mode you cannot afford
+in high-stakes routing.
 
 Red flags OR-gate, at a deliberately low threshold, because the costs are
-asymmetric: a needless escalation costs a clinician five minutes, a missed one
-costs a life.
+asymmetric: an unnecessary escalation consumes clinical time, and a missed one
+can cost a great deal more than that.
 
 ```ts
 const ESCALATE_AT = 0.35; // Deliberately low. The two errors are not equal.
@@ -421,16 +465,18 @@ The mechanic: the player types whatever they want. Not a verb list, not
 ```
 
 For a game designer this has always been the impossible input. You cannot regex
-intent. For half a century the genre has solved it by shrinking the player's
-vocabulary until parsing becomes tractable, which is exactly why text adventures
+intent. Text adventures have traditionally solved this by shrinking the player's
+vocabulary until parsing becomes tractable, which is exactly why the genre can
 feel like guessing a password.
 
 Three reasons Jev is specifically the right tool, rather than a smaller LLM:
 
 **The outcomes are authored.** A room has, say, six things that can happen.
-`choice` over six labelled outcomes means the referee physically cannot invent a
-seventh. It cannot hallucinate an item the game doesn't contain. Not because the
-prompt asked nicely, but because the option set is the type.
+`choice` over six labelled outcomes means the referee cannot return a seventh,
+and cannot hand back an item the game doesn't contain. Not because the prompt
+asked nicely, but because the option set is the type. It can still pick the wrong
+one of your six, which is a bug you find in playtesting. It will never invent a
+lockpick you never wrote, which is a bug you'd find in production.
 
 **The latency budget is a feel budget.** Roughly 100–300ms reads as responsive;
 two seconds breaks the spell completely. Jev's published range is 70–500ms, and
@@ -535,8 +581,8 @@ if (answers.outcome.confidence < 0.45) {
 }
 ```
 
-The player reads character. You read an honest probability distribution. It's the
-only domain I've found where calibrated uncertainty costs nothing to surface.
+The player reads character. You read the model's own uncertainty. It's the only
+domain I've found where surfacing that uncertainty costs you nothing.
 
 ## Where it will bite you
 
@@ -553,6 +599,10 @@ most model cards manage. Worth reading in full; the parts that changed my design
 | Accuracy falls as `state` grows with irrelevant content   | trim state per question set. Context rot is real and measurable.       |
 | Adversarial content isn't treated as hostile by default   | fence untrusted text, floor the decision with rules.                   |
 | Contradictory criteria degrade the answer                 | conflicting `instructions` and `criteria` make it worse, not cautious. |
+
+Two things that table doesn't cover, both from further up: the confidence numbers
+need thresholds fitted against your own data rather than copied from anyone, and
+the questions inside a single request place no constraint on each other.
 
 And one that isn't in any doc, from my own build: **latency is mostly not the
 model.** My first working gatekeeper took ~850ms per command. The model was
