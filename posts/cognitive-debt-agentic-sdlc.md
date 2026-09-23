@@ -18,7 +18,7 @@ tags:
 
 The question is, how many of us are actually adopting it? And I'm not talking about large corporations here. I'm talking about small startups with three or four developers and very limited resources. That's where I keep coming back to the same worry: what's the cognitive debt we're taking on? The hidden risk in AI-driven development, in code reviews nobody really reads, and in plain FOMO.
 
-Let me be clear about where I stand, because this argument gets misread in both directions. I'm not anti-AI and I'm not anti-agentic-SDLC. I use this stuff every day and I'd be slower without it. What I'm against is AI slop, and the unnecessary cognitive load that comes with it — the kind that quietly breaks a four-person team. A large company can absorb that load. A startup with three developers cannot.
+Let me be clear about where I stand, because this argument gets misread in both directions. I'm not anti-AI and I'm not anti-agentic-SDLC. I use this stuff every day and I'd be slower without it. What I'm against is AI slop, and the unnecessary cognitive load that comes with it, the kind that quietly breaks a four-person team. A large company can absorb that load. A startup with three developers cannot.
 
 So how much AI should we adopt, and how much should we stay human about it? That's what this post is about.
 
@@ -47,9 +47,9 @@ Here's the mechanism underneath all of this, and I think it's the whole ballgame
 
 Writing code got something like ten times cheaper in two years. Reading code, reviewing code, and understanding code got no cheaper at all. They cost exactly what they cost in 2019.
 
-Everything else in this post falls out of that one gap. When generation gets cheap and verification doesn't, the bottleneck doesn't disappear. It moves. It lands on whoever has to say "yes, I understand this, ship it" — and on a small team that's the same two people every time.
+Everything else in this post falls out of that one gap. When generation gets cheap and verification doesn't, the bottleneck doesn't disappear. It moves. It lands on whoever has to say "yes, I understand this, ship it." On a small team that's the same two people every time.
 
-The 2025 DORA report puts numbers on it. AI adoption now correlates positively with delivery throughput, so the speed is real. It also correlates with _higher instability_ — more change failures, more rework, longer recovery. Their read is that AI is exposing downstream bottlenecks in testing, review and QA that were never built for this pace. Around 30% of developers report little to no trust in AI-generated code, which means the time saved writing is being spent auditing instead.
+The 2025 DORA report puts numbers on it. AI adoption now correlates positively with delivery throughput, so the speed is real. It also correlates with _higher instability_: more change failures, more rework, longer recovery. Their read is that AI is exposing downstream bottlenecks in testing, review and QA that were never built for this pace. Around 30% of developers report little to no trust in AI-generated code, which means the time saved writing is being spent auditing instead.
 
 DORA's own framing is the one I'd put on a wall: AI magnifies the strengths of high-performing organisations and the dysfunctions of struggling ones. It's an amplifier, not a multiplier. If your team has tests, a real review culture and a platform that tells you when you broke something, agentic tooling makes you meaningfully better. If it doesn't, the tool will just help you generate technical debt faster.
 
@@ -59,7 +59,7 @@ That's why I don't think "should we use AI" is the interesting question. The int
 
 This is the part I care about most, and it's where I think the conversation is thinnest.
 
-Follow the load. One developer starts generating three times more code. That code doesn't review itself. So the review burden triples — but it lands on somebody else, and on a four-person team there is no somebody else. There's the same two people who were already at capacity.
+Follow the load. One developer starts generating three times more code. That code doesn't review itself. So the review burden triples, but it lands on somebody else, and on a four-person team there is no somebody else. There's the same two people who were already at capacity.
 
 Now watch what happens over a few months:
 
@@ -68,7 +68,7 @@ Now watch what happens over a few months:
 - The one person who does still understand the system becomes the bottleneck for everything, gets interrupted constantly, and stops shipping.
 - That person burns out and leaves.
 
-And here's the part that makes it a collapse rather than a setback: when they go, the understanding goes with them. Not the code — the code is in git. The _why_. Why the retry logic looks like that, which of those two services owns the write, what the weird conditional in billing is protecting against. A big company survives that because three other people half-know it. A four-person startup does not.
+And here's the part that makes it a collapse rather than a setback: when they go, the understanding goes with them. Not the code. The code is in git. The _why_. Why the retry logic looks like that, which of those two services owns the write, what the weird conditional in billing is protecting against. A big company survives that because three other people half-know it. A four-person startup does not.
 
 Burnout in this story isn't a wellbeing footnote. It's the failure mode. Cognitive debt is paid down by the most experienced person on the team, out of their evenings, until they stop.
 
@@ -76,7 +76,7 @@ Burnout in this story isn't a wellbeing footnote. It's the failure mode. Cogniti
 
 I deeply believe in team collaboration, and this is the part agentic tooling hasn't touched at all.
 
-You can vibe code an app in a day. Making it something people pay for still takes human skills — understanding the customer, positioning, knowing which problem is actually worth solving. That's where your product and engineering people earn their keep, and none of it got automated.
+You can vibe code an app in a day. Making it something people pay for still takes human skills: understanding the customer, positioning, knowing which problem is actually worth solving. That's where your product and engineering people earn their keep, and none of it got automated.
 
 If anything it matters more now. When everyone can generate a working prototype in an afternoon, the prototype isn't what makes you different anymore.
 
@@ -123,13 +123,13 @@ Watch what happens. Someone who understands it will tell you about the trade-off
 
 Do that once a month with a random PR and you'll know your real number. If it goes badly, the fix isn't less AI. It's smaller diffs and an actual review.
 
-I'd also watch how long PRs sit waiting for review. If that's climbing while your merge rate climbs too, you've found the bottleneck moving — and you've probably found the person about to burn out.
+I'd also watch how long PRs sit waiting for review. If that's climbing while your merge rate climbs too, you've found the bottleneck moving, and you've probably found the person about to burn out.
 
 ## When cognitive debt is worth it
 
 I don't want to leave this sounding like every shortcut is a sin, because most of them aren't.
 
-Take the debt deliberately when the code is genuinely disposable. The spike you're running to find out whether an approach works. The prototype for Friday's demo. The internal script three people will use twice. The migration you'll delete after it runs. In all of those, understanding is not the asset — the answer is, and paying full price for comprehension is waste.
+Take the debt deliberately when the code is genuinely disposable. The spike you're running to find out whether an approach works. The prototype for Friday's demo. The internal script three people will use twice. The migration you'll delete after it runs. In all of those, understanding is not the asset. The answer is, and paying full price for comprehension is waste.
 
 The rule I use is simple enough: how expensive is it if nobody understands this in six months? For a throwaway script, free. For your auth flow, your billing logic, or anything holding customer data, that's the bill arriving at 2am.
 
