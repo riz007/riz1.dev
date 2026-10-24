@@ -813,8 +813,14 @@ img {
 }
 
 /* tables — GFM */
+/* block + max-content lets a wide table scroll inside itself instead of
+   pushing the page sideways on narrow screens */
 .prose table {
-  width: 100%;
+  display: block;
+  width: max-content;
+  min-width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
   margin: 28px 0;
   border-collapse: collapse;
   font-size: 0.9375rem;
