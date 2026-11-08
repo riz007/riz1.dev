@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="552" viewBox="0 0 480 552" role="img" aria-labelledby="t d">
+  <title id="t">The fix shipped 14 months early</title>
+  <desc id="d">The likely path into the supermarket fridges. One: a controller login page open to the internet; Claroty's scan found 2,765 reachable systems. Two: username admin with a password built from the date, a code of the day, CVE-2025-41450. Three: refrigeration switched to defrost overnight with no alarm. Four: about 50 degrees Celsius after six hours, fires, sprinkler damage and more than 10 million euros in losses. Timeline: 2016 AK-SC355 end of life, May 2021 AK-SM800 end of life, March 2025 Claroty reports the flaws, August 2025 the fix ships in firmware 4.3.1, October 2026 the attack, 14 months after the fix.</desc>
+  <style>
+    .serif{font-family:Georgia,'Times New Roman',serif;fill:#1c1916}
+    .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+    .ink{fill:#1c1916}.ink2{fill:#6b655c}
+    .box{fill:#fdfcfa;stroke:#d8d0c4;stroke-width:1}
+    .num{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;fill:#fdfcfa}
+  </style>
+  <rect width="480" height="552" rx="6" fill="#f8f5f0"/>
+  <rect x="0.5" y="0.5" width="479" height="551" rx="6" fill="none" stroke="#e4ddd2"/>
+
+  <text class="serif" x="24" y="36" font-size="20">The fix shipped 14 months early</text>
+  <text class="mono ink2" x="24" y="58" font-size="11.5">The likely path into the supermarket fridges</text>
+
+  <rect class="box" x="24" y="78" width="432" height="52" rx="4"/>
+  <circle cx="46" cy="104" r="11" fill="#1c1916"/>
+  <text class="num" x="46" y="108" font-size="11" text-anchor="middle">1</text>
+  <text class="serif" x="68" y="100" font-size="14">Controller login page, open to the internet</text>
+  <text class="mono ink2" x="68" y="118" font-size="10.5">Claroty's scan found 2,765 reachable systems</text>
+  <path d="M240 132 V148 M235 143 L240 149 L245 143" fill="none" stroke="#6b655c" stroke-width="1.5"/>
+
+  <rect class="box" x="24" y="152" width="432" height="52" rx="4"/>
+  <circle cx="46" cy="178" r="11" fill="#1c1916"/>
+  <text class="num" x="46" y="182" font-size="11" text-anchor="middle">2</text>
+  <text class="serif" x="68" y="174" font-size="14">Username admin, password built from the date</text>
+  <text class="mono ink2" x="68" y="192" font-size="10.5">a "code of the day", CVE-2025-41450</text>
+  <path d="M240 206 V222 M235 217 L240 223 L245 217" fill="none" stroke="#6b655c" stroke-width="1.5"/>
+
+  <rect class="box" x="24" y="226" width="432" height="52" rx="4"/>
+  <circle cx="46" cy="252" r="11" fill="#1c1916"/>
+  <text class="num" x="46" y="256" font-size="11" text-anchor="middle">3</text>
+  <text class="serif" x="68" y="248" font-size="14">Refrigeration switched to defrost, overnight</text>
+  <text class="mono ink2" x="68" y="266" font-size="10.5">no alarm raised, few staff on site</text>
+  <path d="M240 280 V296 M235 291 L240 297 L245 291" fill="none" stroke="#6b655c" stroke-width="1.5"/>
+
+  <rect x="24" y="300" width="432" height="52" rx="4" fill="#f3e2d8" stroke="#b85c38" stroke-width="1"/>
+  <circle cx="46" cy="326" r="11" fill="#b85c38"/>
+  <text class="num" x="46" y="330" font-size="11" text-anchor="middle">4</text>
+  <text class="serif" x="68" y="322" font-size="14">About 50°C after six hours</text>
+  <text class="mono ink2" x="68" y="340" font-size="10.5">fires, sprinkler damage, €10M+ in losses</text>
+
+  <text class="mono ink2" x="24" y="376" font-size="10.5">The exact method used on 11 October hasn't been confirmed.</text>
+
+  <text class="serif" x="24" y="410" font-size="15">The timeline</text>
+  <text class="mono ink" x="375" y="426" font-size="10.5" text-anchor="middle">14 months</text>
+  <path d="M330 436 V432 H420 V436" fill="none" stroke="#1c1916" stroke-width="1"/>
+  <line x1="60" y1="446" x2="420" y2="446" stroke="#d8d0c4" stroke-width="1.5"/>
+  <circle cx="60" cy="446" r="5" fill="#6b655c" stroke="#f8f5f0" stroke-width="2"/>
+  <circle cx="150" cy="446" r="5" fill="#6b655c" stroke="#f8f5f0" stroke-width="2"/>
+  <circle cx="240" cy="446" r="5" fill="#6b655c" stroke="#f8f5f0" stroke-width="2"/>
+  <circle cx="330" cy="446" r="5" fill="#6b655c" stroke="#f8f5f0" stroke-width="2"/>
+  <circle cx="420" cy="446" r="6" fill="#b85c38" stroke="#f8f5f0" stroke-width="2"/>
+
+  <text class="mono ink" x="60" y="468" font-size="11" text-anchor="middle">2016</text>
+  <text class="serif ink2" x="60" y="484" font-size="11.5" text-anchor="middle">AK-SC355</text>
+  <text class="serif ink2" x="60" y="498" font-size="11.5" text-anchor="middle">end-of-life</text>
+
+  <text class="mono ink" x="150" y="468" font-size="11" text-anchor="middle">May 2021</text>
+  <text class="serif ink2" x="150" y="484" font-size="11.5" text-anchor="middle">AK-SM800</text>
+  <text class="serif ink2" x="150" y="498" font-size="11.5" text-anchor="middle">end-of-life</text>
+
+  <text class="mono ink" x="240" y="468" font-size="11" text-anchor="middle">Mar 2025</text>
+  <text class="serif ink2" x="240" y="484" font-size="11.5" text-anchor="middle">Claroty</text>
+  <text class="serif ink2" x="240" y="498" font-size="11.5" text-anchor="middle">reports flaws</text>
+
+  <text class="mono ink" x="330" y="468" font-size="11" text-anchor="middle">Aug 2025</text>
+  <text class="serif ink2" x="330" y="484" font-size="11.5" text-anchor="middle">fix ships</text>
+  <text class="serif ink2" x="330" y="498" font-size="11.5" text-anchor="middle">firmware 4.3.1</text>
+
+  <text class="mono ink" x="420" y="468" font-size="11" text-anchor="middle">Oct 2026</text>
+  <text class="serif ink2" x="420" y="484" font-size="11.5" text-anchor="middle">the attack</text>
+
+  <text class="mono ink2" x="24" y="537" font-size="10.5">Sources: Wikipedia, Claroty Team82, Danfoss DSA-2025-03-01.</text>
+</svg>

@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="376" viewBox="0 0 480 376" role="img" aria-labelledby="t d">
+  <title id="t">Binance quadrupled the record</title>
+  <desc id="d">Largest crypto thefts in US dollars at the time of theft: Mt. Gox 2014 460 million, Coincheck 2018 534 million, Poly Network 2021 611 million, Ronin 2022 625 million, Bybit 2025 1.5 billion, Binance 2026 6.3 billion.</desc>
+  <style>
+    .serif{font-family:Georgia,'Times New Roman',serif;fill:#1c1916}
+    .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+    .ink{fill:#1c1916}.ink2{fill:#6b655c}
+    .grid{stroke:#e4ddd2;stroke-width:1}
+  </style>
+  <rect width="480" height="376" rx="6" fill="#f8f5f0"/>
+  <rect x="0.5" y="0.5" width="479" height="375" rx="6" fill="none" stroke="#e4ddd2"/>
+
+  <text class="serif" x="24" y="36" font-size="20">Binance quadrupled the record</text>
+  <text class="mono ink2" x="24" y="58" font-size="11.5">Largest crypto thefts, US dollars at the time of theft</text>
+
+  <line class="grid" x1="160" y1="86" x2="160" y2="302"/>
+  <line class="grid" x1="236.2" y1="86" x2="236.2" y2="302"/>
+  <line class="grid" x1="312.4" y1="86" x2="312.4" y2="302"/>
+  <line class="grid" x1="388.6" y1="86" x2="388.6" y2="302"/>
+
+  <text class="serif" x="24" y="109" font-size="14">Mt. Gox</text>
+  <text class="mono ink2" x="150" y="109" font-size="11.5" text-anchor="end">2014</text>
+  <path d="M160 96 H173.5 A4 4 0 0 1 177.5 100 V110 A4 4 0 0 1 173.5 114 H160 Z" fill="#a39b8f"/>
+  <text class="mono ink" x="183.5" y="109" font-size="12">$460M</text>
+
+  <text class="serif" x="24" y="145" font-size="14">Coincheck</text>
+  <text class="mono ink2" x="150" y="145" font-size="11.5" text-anchor="end">2018</text>
+  <path d="M160 132 H176.3 A4 4 0 0 1 180.3 136 V146 A4 4 0 0 1 176.3 150 H160 Z" fill="#a39b8f"/>
+  <text class="mono ink" x="186.3" y="145" font-size="12">$534M</text>
+
+  <text class="serif" x="24" y="181" font-size="14">Poly Network</text>
+  <text class="mono ink2" x="150" y="181" font-size="11.5" text-anchor="end">2021</text>
+  <path d="M160 168 H179.3 A4 4 0 0 1 183.3 172 V182 A4 4 0 0 1 179.3 186 H160 Z" fill="#a39b8f"/>
+  <text class="mono ink" x="189.3" y="181" font-size="12">$611M</text>
+
+  <text class="serif" x="24" y="217" font-size="14">Ronin</text>
+  <text class="mono ink2" x="150" y="217" font-size="11.5" text-anchor="end">2022</text>
+  <path d="M160 204 H179.8 A4 4 0 0 1 183.8 208 V218 A4 4 0 0 1 179.8 222 H160 Z" fill="#a39b8f"/>
+  <text class="mono ink" x="189.8" y="217" font-size="12">$625M</text>
+
+  <text class="serif" x="24" y="253" font-size="14">Bybit</text>
+  <text class="mono ink2" x="150" y="253" font-size="11.5" text-anchor="end">2025</text>
+  <path d="M160 240 H213.1 A4 4 0 0 1 217.1 244 V254 A4 4 0 0 1 213.1 258 H160 Z" fill="#a39b8f"/>
+  <text class="mono ink" x="223.1" y="253" font-size="12">$1.5B</text>
+
+  <text class="serif" x="24" y="289" font-size="14">Binance</text>
+  <text class="mono ink2" x="150" y="289" font-size="11.5" text-anchor="end">2026</text>
+  <path d="M160 276 H396 A4 4 0 0 1 400 280 V290 A4 4 0 0 1 396 294 H160 Z" fill="#b85c38"/>
+  <text class="mono ink" x="406" y="289" font-size="12">$6.3B</text>
+
+  <text class="mono ink2" x="160" y="320" font-size="11" text-anchor="middle">$0</text>
+  <text class="mono ink2" x="236.2" y="320" font-size="11" text-anchor="middle">$2B</text>
+  <text class="mono ink2" x="312.4" y="320" font-size="11" text-anchor="middle">$4B</text>
+  <text class="mono ink2" x="388.6" y="320" font-size="11" text-anchor="middle">$6B</text>
+
+  <text class="mono ink2" x="24" y="348" font-size="10.5">Values at time of theft. Poly Network's were returned.</text>
+  <text class="mono ink2" x="24" y="363" font-size="10.5">Sources: Wikipedia, CNBC, Decrypt, Benzinga.</text>
+</svg>

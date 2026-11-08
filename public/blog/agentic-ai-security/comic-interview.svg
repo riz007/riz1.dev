@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="506" viewBox="0 0 480 506" role="img" aria-labelledby="t d">
+  <title id="t">The interview</title>
+  <desc id="d">A four-panel comic. Panel one, September: an engineer with glasses gets a message, "Loved your wallet work. Quick chat?", and says "Ooh." Panel two: a video call with a smiling recruiter labelled HR, round one, saying "We love your profile!" Panel three: a video call with a man in a suit and tie labelled CEO, round two, saying "Last step: a small take-home." Panel four, weeks later: the engineer runs the take-home task on a laptop while coins fly out of the screen, labelled 6.3 billion dollars.</desc>
+  <style>
+    .serif{font-family:Georgia,'Times New Roman',serif;fill:#1c1916}
+    .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+    .ink2{fill:#6b655c}
+    .panel{fill:#fdfcfa;stroke:#1c1916;stroke-width:1.5}
+    .line{fill:none;stroke:#1c1916;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+    .scr{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;fill:#f3efe7}
+    .cap{fill:#efe9e0;stroke:#1c1916;stroke-width:1}
+    .bub{fill:#fdfcfa;stroke:#1c1916;stroke-width:1.2}
+    .tag{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;fill:#1c1916}
+  </style>
+  <rect width="480" height="506" rx="6" fill="#f8f5f0"/>
+  <rect x="0.5" y="0.5" width="479" height="505" rx="6" fill="none" stroke="#e4ddd2"/>
+
+  <text class="serif" x="16" y="34" font-size="19">The interview</text>
+  <text class="mono ink2" x="464" y="34" font-size="10.5" text-anchor="end">based on Binance's own report</text>
+
+  <rect class="panel" x="12" y="50" width="224" height="196" rx="3"/>
+  <rect class="cap" x="20" y="58" width="68" height="18"/>
+  <text class="mono" x="26" y="71" font-size="10" fill="#1c1916">September</text>
+  <rect class="bub" x="112" y="82" width="116" height="50" rx="6"/>
+  <text class="mono ink2" x="120" y="97" font-size="9.5">New message</text>
+  <text class="serif" x="120" y="112" font-size="11.5">Loved your wallet</text>
+  <text class="serif" x="120" y="126" font-size="11.5">work. Quick chat?</text>
+  <rect class="bub" x="24" y="96" width="46" height="22" rx="11"/>
+  <polygon points="48,116 58,116 56,128" fill="#fdfcfa"/>
+  <polyline class="line" points="49,117.5 56,128 57,117.5" stroke-width="1.2"/>
+  <text class="serif" x="47" y="111" font-size="12" text-anchor="middle">Ooh.</text>
+  <path d="M40 214 Q42 178 70 172 Q98 178 100 214 Z" fill="#c9bfb1" stroke="#1c1916" stroke-width="1.5"/>
+  <circle cx="70" cy="150" r="17" fill="#f1e4d3" stroke="#1c1916" stroke-width="1.5"/>
+  <path d="M53 148 Q54 130 70 131 Q87 130 87 146 Q80 139 70 140 Q60 139 53 148 Z" fill="#1c1916"/>
+  <circle cx="74" cy="152" r="4.5" fill="none" stroke="#1c1916" stroke-width="1.2"/>
+  <circle cx="85" cy="152" r="4.5" fill="none" stroke="#1c1916" stroke-width="1.2"/>
+  <path class="line" d="M78.5 152 H80.5" stroke-width="1.2"/>
+  <path class="line" d="M74 162 Q78 165 82 162"/>
+  <path d="M98 192 L124 202" stroke="#c9bfb1" stroke-width="7" stroke-linecap="round"/>
+  <rect x="124" y="140" width="92" height="62" rx="3" fill="#1c1916"/>
+  <circle cx="204" cy="150" r="4" fill="#b85c38"/>
+  <path d="M116 212 L120 203 L220 203 L224 212 Z" fill="#a39b8f" stroke="#1c1916" stroke-width="1.5"/>
+  <line class="line" x1="12" y1="214" x2="236" y2="214"/>
+
+  <rect class="panel" x="244" y="50" width="224" height="196" rx="3"/>
+  <rect x="258" y="62" width="196" height="132" rx="6" fill="#1c1916"/>
+  <path d="M318 194 Q322 160 356 154 Q390 160 394 194 Z" fill="#b85c38"/>
+  <path d="M330 140 Q326 98 356 96 Q386 98 382 140 Q378 120 356 118 Q334 120 330 140 Z" fill="#6b655c"/>
+  <circle cx="356" cy="128" r="22" fill="#f1e4d3" stroke="#fdfcfa" stroke-width="1.5"/>
+  <path d="M338 116 Q344 104 356 104 Q368 104 374 116 Q366 110 356 110 Q346 110 338 116 Z" fill="#6b655c"/>
+  <circle cx="348" cy="126" r="1.8" fill="#1c1916"/>
+  <circle cx="364" cy="126" r="1.8" fill="#1c1916"/>
+  <path class="line" d="M346 136 Q356 145 366 136"/>
+  <rect x="266" y="172" width="80" height="16" rx="8" fill="#fdfcfa"/>
+  <text class="tag" x="306" y="184" font-size="9.5" text-anchor="middle">HR · round 1</text>
+  <rect class="bub" x="270" y="206" width="172" height="28" rx="12"/>
+  <polygon points="350,208 362,208 356,196" fill="#fdfcfa"/>
+  <polyline class="line" points="350,206.5 356,196 362,206.5" stroke-width="1.2"/>
+  <text class="serif" x="356" y="224" font-size="12.5" text-anchor="middle">We love your profile!</text>
+
+  <rect class="panel" x="12" y="254" width="224" height="196" rx="3"/>
+  <rect x="26" y="266" width="196" height="122" rx="6" fill="#1c1916"/>
+  <path d="M84 388 Q88 352 124 346 Q160 352 164 388 Z" fill="#3d3833"/>
+  <path d="M112 348 L124 372 L136 348 Z" fill="#fdfcfa"/>
+  <path d="M120 352 L128 352 L126 372 L124 376 L122 372 Z" fill="#b85c38"/>
+  <circle cx="124" cy="318" r="22" fill="#f1e4d3" stroke="#fdfcfa" stroke-width="1.5"/>
+  <path d="M104 312 Q106 294 124 294 Q142 294 144 312 Q136 302 124 302 Q112 302 104 312 Z" fill="#3d3833"/>
+  <path class="line" d="M112 309 L120 311 M128 311 L136 307"/>
+  <circle cx="116" cy="316" r="1.8" fill="#1c1916"/>
+  <circle cx="132" cy="316" r="1.8" fill="#1c1916"/>
+  <path class="line" d="M117 329 Q124 332 132 327"/>
+  <rect x="34" y="364" width="86" height="16" rx="8" fill="#fdfcfa"/>
+  <text class="tag" x="77" y="376" font-size="9.5" text-anchor="middle">CEO · round 2</text>
+  <rect class="bub" x="22" y="402" width="204" height="30" rx="12"/>
+  <polygon points="118,404 130,404 124,392" fill="#fdfcfa"/>
+  <polyline class="line" points="118,402.5 124,392 130,402.5" stroke-width="1.2"/>
+  <text class="serif" x="124" y="421" font-size="12" text-anchor="middle">Last step: a small take-home.</text>
+
+  <rect class="panel" x="244" y="254" width="224" height="196" rx="3"/>
+  <rect class="cap" x="252" y="262" width="80" height="18"/>
+  <text class="mono" x="258" y="275" font-size="10" fill="#1c1916">Weeks later</text>
+  <path d="M260 418 Q262 382 290 376 Q318 382 320 418 Z" fill="#c9bfb1" stroke="#1c1916" stroke-width="1.5"/>
+  <circle cx="290" cy="354" r="17" fill="#f1e4d3" stroke="#1c1916" stroke-width="1.5"/>
+  <path d="M273 352 Q274 334 290 335 Q307 334 307 350 Q300 343 290 344 Q280 343 273 352 Z" fill="#1c1916"/>
+  <circle cx="294" cy="356" r="4.5" fill="none" stroke="#1c1916" stroke-width="1.2"/>
+  <circle cx="305" cy="356" r="4.5" fill="none" stroke="#1c1916" stroke-width="1.2"/>
+  <path class="line" d="M298.5 356 H300.5" stroke-width="1.2"/>
+  <path class="line" d="M295 366 Q299 368 303 366"/>
+  <rect x="330" y="336" width="104" height="70" rx="3" fill="#1c1916"/>
+  <text class="scr" x="338" y="354" font-size="9.5">$ ./take_home</text>
+  <text class="scr" x="338" y="370" font-size="9.5">running...</text>
+  <text class="scr" x="338" y="386" font-size="9.5">done.</text>
+  <path d="M322 416 L326 407 L438 407 L442 416 Z" fill="#a39b8f" stroke="#1c1916" stroke-width="1.5"/>
+  <circle cx="430" cy="326" r="6" fill="#b85c38" stroke="#1c1916" stroke-width="1.2"/>
+  <circle cx="444" cy="308" r="6" fill="#b85c38" stroke="#1c1916" stroke-width="1.2"/>
+  <circle cx="452" cy="288" r="6" fill="#b85c38" stroke="#1c1916" stroke-width="1.2"/>
+  <circle cx="418" cy="304" r="5" fill="#b85c38" stroke="#1c1916" stroke-width="1.2"/>
+  <text class="serif" x="404" y="296" font-size="16" text-anchor="end">$6.3B</text>
+  <line class="line" x1="244" y1="418" x2="468" y2="418"/>
+
+  <text class="mono ink2" x="16" y="474" font-size="11">Same playbook as Bybit in 2025:</text>
+  <text class="mono ink2" x="16" y="490" font-size="11">get onto a developer's laptop first.</text>
+</svg>

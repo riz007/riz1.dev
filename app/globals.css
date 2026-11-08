@@ -776,6 +776,23 @@ img {
 
 .prose em { font-style: italic; }
 
+.prose a {
+  color: var(--color-ink);
+  text-decoration: underline;
+  text-decoration-color: var(--color-ink-3);
+  text-underline-offset: 3px;
+  transition: text-decoration-color var(--dur-base) var(--ease-out);
+}
+.prose a:hover { text-decoration-color: var(--color-accent); }
+.prose a:has(> img) { text-decoration: none; }
+
+.prose img[src^="/blog/"] {
+  width: 100%;
+  max-width: 600px;
+  height: auto;
+  margin: 36px auto;
+}
+
 .prose blockquote {
   border-left: 2px solid var(--accent);
   padding: 4px 0 4px 24px;

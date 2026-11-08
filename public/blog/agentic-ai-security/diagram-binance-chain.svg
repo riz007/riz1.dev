@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="552" viewBox="0 0 480 552" role="img" aria-labelledby="t d">
+  <title id="t">Five months, four steps, no zero-day</title>
+  <desc id="d">The Binance attack in four steps. June 2026: a wallet engineer downloads a tampered Homebrew installer while looking for an AI coding tool. September 2026: a second engineer is recruited through a fake LinkedIn job interview and runs a malicious take-home assignment. 20 October 2026: attackers use Binance's own internal AI tools to take over two more wallet engineers' machines. 29 October 2026: an EIP-7702 authorization gives a malicious contract partial control of a hot wallet and about 6.3 billion dollars leaves in roughly 20 minutes.</desc>
+  <style>
+    .serif{font-family:Georgia,'Times New Roman',serif;fill:#1c1916}
+    .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+    .ink2{fill:#6b655c}
+    .pill{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;fill:#fdfcfa}
+  </style>
+  <rect width="480" height="552" rx="6" fill="#f8f5f0"/>
+  <rect x="0.5" y="0.5" width="479" height="551" rx="6" fill="none" stroke="#e4ddd2"/>
+
+  <text class="serif" x="24" y="36" font-size="20">Five months, four steps, no zero-day</text>
+  <text class="mono ink2" x="24" y="58" font-size="11.5">The Binance attack, per its 3 Nov 2026 incident report</text>
+
+  <line x1="40" y1="102" x2="40" y2="408" stroke="#d8d0c4" stroke-width="1.5"/>
+
+  <circle cx="40" cy="102" r="6" fill="#b85c38" stroke="#f8f5f0" stroke-width="2"/>
+  <text class="mono ink2" x="60" y="106" font-size="11">JUNE 2026</text>
+  <rect x="376" y="93" width="80" height="18" rx="9" fill="#b85c38"/>
+  <text class="pill" x="416" y="106" font-size="10.5" text-anchor="middle">AI as bait</text>
+  <text class="serif" x="60" y="126" font-size="16">The lure</text>
+  <text class="serif" x="60" y="148" font-size="13">A wallet engineer downloads a tampered Homebrew</text>
+  <text class="serif" x="60" y="166" font-size="13">installer while looking for an AI coding tool.</text>
+
+  <circle cx="40" cy="192" r="6" fill="#a39b8f" stroke="#f8f5f0" stroke-width="2"/>
+  <text class="mono ink2" x="60" y="196" font-size="11">SEPTEMBER 2026</text>
+  <text class="serif" x="60" y="216" font-size="16">The interview</text>
+  <text class="serif" x="60" y="238" font-size="13">A second engineer is approached on LinkedIn. A fake</text>
+  <text class="serif" x="60" y="256" font-size="13">HR call, a fake CEO call, then a malicious take-home</text>
+  <text class="serif" x="60" y="274" font-size="13">assignment that infects his work laptop.</text>
+
+  <circle cx="40" cy="300" r="6" fill="#b85c38" stroke="#f8f5f0" stroke-width="2"/>
+  <text class="mono ink2" x="60" y="304" font-size="11">20 OCTOBER 2026</text>
+  <rect x="344" y="291" width="112" height="18" rx="9" fill="#b85c38"/>
+  <text class="pill" x="400" y="304" font-size="10.5" text-anchor="middle">AI as the pivot</text>
+  <text class="serif" x="60" y="324" font-size="16">The pivot</text>
+  <text class="serif" x="60" y="346" font-size="13">From that laptop the attackers use Binance's own</text>
+  <text class="serif" x="60" y="364" font-size="13">internal AI tools to take over two more wallet</text>
+  <text class="serif" x="60" y="382" font-size="13">engineers' machines.</text>
+
+  <circle cx="40" cy="408" r="6" fill="#a39b8f" stroke="#f8f5f0" stroke-width="2"/>
+  <text class="mono ink2" x="60" y="412" font-size="11">29 OCTOBER 2026</text>
+  <text class="serif" x="60" y="432" font-size="16">The drain</text>
+  <text class="serif" x="60" y="454" font-size="13">An EIP-7702 authorization gives a malicious contract</text>
+  <text class="serif" x="60" y="472" font-size="13">partial control of a hot wallet. About $6.3 billion</text>
+  <text class="serif" x="60" y="490" font-size="13">leaves in roughly 20 minutes.</text>
+
+  <text class="mono ink2" x="24" y="522" font-size="10.5">Binance hasn't said how the internal AI tool was misused.</text>
+  <text class="mono ink2" x="24" y="537" font-size="10.5">Sources: Binance report via Fortune, NBC, Security Affairs.</text>
+</svg>
