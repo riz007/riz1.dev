@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { setRequestLocale } from "next-intl/server";
 import { getPostBySlug, getPostSlugs, getRelatedPosts } from "../../../../lib/posts";
+import { pageMetadata } from "../../../../lib/seo";
 
 const BASE = "https://riz1.dev";
 
@@ -12,34 +13,27 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }) {
   const { slug, locale } = await params;
-  try {
-    const post = await getPostBySlug(slug);
-    return {
+  const post = await getPostBySlug(slug).catch(() => null);
+  if (!post) return { title: "Post" };
+  return {
+    ...pageMetadata({
+      locale,
+      path: `/blog/${slug}`,
       title: post.title,
       description: post.description,
-      // English-only bodies: no hreflang, canonical to /en.
-      alternates: { canonical: `${BASE}/en/blog/${slug}` },
-      keywords: post.tags,
-      authors: [{ name: "Rizwanul Islam Rudra", url: BASE }],
+      type: "article",
+      translated: false,
       openGraph: {
-        type: "article",
         title: post.title,
-        description: post.description,
-        url: `${BASE}/${locale}/blog/${slug}`,
         publishedTime: post.isoDateTime,
         modifiedTime: post.isoDateTime,
         authors: [BASE],
         tags: post.tags,
       },
-      twitter: {
-        card: "summary_large_image",
-        title: post.title,
-        description: post.description,
-      },
-    };
-  } catch {
-    return { title: "Post" };
-  }
+    }),
+    keywords: post.tags,
+    authors: [{ name: "Rizwanul Islam Rudra", url: BASE }],
+  };
 }
 
 export default async function BlogPostPage({ params }) {

@@ -1,33 +1,18 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import links from "../../../data/links.json";
+import { pageMetadata } from "../../../lib/seo";
 
 const BASE = "https://riz1.dev";
 
 export async function generateMetadata({ params }) {
   const { locale } = await params;
-  return {
+  return pageMetadata({
+    locale,
+    path: "/links",
     title: "Links",
     description:
-      "A curated collection of resources on AI engineering, agentic systems, software architecture, and engineering craft — tools and references Rizwanul Islam Rudra finds valuable.",
-    alternates: {
-      canonical: `${BASE}/${locale}/links`,
-      languages: {
-        "x-default": `${BASE}/en/links`,
-        en: `${BASE}/en/links`,
-        bn: `${BASE}/bn/links`,
-        th: `${BASE}/th/links`,
-        zh: `${BASE}/zh/links`,
-        de: `${BASE}/de/links`,
-      },
-    },
-    openGraph: {
-      type: "website",
-      url: `${BASE}/${locale}/links`,
-      title: "Links — Rizwanul Islam Rudra",
-      description:
-        "Curated resources on AI engineering, agentic systems, software architecture, and engineering craft.",
-    },
-  };
+      "Curated resources on AI engineering, agentic systems, software architecture and engineering craft that Rizwanul Islam Rudra keeps returning to.",
+  });
 }
 
 export default async function LinksPage({ params }) {

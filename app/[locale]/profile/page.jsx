@@ -5,33 +5,22 @@ import { projects } from "../../../data/projects";
 import { getPostsIndex } from "../../../lib/posts";
 import ProfileArticle from "../../../components/ProfileArticle";
 import { identityFor } from "../../../data/identity";
+import { pageMetadata } from "../../../lib/seo";
 
 const BASE = "https://riz1.dev";
 const LOCALES = ["en", "bn", "th", "zh", "de"];
 
 export async function generateMetadata({ params }) {
   const { locale } = await params;
-  const languages = Object.fromEntries(
-    LOCALES.map((l) => [l, `${BASE}/${l}/profile`])
-  );
-  return {
+  return pageMetadata({
+    locale,
+    path: "/profile",
     title: "Profile",
     description:
-      "Rizwanul Islam Rudra — senior software engineer and technical lead in Bangkok. Software engineering and system design, agentic AI systems, and the technical leadership to ship them. 10+ years across the software lifecycle.",
-    alternates: {
-      canonical: `${BASE}/${locale}/profile`,
-      languages: { "x-default": `${BASE}/en/profile`, ...languages },
-    },
-    openGraph: {
-      type: "profile",
-      firstName: "Rizwanul",
-      lastName: "Rudra",
-      url: `${BASE}/${locale}/profile`,
-      title: "Rizwanul Islam Rudra — Senior Software Engineer & Technical Lead",
-      description:
-        "Software engineering and system design, agentic AI systems, and engineering leadership — 10+ years, based in Bangkok.",
-    },
-  };
+      "Experience, capabilities and open-source work of Rizwanul Islam Rudra: senior software engineer and technical lead in Bangkok with 10+ years.",
+    type: "profile",
+    openGraph: { firstName: "Rizwanul", lastName: "Rudra" },
+  });
 }
 
 export default async function ProfilePage({ params }) {

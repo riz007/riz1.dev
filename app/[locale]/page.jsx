@@ -5,6 +5,7 @@ import { getPostsIndex } from "../../lib/posts";
 import links from "../../data/links.json";
 import Desktop from "../../components/os/Desktop";
 import { identityFor } from "../../data/identity";
+import { pageMetadata } from "../../lib/seo";
 
 const BASE = "https://riz1.dev";
 
@@ -50,34 +51,23 @@ async function getContributions() {
 
 export async function generateMetadata({ params }) {
   const { locale } = await params;
-  return {
-    title: "Rizwanul Islam Rudra — Senior Software Engineer & Technical Lead",
+  return pageMetadata({
+    locale,
+    path: "",
+    title: { absolute: "Rizwanul Islam Rudra — Senior Software Engineer & Technical Lead" },
     description:
-      "Senior software engineer and technical lead in Bangkok with 10+ years across the software lifecycle — software engineering and system design, agentic AI systems, and the technical leadership to ship them.",
-    alternates: {
-      canonical: `${BASE}/${locale}`,
-      languages: {
-        "x-default": `${BASE}/en`,
-        en: `${BASE}/en`,
-        bn: `${BASE}/bn`,
-        th: `${BASE}/th`,
-        zh: `${BASE}/zh`,
-        de: `${BASE}/de`,
-      },
-    },
-    openGraph: {
-      type: "profile",
-      firstName: "Rizwanul",
-      lastName: "Rudra",
-      url: `${BASE}/${locale}`,
-    },
-  };
+      "Senior software engineer and technical lead in Bangkok. 10+ years in software engineering, system design, agentic AI systems and team leadership.",
+    type: "profile",
+    openGraph: { firstName: "Rizwanul", lastName: "Rudra" },
+  });
 }
 
 const personSchema = {
   "@context": "https://schema.org",
   "@type": "Person",
+  "@id": `${BASE}/#person`,
   name: "Rizwanul Islam Rudra",
+  image: `${BASE}/opengraph-image`,
   url: BASE,
   jobTitle: "Senior Software Engineer & Technical Lead",
   description:
@@ -114,7 +104,14 @@ const personSchema = {
     "Node.js",
     "Python",
   ],
-  worksFor: { "@type": "Organization", name: "Tech Company in Bangkok" },
+};
+
+const siteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "riz1.dev",
+  url: BASE,
+  author: { "@id": `${BASE}/#person` },
 };
 
 const SOCIALS = [
@@ -162,7 +159,7 @@ export default async function HomePage({ params }) {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify([personSchema, siteSchema]) }}
       />
       <Desktop locale={locale} data={data} />
     </>

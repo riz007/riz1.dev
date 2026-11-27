@@ -1,37 +1,20 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import Link from "next/link";
 import { getAllTags, getPostsIndex } from "../../../lib/posts";
+import { pageMetadata } from "../../../lib/seo";
 
 const BASE = "https://riz1.dev";
 const LOCALES = ["en", "bn", "th", "zh", "de"];
 
 export async function generateMetadata({ params }) {
   const { locale } = await params;
-  const languages = Object.fromEntries(
-    LOCALES.map((l) => [l, `${BASE}/${l}/blog`])
-  );
-  return {
+  return pageMetadata({
+    locale,
+    path: "/blog",
     title: "Writing",
     description:
-      "Technical blog on frontend architecture, AI-powered applications, system design, and engineering leadership by Rizwanul Islam Rudra.",
-    alternates: {
-      // Translated route: self-canonical, so the hreflang set holds.
-      canonical: `${BASE}/${locale}/blog`,
-      languages: { "x-default": `${BASE}/en/blog`, ...languages },
-      types: {
-        "application/rss+xml": [
-          { url: `${BASE}/feed.xml`, title: "riz1.dev — Writing" },
-        ],
-      },
-    },
-    openGraph: {
-      type: "website",
-      url: `${BASE}/${locale}/blog`,
-      title: "Writing — Rizwanul Islam Rudra",
-      description:
-        "Technical blog on frontend architecture, AI-powered applications, system design, and engineering leadership.",
-    },
-  };
+      "Articles on AI engineering, agentic systems, system design, software architecture and engineering leadership by Rizwanul Islam Rudra.",
+  });
 }
 
 export default async function BlogPage({ params }) {

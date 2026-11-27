@@ -14,22 +14,25 @@ const TRANSLATED_ROUTES = [
 
 export default async function sitemap() {
   const [posts, tags] = await Promise.all([getPostsIndex(), getAllTags()]);
-  const now = new Date();
-  const newestPost = posts[0]?.isoDateTime ? new Date(posts[0].isoDateTime) : now;
+  const newestPost = posts[0]?.isoDateTime ? new Date(posts[0].isoDateTime) : undefined;
 
   const statics = LOCALES.flatMap((locale) =>
     TRANSLATED_ROUTES.map((r) => ({
       url: `${BASE}/${locale}${r.path}`,
-      lastModified: r.path === "/blog" ? newestPost : now,
+      // Only the blog index has a real change date to report.
+      ...(r.path === "/blog" && { lastModified: newestPost }),
       changeFrequency: r.changeFrequency,
       priority: r.priority,
+      alternates: {
+        languages: Object.fromEntries(LOCALES.map((l) => [l, `${BASE}/${l}${r.path}`])),
+      },
     }))
   );
 
   /* Post bodies are English only; every locale canonicalises to /en. */
   const articles = posts.map((post) => ({
     url: `${BASE}/en/blog/${post.slug}`,
-    lastModified: post.isoDateTime ? new Date(post.isoDateTime) : now,
+    lastModified: post.isoDateTime ? new Date(post.isoDateTime) : undefined,
     changeFrequency: "monthly",
     priority: 0.8,
   }));

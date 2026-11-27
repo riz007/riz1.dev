@@ -1,33 +1,18 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { ComplexityChart, AlgorithmsInAI, WhyItStillMatters } from "../../../components/DsaVisuals";
+import { pageMetadata } from "../../../lib/seo";
 
 const BASE = "https://riz1.dev";
 
 export async function generateMetadata({ params }) {
   const { locale } = await params;
-  return {
+  return pageMetadata({
+    locale,
+    path: "/dsa",
     title: "Data Structures & Algorithms",
     description:
-      "Data structures and algorithms explained for modern software engineers and AI systems builders — complexity analysis, why DSA powers AI, and interactive visualizations.",
-    alternates: {
-      canonical: `${BASE}/${locale}/dsa`,
-      languages: {
-        "x-default": `${BASE}/en/dsa`,
-        en: `${BASE}/en/dsa`,
-        bn: `${BASE}/bn/dsa`,
-        th: `${BASE}/th/dsa`,
-        zh: `${BASE}/zh/dsa`,
-        de: `${BASE}/de/dsa`,
-      },
-    },
-    openGraph: {
-      type: "article",
-      url: `${BASE}/${locale}/dsa`,
-      title: "Data Structures & Algorithms — Rizwanul Islam Rudra",
-      description:
-        "Complexity analysis, why DSA still matters in the AI age, and how classical algorithms power modern AI systems.",
-    },
-  };
+      "Data structures and algorithms for software engineers and AI builders: complexity analysis, why they power AI, and visual explanations.",
+  });
 }
 
 export default async function DsaPage({ params }) {

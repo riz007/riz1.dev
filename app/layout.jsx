@@ -52,14 +52,6 @@ export const metadata = {
     title: "Rizwanul Islam Rudra — Senior Software Engineer & Technical Lead",
     description:
       "Software engineering and system design, agentic AI systems, and the technical leadership to ship them — maintainable, performant, and built to evolve. 10+ years, based in Bangkok.",
-    images: [
-      {
-        url: "/opengraph-image",
-        width: 1200,
-        height: 630,
-        alt: "Rizwanul Islam Rudra — Senior Software Engineer & Technical Lead",
-      },
-    ],
   },
 
   twitter: {
@@ -67,7 +59,6 @@ export const metadata = {
     title: "Rizwanul Islam Rudra — Senior Software Engineer & Technical Lead",
     description:
       "Software engineering, system design, and agentic AI systems — 10+ years, based in Bangkok.",
-    images: ["/opengraph-image"],
     creator: "@riz007",
   },
 

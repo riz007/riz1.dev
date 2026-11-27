@@ -20,15 +20,15 @@ yarn build    # production build
 
 ## Layout
 
-| Path                    | What lives there                                  |
-| ----------------------- | ------------------------------------------------- |
-| `app/[locale]/`         | Routes; `/[locale]` is the RudraOS desktop        |
-| `components/os/`        | Desktop shell: windows, dock, terminal, search    |
-| `components/`           | Shared and editorial components                   |
-| `data/`                 | Profile, projects and links                       |
-| `posts/`                | Blog posts in Markdown                            |
-| `messages/`             | Translations: `en`, `bn`, `th`, `zh`, `de`        |
-| `app/tokens.css`        | Colour, type and spacing tokens                   |
+| Path             | What lives there                               |
+| ---------------- | ---------------------------------------------- |
+| `app/[locale]/`  | Routes; `/[locale]` is the RudraOS desktop     |
+| `components/os/` | Desktop shell: windows, dock, terminal, search |
+| `components/`    | Shared and editorial components                |
+| `data/`          | Profile, projects and links                    |
+| `posts/`         | Blog posts in Markdown                         |
+| `messages/`      | Translations: `en`, `bn`, `th`, `zh`, `de`     |
+| `app/tokens.css` | Colour, type and spacing tokens                |
 
 ## Design
 
@@ -44,6 +44,9 @@ Read `design.md` before changing anything visual. It is the source of truth.
 - Every control has an accessible name. Check contrast, keyboard focus and
   reduced motion for anything new.
 - Route `params` are promises: `await` them.
+- A new page builds its metadata with `pageMetadata` from `lib/seo.js` and gets an
+  `opengraph-image.jsx` that calls `ogCard` from `lib/og.jsx`. Add it to
+  `app/sitemap.js`.
 - A post needs `title`, `date` (YYYY-MM-DD), `description` and `tags` in its
   front matter. Post bodies are English only.
 - Facts about the author (roles, dates, employers, skills) come from `data/`.

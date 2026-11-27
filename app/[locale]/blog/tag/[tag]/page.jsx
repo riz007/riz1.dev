@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { setRequestLocale } from "next-intl/server";
 import { getAllTags, getPostsByTag } from "../../../../../lib/posts";
+import { pageMetadata } from "../../../../../lib/seo";
 
 const BASE = "https://riz1.dev";
 
@@ -19,16 +20,13 @@ export async function generateMetadata({ params }) {
   const { tag, locale } = await params;
   const found = await findTag(tag);
   if (!found) return { title: "Topic" };
-  return {
+  return pageMetadata({
+    locale,
+    path: `/blog/tag/${tag}`,
     title: `${found.name} — Writing`,
     description: `Articles on ${found.name} by Rizwanul Islam Rudra — ${found.count} post${found.count === 1 ? "" : "s"} on engineering practice, architecture, and AI systems.`,
-    alternates: { canonical: `${BASE}/en/blog/tag/${tag}` },
-    openGraph: {
-      type: "website",
-      url: `${BASE}/${locale}/blog/tag/${tag}`,
-      title: `${found.name} — Writing by Rizwanul Islam Rudra`,
-    },
-  };
+    translated: false,
+  });
 }
 
 export default async function TagPage({ params }) {
