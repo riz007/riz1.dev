@@ -1,8 +1,8 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
-const DOCK_SAFE = 96;
+const DOCK_SAFE = 110;
 const MENUBAR = 36;
 const SNAP_EDGE = 14;
 
@@ -24,6 +24,15 @@ export default function Window({
   const drag = useRef(null);
   // suppresses the position transition while the user is actively dragging/resizing
   const [live, setLive] = useState(false);
+  const ref = useRef(null);
+
+  // Windows a person opens take focus; the ones opened at load don't.
+  useEffect(() => {
+    if (!focused || !win.takeFocus) return;
+    const el = ref.current;
+    if (!el.contains(document.activeElement)) el.focus({ preventScroll: true });
+    if (isMobile) el.scrollIntoView({ block: "start" });
+  }, [focused, win.takeFocus, win.z, isMobile]);
 
   const startDrag = (e) => {
     // let the traffic-light buttons receive their clicks untouched
@@ -121,10 +130,12 @@ export default function Window({
 
   return (
     <section
+      ref={ref}
       data-winid={win.id}
       className={`os-window${focused ? " focused" : ""}${win.max ? " max" : ""}${win.min ? " min" : ""}${win.closing ? " closing" : ""}${live ? " live" : ""}${win.minimizing ? " minimizing" : ""}${win.restoring ? " restoring" : ""}${ov ? " ov" : ""}`}
       style={style}
       onPointerDown={() => onFocus(win.id)}
+      onContextMenu={(e) => e.stopPropagation()}
       role="dialog"
       aria-label={win.title}
       onKeyDown={(e) => { if (e.key === "Escape") onClose(win.id); }}
@@ -146,12 +157,11 @@ export default function Window({
           onPointerDown={(e) => e.stopPropagation()}
           onDoubleClick={(e) => e.stopPropagation()}
         >
-          <button className="os-light red" aria-label="Close window" onClick={() => onClose(win.id)}><span>×</span></button>
-          <button className="os-light yellow" aria-label="Minimize window" onClick={() => onMinimize(win.id)}><span>–</span></button>
-          <button className="os-light green" aria-label="Maximize window" onClick={() => onMaximize(win.id)}><span>+</span></button>
+          <button className="os-light red" type="button" aria-label={`Close ${win.title}`} onClick={() => onClose(win.id)}><span>×</span></button>
+          <button className="os-light yellow" type="button" aria-label={`Minimize ${win.title}`} onClick={() => onMinimize(win.id)}><span>–</span></button>
+          <button className="os-light green" type="button" aria-label={`Maximize ${win.title}`} onClick={() => onMaximize(win.id)}><span>+</span></button>
         </div>
         <span className="os-title">
-          <span className="os-title-ico">{win.icon}</span>
           {win.title}
         </span>
       </header>

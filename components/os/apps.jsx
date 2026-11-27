@@ -4,26 +4,30 @@ import { useEffect, useState } from "react";
 
 /* Window registry — order defines the dock. Terminal is rendered specially. */
 export const APPS = [
-  { id: "terminal",     title: "agent://terminal", icon: "▸", w: 480, h: 340 },
-  { id: "about",        title: "about.md",         icon: "◈", w: 480, h: 500 },
-  { id: "projects",     title: "~/projects",       icon: "❒", w: 560, h: 500 },
-  { id: "experience",   title: "experience.log",   icon: "❯", w: 440, h: 420 },
-  { id: "skills",       title: "stack.json",       icon: "⬡", w: 440, h: 340 },
-  { id: "capabilities", title: "capabilities",     icon: "◇", w: 480, h: 400 },
-  { id: "blog",         title: "writing",          icon: "✎", w: 540, h: 470 },
-  { id: "dsa",          title: "algorithms",       icon: "∑", w: 640, h: 540 },
-  { id: "links",        title: "links",            icon: "⚯", w: 500, h: 420 },
-  { id: "contact",      title: "contact",          icon: "✉", w: 430, h: 380 },
+  { id: "terminal",     title: "agent://terminal", w: 480, h: 340 },
+  { id: "about",        title: "about.md",         w: 480, h: 500 },
+  { id: "projects",     title: "~/projects",       w: 560, h: 500 },
+  { id: "experience",   title: "experience.log",   w: 440, h: 420 },
+  { id: "skills",       title: "stack.json",       w: 440, h: 340 },
+  { id: "capabilities", title: "capabilities",     w: 480, h: 400 },
+  { id: "blog",         title: "writing",          w: 540, h: 470 },
+  { id: "dsa",          title: "algorithms",       w: 640, h: 540 },
+  { id: "links",        title: "links",            w: 500, h: 420 },
+  { id: "contact",      title: "contact",          w: 430, h: 380 },
 ];
 
-/* apps shown in the dock (terminal + a curated subset) */
-export const DOCK = ["terminal", "about", "projects", "experience", "skills", "blog", "dsa", "links", "contact"];
-
-const DOCK_ICON = {
-  terminal: "▸", about: "◈", projects: "❒", experience: "❯", skills: "⬡",
-  blog: "✎", dsa: "∑", links: "⚯", contact: "✉",
-};
-export const dockIcon = (id) => DOCK_ICON[id] || "▢";
+/* apps shown in the dock; labels are what a first-time visitor would look for */
+export const DOCK = [
+  { id: "about", label: "About" },
+  { id: "projects", label: "Projects" },
+  { id: "experience", label: "Experience" },
+  { id: "skills", label: "Skills" },
+  { id: "blog", label: "Writing" },
+  { id: "dsa", label: "Algorithms" },
+  { id: "links", label: "Links" },
+  { id: "terminal", label: "Terminal" },
+  { id: "contact", label: "Contact" },
+];
 
 export function AppContent({ id, data, onOpen, onReadPost }) {
   switch (id) {
@@ -59,7 +63,7 @@ export function Reader({ post, l }) {
     <article className="reader">
       <header className="reader-head">
         <div className="os-eyebrow">{post.date} · {post.readingTime} min read</div>
-        <h1 className="reader-title">{post.title}</h1>
+        <h2 className="reader-title">{post.title}</h2>
         {post.description && <p className="reader-desc">{post.description}</p>}
       </header>
       {body ? (
@@ -103,7 +107,7 @@ function About({ identity, onOpen }) {
         <a className="about-social-link" href={`mailto:${identity.email}`}>{identity.email}</a>
       </div>
       <p className="about-prompt">
-        <span className="c">agent{">"}</span> want the tour? run <button className="os-link" style={{ background: "none", border: "none", padding: 0 }} onClick={() => onOpen("projects")}>projects</button>, <button className="os-link" style={{ background: "none", border: "none", padding: 0 }} onClick={() => onOpen("experience")}>experience</button>, or <button className="os-link" style={{ background: "none", border: "none", padding: 0 }} onClick={() => onOpen("blog")}>writing</button>.
+        <span className="c">agent{">"}</span> want the tour? run <button type="button" className="os-link" onClick={() => onOpen("projects")}>projects</button>, <button type="button" className="os-link" onClick={() => onOpen("experience")}>experience</button>, or <button type="button" className="os-link" onClick={() => onOpen("blog")}>writing</button>.
       </p>
       <p className="about-legal">Opinions are my own, not my employers&apos; — past or present.</p>
     </div>
@@ -231,7 +235,7 @@ function Dsa({ l }) {
     <article className="reader">
       <header className="reader-head">
         <div className="os-eyebrow">long-form essay</div>
-        <h1 className="reader-title">{l.dsaTitle}</h1>
+        <h2 className="reader-title">{l.dsaTitle}</h2>
         <p className="reader-desc">{l.dsaLead}</p>
       </header>
       <div className="os-prose">

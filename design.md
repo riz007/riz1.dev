@@ -4,8 +4,15 @@ The site has two surfaces: **RudraOS**, the desktop shell at `/[locale]`, and th
 **editorial pages** at `/profile`, `/blog`, `/dsa`, `/links`. They are two
 surfaces of one system, not two systems.
 
-Tokens live in `app/tokens.css`. Both surfaces resolve the same names; only
-lightness and chroma change between light and dark. Colour is OKLCH throughout.
+Tokens live in `app/tokens.css`. Both surfaces resolve the same names. Colour is
+OKLCH throughout.
+
+## Direction
+
+An early-90s workstation: pinstriped title bars, square window controls, 2px
+outlines, hard offset shadows, a dithered desktop and 12×12 pixel icons.
+Editorial pages are documents opened in that OS. No blur, glass, soft shadows,
+gradient meshes or rounded corners.
 
 ## Colour
 
@@ -23,63 +30,48 @@ every grade.
 The grade is stored on `<html data-palette>` and persisted in `localStorage`
 under `palette-preference`. Light/dark is a separate axis (`data-theme`,
 `theme-preference`); both are applied by an inline script in
-`app/[locale]/layout.jsx` before first paint.
+`app/[locale]/layout.jsx` before first paint. Switching language is a full page
+load so these attributes survive.
 
 Rules:
 
-- One accent. Neutrals tint toward the anchor hue — never flat grey.
-- No pure black or white. No gradients across unrelated hues.
-- The accent stays under ~5% of any viewport: links, focus rings, active states,
-  a primary action. Not section fills.
-- Dark surface: paper ~15% L, ink ~94% L, body weight drops to 350, elevation
-  goes lighter rather than darker.
+- All three ink levels clear 4.5:1 on paper and chrome. `--color-rule` is for
+  decorative dividers only; control edges use `--color-edge`.
+- The dithered desktop carries no text.
+- Dark mode is a phosphor screen: the accent tints edges and the desktop.
 
 ## Typography
 
-Three families, which is the ceiling.
+- Display — **Pixelify Sans**: names, headings, title bars. Never body copy or
+  anything under 1rem.
+- Body — **IBM Plex Sans**.
+- Controls, meta and code — **IBM Plex Mono**.
 
-- Display — **Fraunces**, weights 300–600, always roman.
-- Body — **Spectral**, weights 300–500.
-- Meta and labels — **JetBrains Mono**.
-
-Italic is body-copy emphasis only (`.prose em`, blockquote). Headings and
-display type are never italic.
-
-The shell uses mono as its UI face; a terminal aesthetic is monospace on
-purpose. On editorial pages mono stays in its two roles: meta lines and code.
-
-Measure is 65ch, 68ch maximum on prose. Scale is a perfect fourth anchored at
-`--text-base` 1.0625rem.
+Pixelify Sans is Latin only; other scripts fall back to the system face.
 
 ## Layout
 
-4-point spacing scale. Use the named tokens (`var(--space-md)`), not raw values.
+4-point spacing scale. Use the named tokens.
 
-- Content pages (`/profile`, `/blog/[slug]`, `/dsa`) read as a single document:
-  continuous prose, inline section heads, hairline rules.
-- Index pages (`/blog`, `/blog/tag/[tag]`, `/links`) are lists of links first.
-- The shell owns its own layout — the desktop metaphor, not a page shape.
+- Home: a fixed profile card (name, role, facts, contact, "start here" links)
+  that must be readable without opening anything. Only the terminal opens by
+  itself, on screens 1200px and wider.
+- Short screens (≤860px tall) widen the card so its links stay above the fold.
+- Phones (≤720px): one scrolling column — card, app grid, open windows.
+- `/profile` has a print stylesheet; it doubles as the résumé.
 
-Header is a centred masthead: meta line, wordmark, inline nav, rule below. The
-wordmark is a link, never an `<h1>` — every page already has a content `<h1>`.
-Footer anchors the wordmark in one band with navigation beside it.
+## Controls and accessibility
+
+Menus, the search palette, the dock toolbar and buttons come from
+`@ui-sdk/react` and are styled here via `data-slot` and state attributes.
+`test/` checks that an agent can find and operate them (`yarn test`).
+
+- Buttons: 2px edge, hard shadow, pressed state moves into the shadow.
+- Icon-only controls carry a name; a visible label is part of that name.
+- Focus is a 3px outline. Windows a person opens take focus and give it back to
+  the dock when closed.
 
 ## Motion
 
-- Easings `--ease-out` / `--ease-in` / `--ease-in-out`; durations 120 / 220 / 420ms.
-- Animate `transform` and `opacity` only.
-- One entrance per page. Under reduced motion, opacity only, ≤150ms.
-- Focus rings appear instantly and are never animated.
-
-## Interaction
-
-- Silent success — no celebratory toasts.
-- Hover tooltips delay 800ms, focus tooltips 0ms.
-- Links underline via `text-decoration-color`; no layout shift on hover.
-- Primary action: solid accent fill, 4px radius. Secondary: hairline border,
-  same radius and padding rhythm. No gradient fills. Pills are shell chrome only.
-
-## What every page shares
-
-The wordmark and masthead rhythm, the accent hue and its placement, the three
-faces, the button voice, the spacing scale, the hairline rule weight.
+Stepped, short transitions on windows. Reduced motion removes them and skips
+the boot screen; any key skips it otherwise.

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { capabilityCards, experience, skills } from "../../../data/profile";
 import { projects } from "../../../data/projects";
 import { getPostsIndex } from "../../../lib/posts";
@@ -9,7 +9,8 @@ import { identityFor } from "../../../data/identity";
 const BASE = "https://riz1.dev";
 const LOCALES = ["en", "bn", "th", "zh", "de"];
 
-export async function generateMetadata({ params: { locale } }) {
+export async function generateMetadata({ params }) {
+  const { locale } = await params;
   const languages = Object.fromEntries(
     LOCALES.map((l) => [l, `${BASE}/${l}/profile`])
   );
@@ -33,8 +34,9 @@ export async function generateMetadata({ params: { locale } }) {
   };
 }
 
-export default async function ProfilePage({ params: { locale } }) {
-  unstable_setRequestLocale(locale);
+export default async function ProfilePage({ params }) {
+  const { locale } = await params;
+  setRequestLocale(locale);
   const t = await getTranslations("home");
   const tb = await getTranslations("blog");
   const td = await getTranslations("dsa");

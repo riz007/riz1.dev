@@ -1,24 +1,23 @@
-import { Fraunces, Spectral, JetBrains_Mono } from "next/font/google";
+import { Pixelify_Sans, IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
 
-const display = Fraunces({
+const display = Pixelify_Sans({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
-  variable: "--font-fraunces",
+  variable: "--font-pixel",
   display: "swap",
 });
 
-const body = Spectral({
-  subsets: ["latin"],
-  weight: ["300", "400", "500"],
-  style: ["normal", "italic"],
-  variable: "--font-spectral",
-  display: "swap",
-});
-
-const mono = JetBrains_Mono({
+const body = IBM_Plex_Sans({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
-  variable: "--font-jetbrains",
+  style: ["normal", "italic"],
+  variable: "--font-plex-sans",
+  display: "swap",
+});
+
+const mono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-plex-mono",
   display: "swap",
 });
 

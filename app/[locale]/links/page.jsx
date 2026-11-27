@@ -1,9 +1,10 @@
-import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import links from "../../../data/links.json";
 
 const BASE = "https://riz1.dev";
 
-export async function generateMetadata({ params: { locale } }) {
+export async function generateMetadata({ params }) {
+  const { locale } = await params;
   return {
     title: "Links",
     description:
@@ -29,16 +30,13 @@ export async function generateMetadata({ params: { locale } }) {
   };
 }
 
-export default async function LinksPage({ params: { locale } }) {
-  unstable_setRequestLocale(locale);
+export default async function LinksPage({ params }) {
+  const { locale } = await params;
+  setRequestLocale(locale);
   const t = await getTranslations("links");
 
   return (
     <div className="fade-in">
-      <div className="section-eyebrow">
-        <span className="section-eyebrow-num">Links</span>
-        <hr className="section-eyebrow-line" />
-      </div>
       <h1 className="section-h">{t("title")}</h1>
       <p className="section-lead">{t("subtitle")}</p>
 

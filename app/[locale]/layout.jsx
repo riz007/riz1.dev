@@ -1,11 +1,12 @@
 import { notFound } from "next/navigation";
 import { NextIntlClientProvider } from "next-intl";
-import { getMessages, unstable_setRequestLocale } from "next-intl/server";
+import { getMessages, setRequestLocale } from "next-intl/server";
 import Script from "next/script";
 import { fontVariables } from "../fonts";
 import { locales } from "../../i18n/routing";
 import SiteFooter from "../../components/SiteFooter";
 import SiteHeader from "../../components/SiteHeader";
+import SiteShell from "../../components/SiteShell";
 
 const BASE = "https://riz1.dev";
 
@@ -16,9 +17,10 @@ export function generateStaticParams() {
 /* Without this, /anything resolves as a locale and returns 200. */
 export const dynamicParams = false;
 
-export default async function LocaleLayout({ children, params: { locale } }) {
+export default async function LocaleLayout({ children, params }) {
+  const { locale } = await params;
   if (!locales.includes(locale)) notFound();
-  unstable_setRequestLocale(locale);
+  setRequestLocale(locale);
   const messages = await getMessages();
 
   return (
@@ -38,11 +40,9 @@ export default async function LocaleLayout({ children, params: { locale } }) {
       </head>
       <body suppressHydrationWarning>
         <NextIntlClientProvider messages={messages}>
-          <div className="shell">
-            <SiteHeader locale={locale} />
-            <main className="container page">{children}</main>
-            <SiteFooter locale={locale} />
-          </div>
+          <SiteShell header={<SiteHeader locale={locale} />} footer={<SiteFooter locale={locale} />}>
+            {children}
+          </SiteShell>
         </NextIntlClientProvider>
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-WCHT2DKSX2"

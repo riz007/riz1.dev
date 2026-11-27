@@ -10,7 +10,7 @@ This is the source code for my personal portfolio website, Rizfolio. It is built
 
 ## Tech Stack
 
-*   **Framework:** Next.js (React 18)
+*   **Framework:** Next.js 15 (React 19), ui-sdk
 *   **i18n:** next-intl
 *   **Content:** Markdown with `gray-matter` and `remark`
 

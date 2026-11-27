@@ -1,11 +1,12 @@
-import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import Link from "next/link";
 import { getAllTags, getPostsIndex } from "../../../lib/posts";
 
 const BASE = "https://riz1.dev";
 const LOCALES = ["en", "bn", "th", "zh", "de"];
 
-export async function generateMetadata({ params: { locale } }) {
+export async function generateMetadata({ params }) {
+  const { locale } = await params;
   const languages = Object.fromEntries(
     LOCALES.map((l) => [l, `${BASE}/${l}/blog`])
   );
@@ -33,8 +34,9 @@ export async function generateMetadata({ params: { locale } }) {
   };
 }
 
-export default async function BlogPage({ params: { locale } }) {
-  unstable_setRequestLocale(locale);
+export default async function BlogPage({ params }) {
+  const { locale } = await params;
+  setRequestLocale(locale);
   const t = await getTranslations("blog");
   const [posts, tags] = await Promise.all([getPostsIndex(), getAllTags()]);
 
@@ -89,13 +91,12 @@ export default async function BlogPage({ params: { locale } }) {
           </nav>
         )}
 
-        <div role="list">
+        <ul className="post-list">
           {posts.map((post) => (
+            <li key={post.slug}>
             <Link
-              role="listitem"
               className="post-row"
               href={`/${locale}/blog/${post.slug}`}
-              key={post.slug}
             >
               <span className="post-row-date">
                 {post.isoDate ? (
@@ -110,8 +111,9 @@ export default async function BlogPage({ params: { locale } }) {
                 <p className="post-row-meta">{post.readingTime} min read</p>
               </div>
             </Link>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </>
   );

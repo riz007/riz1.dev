@@ -1,4 +1,5 @@
 import Link from "next/link";
+import PrintButton from "./PrintButton";
 
 export default function ProfileArticle({ locale, identity, copy, experience, capabilities, skills, projects, posts }) {
   const featured = projects.filter((p) => p.featured);
@@ -7,8 +8,8 @@ export default function ProfileArticle({ locale, identity, copy, experience, cap
     <section className="profile" id="profile" aria-label="Profile">
       <div className="profile-inner">
         <header className="profile-hd">
-          <p className="profile-eyebrow">{identity.role}</p>
           <h1 className="profile-h1">{identity.name}</h1>
+          <p className="profile-role-line">{identity.role}</p>
           <p className="profile-lead">{identity.bio}</p>
           <dl className="profile-facts">
             <div><dt>Location</dt><dd>{identity.location}</dd></div>
@@ -17,11 +18,13 @@ export default function ProfileArticle({ locale, identity, copy, experience, cap
             <div><dt>Stack</dt><dd>{identity.stack}</dd></div>
             <div><dt>Education</dt><dd>{identity.education}</dd></div>
           </dl>
-          <p className="profile-cta">
-            <Link className="profile-btn" href={`/${locale}/blog`}>{copy.ctaPrimary}</Link>
-            <Link className="profile-btn ghost" href={`/${locale}/dsa`}>{copy.dsaTitle}</Link>
-            <Link className="profile-btn ghost" href={`/${locale}/links`}>{copy.ctaSecondary}</Link>
-          </p>
+          <div className="profile-cta">
+            <a className="retro-btn primary" href={`mailto:${identity.email}`}>Email me</a>
+            <a className="retro-btn" href={identity.linkedin} target="_blank" rel="noreferrer">LinkedIn ↗</a>
+            <a className="retro-btn" href={identity.github} target="_blank" rel="noreferrer">GitHub ↗</a>
+            <Link className="retro-btn" href={`/${locale}/blog`}>{copy.ctaPrimary}</Link>
+            <PrintButton />
+          </div>
         </header>
 
         <section className="profile-sec" aria-labelledby="h-capabilities">

@@ -1,4 +1,4 @@
-import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { capabilityCards, experience, skills } from "../../data/profile";
 import { projects } from "../../data/projects";
 import { getPostsIndex } from "../../lib/posts";
@@ -48,7 +48,8 @@ async function getContributions() {
   }
 }
 
-export async function generateMetadata({ params: { locale } }) {
+export async function generateMetadata({ params }) {
+  const { locale } = await params;
   return {
     title: "Rizwanul Islam Rudra — Senior Software Engineer & Technical Lead",
     description:
@@ -125,8 +126,9 @@ const SOCIALS = [
   { label: "IEEE", url: "https://ieeexplore.ieee.org/document/10202106" },
 ];
 
-export default async function HomePage({ params: { locale } }) {
-  unstable_setRequestLocale(locale);
+export default async function HomePage({ params }) {
+  const { locale } = await params;
+  setRequestLocale(locale);
   const t = await getTranslations("home");
   const tb = await getTranslations("blog");
   const td = await getTranslations("dsa");

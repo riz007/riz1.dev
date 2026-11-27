@@ -12,11 +12,13 @@ export default function RootNotFound() {
     <html lang="en" className={fontVariables} suppressHydrationWarning>
       <body suppressHydrationWarning>
         <div className="shell">
-          <main className="container page">
+          <main className="container doc">
+            <div className="page">
             <h1 className="section-h">Page not found</h1>
             <p className="section-lead">
               That page does not exist. <a href="/en">Head back to riz1.dev</a>.
             </p>
+            </div>
           </main>
         </div>
       </body>

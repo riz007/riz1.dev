@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { unstable_setRequestLocale } from "next-intl/server";
+import { setRequestLocale } from "next-intl/server";
 import { getPostBySlug, getPostSlugs, getRelatedPosts } from "../../../../lib/posts";
 
 const BASE = "https://riz1.dev";
@@ -10,7 +10,8 @@ export async function generateStaticParams() {
   return slugs.map((file) => ({ slug: file.replace(/\.md$/, "") }));
 }
 
-export async function generateMetadata({ params: { slug, locale } }) {
+export async function generateMetadata({ params }) {
+  const { slug, locale } = await params;
   try {
     const post = await getPostBySlug(slug);
     return {
@@ -41,8 +42,9 @@ export async function generateMetadata({ params: { slug, locale } }) {
   }
 }
 
-export default async function BlogPostPage({ params: { locale, slug } }) {
-  unstable_setRequestLocale(locale);
+export default async function BlogPostPage({ params }) {
+  const { locale, slug } = await params;
+  setRequestLocale(locale);
 
   let post;
   try {

@@ -1,17 +1,17 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { useRouter } from "next/navigation";
-import { APPS, DOCK, AppContent, Reader, dockIcon } from "./apps";
+import Link from "next/link";
+import { Button } from "@ui-sdk/react/button";
+import { Menu, MenuContent, MenuContextTrigger, MenuItem, MenuSeparator } from "@ui-sdk/react/menu";
+import { Toolbar, ToolbarButton } from "@ui-sdk/react/toolbar";
+import { APPS, DOCK, AppContent, Reader } from "./apps";
+import PixelIcon from "./PixelIcon";
+import { ColourMenu, LanguageMenu, ThemeButton, setTheme } from "../Preferences";
 import Window from "./Window";
 import Terminal from "./Terminal";
 import Spotlight from "./Spotlight";
 import "./os.css";
-
-const LOCALES = ["en", "bn", "th", "zh", "de"];
-const THEME_KEY = "theme-preference";
-const PALETTE_KEY = "palette-preference";
-const PALETTES = ["ember", "vermilion", "cobalt", "garden", "plum"];
 
 /* GitHub contribution calendar as ambient desktop art — pure decoration,
    sits behind the windows and fades toward the edges. */
@@ -34,8 +34,7 @@ function ContributionField({ levels }) {
               y={y * (CELL + GAP)}
               width={CELL}
               height={CELL}
-              rx="2.5"
-            />
+                          />
           ))
         )}
       </svg>
@@ -47,12 +46,11 @@ function ContributionField({ levels }) {
 const BOOT_LINES = [
   "mounting /about /projects /experience",
   "loading knowledge base — 20 skills indexed",
-  "linking tools: writing · algorithms · links",
+  "linking tools: writing, algorithms, links",
   "agent online",
 ];
 
 export default function Desktop({ locale, data }) {
-  const router = useRouter();
   const [booted, setBooted] = useState(false);
   const [bootOut, setBootOut] = useState(false);
   const [bootStep, setBootStep] = useState(0);
@@ -60,10 +58,6 @@ export default function Desktop({ locale, data }) {
   const [focusId, setFocusId] = useState(null);
   const [clock, setClock] = useState("");
   const [running, setRunning] = useState(false);
-  const [langOpen, setLangOpen] = useState(false);
-  const [palOpen, setPalOpen] = useState(false);
-  const [palette, setPalette] = useState("ember");
-  const [ctx, setCtx] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
   const [showHint, setShowHint] = useState(false);
   const [snapPreview, setSnapPreview] = useState(null);
@@ -73,13 +67,13 @@ export default function Desktop({ locale, data }) {
   // Mission Control: winId → { tx, ty, s, slot } while the overview is open
   const [ovMap, setOvMap] = useState(null);
   const zTop = useRef(10);
+  const winsRef = useRef([]);
   const uid = useRef(0);
   const runTimer = useRef(null);
 
   /* mount: mark OS active, size class, clock */
   useEffect(() => {
     document.documentElement.classList.add("os-active");
-    setPalette(document.documentElement.getAttribute("data-palette") || "ember");
     const mq = window.matchMedia("(max-width: 720px)");
     const apply = () => setIsMobile(mq.matches);
     apply();
@@ -116,7 +110,7 @@ export default function Desktop({ locale, data }) {
   }, []);
 
   const openApp = useCallback(
-    (appId, override) => {
+    (appId, override, { takeFocus = true } = {}) => {
       pingAgent();
       setWins((ws) => {
         const existing = ws.find((w) => w.app === appId && !w.closing);
@@ -132,21 +126,25 @@ export default function Desktop({ locale, data }) {
               w.id === existing.id ? { ...w, min: false, restoring: true, z: zTop.current } : w
             );
           }
-          return ws.map((w) => (w.id === existing.id ? { ...w, min: false, z: zTop.current } : w));
+          return ws.map((w) =>
+            w.id === existing.id ? { ...w, min: false, takeFocus: true, z: zTop.current } : w
+          );
         }
         const meta = APPS.find((a) => a.id === appId);
         const vw = typeof window !== "undefined" ? window.innerWidth : 1200;
         const vh = typeof window !== "undefined" ? window.innerHeight : 800;
+        const heroRight = document.querySelector(".os-hero")?.getBoundingClientRect().right || 0;
+        const left = vw - heroRight > meta.w + 40 ? Math.round(heroRight) + 24 : 64;
         const w = Math.min(meta.w, vw - 32);
         const h = Math.min(meta.h, vh - 150);
         const n = ws.filter((x) => !x.closing).length;
         const pos = override || {
-          x: Math.min(64 + n * 30, Math.max(24, vw - w - 24)),
+          x: Math.min(left + n * 30, Math.max(24, vw - w - 24)),
           y: Math.min(58 + n * 26, Math.max(52, vh - h - 110)),
         };
         const id = ++uid.current;
         setFocusId(id);
-        return [...ws, { id, app: appId, title: meta.title, icon: meta.icon, w, h, z: zTop.current, min: false, max: false, ...pos }];
+        return [...ws, { id, app: appId, title: meta.title, w, h, takeFocus, z: zTop.current, min: false, max: false, ...pos }];
       });
     },
     [pingAgent]
@@ -184,8 +182,8 @@ export default function Desktop({ locale, data }) {
             id,
             app: "reader",
             payload: post,
+            takeFocus: true,
             title: `writing/${post.slug}.md`,
-            icon: "✎",
             w, h,
             z: zTop.current,
             min: false, max: false,
@@ -199,6 +197,10 @@ export default function Desktop({ locale, data }) {
   );
 
   const closeWin = useCallback((id) => {
+    const app = winsRef.current.find((w) => w.id === id)?.app;
+    if (document.activeElement?.closest(`.os-window[data-winid="${id}"]`)) {
+      document.querySelector(`.os-dock-item[data-app="${app === "reader" ? "blog" : app}"]`)?.focus();
+    }
     setWins((ws) => ws.map((w) => (w.id === id ? { ...w, closing: true } : w)));
     setTimeout(() => setWins((ws) => ws.filter((w) => w.id !== id)), 200);
   }, []);
@@ -288,82 +290,42 @@ export default function Desktop({ locale, data }) {
       setBootStep(step);
       if (step >= BOOT_LINES.length) {
         clearInterval(iv);
-        setTimeout(finishBoot, 550);
+        setTimeout(finishBoot, 120);
       }
-    }, 360);
-    return () => clearInterval(iv);
+    }, 180);
+    const skip = () => { clearInterval(iv); finishBoot(); };
+    window.addEventListener("keydown", skip, { once: true });
+    return () => { clearInterval(iv); window.removeEventListener("keydown", skip); };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const finishBoot = useCallback(() => {
     sessionStorage.setItem("rudraos-booted", "1");
     setBootOut(true);
-    setTimeout(() => setBooted(true), 520);
+    setTimeout(() => setBooted(true), 300);
   }, []);
 
   const skipBoot = () => { setBootStep(BOOT_LINES.length); finishBoot(); };
 
-  /* after boot: auto-open the opening windows */
+  /* after boot: the profile card is already on the desktop, so only wide
+     screens get a second window */
   const opened = useRef(false);
   useEffect(() => {
     if (!booted || opened.current) return;
     opened.current = true;
-    const vw = window.innerWidth;
-    const vh = window.innerHeight;
-    /* Opening windows keep clear of the hero column. */
-    if (window.matchMedia("(max-width: 720px)").matches) {
-      openApp("about");
-      openApp("terminal");
-    } else if (vw >= 1200 && vh >= 800) {
-      openApp("terminal", { x: 60, y: 70 });
-      openApp("about", { x: Math.min(580, vw - 500), y: 130 });
-      setShowHint(true);
-      setTimeout(() => setShowHint(false), 6000);
-    } else if (vw >= 1024) {
-      openApp("about", { x: Math.max(Math.round(vw * 0.5) + 8, vw - 500), y: 96 });
-      setShowHint(true);
-      setTimeout(() => setShowHint(false), 6000);
-    } else {
-      setShowHint(true);
-      setTimeout(() => setShowHint(false), 6000);
-    }
+    if (window.matchMedia("(max-width: 720px)").matches) return;
+    if (window.innerWidth >= 1200) openApp("terminal", null, { takeFocus: false });
+    setShowHint(true);
+    setTimeout(() => setShowHint(false), 6000);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [booted]);
-
-  /* theme + locale */
-  const setTheme = useCallback((mode) => {
-    const cur = document.documentElement.getAttribute("data-theme") || "dark";
-    const next = mode === "toggle" ? (cur === "dark" ? "light" : "dark") : mode;
-    document.documentElement.setAttribute("data-theme", next);
-    localStorage.setItem(THEME_KEY, next);
-  }, []);
-
-  const setPal = useCallback((id) => {
-    setPalette(id);
-    document.documentElement.setAttribute("data-palette", id);
-    try {
-      localStorage.setItem(PALETTE_KEY, id);
-    } catch {}
-  }, []);
-
-  const switchLang = useCallback((code) => router.push(`/${code}`), [router]);
-
-  /* prefetch the other locale routes as soon as the menu opens,
-     so the actual switch is near-instant */
-  useEffect(() => {
-    if (!langOpen) return;
-    LOCALES.forEach((l) => {
-      if (l !== locale) router.prefetch(`/${l}`);
-    });
-  }, [langOpen, locale, router]);
 
   /* Mission Control — lay every open window out in a centred grid.
      Geometry comes from state (not DOM rects), so windows mid-transition
      still map to correct slots. */
   const closeOverview = useCallback(() => setOvMap(null), []);
 
-  const winsRef = useRef(wins);
-  winsRef.current = wins;
+  useEffect(() => { winsRef.current = wins; }, [wins]);
 
   const openOverview = useCallback(() => {
     if (window.matchMedia("(max-width: 720px)").matches) return;
@@ -407,7 +369,7 @@ export default function Desktop({ locale, data }) {
      literal ⌘Space, so ⌘K is the reliable binding); ⌃↑ / ⌃↓ for Mission Control */
   useEffect(() => {
     const onKey = (e) => {
-      if (e.key === "Escape") { setCtx(null); setLangOpen(false); setPalOpen(false); setSpotOpen(false); setPartnerPick(null); closeOverview(); }
+      if (e.key === "Escape") { setPartnerPick(null); closeOverview(); }
       if ((e.metaKey || e.ctrlKey) && (e.key.toLowerCase() === "k" || e.code === "Space")) {
         e.preventDefault();
         setSpotOpen((o) => !o);
@@ -425,7 +387,7 @@ export default function Desktop({ locale, data }) {
   const wheelAcc = useRef({ v: 0, t: null });
   useEffect(() => {
     const onWheel = (e) => {
-      if (e.target.closest(".os-window, .os-dock, .os-spot, .os-menubar, .os-partner")) return;
+      if (e.target.closest(".os-window, .os-dock, .os-spot, .os-menubar, .os-partner, .os-hero, [data-slot=menu-content]")) return;
       const a = wheelAcc.current;
       a.v += e.deltaY;
       clearTimeout(a.t);
@@ -437,12 +399,6 @@ export default function Desktop({ locale, data }) {
     return () => { window.removeEventListener("wheel", onWheel); clearTimeout(wheelAcc.current.t); };
   }, [openOverview, closeOverview]);
 
-  const onCtxMenu = (e) => {
-    if (e.target.closest(".os-window")) return;
-    e.preventDefault();
-    setCtx({ x: Math.min(e.clientX, window.innerWidth - 190), y: Math.min(e.clientY, window.innerHeight - 220) });
-  };
-
   /* everything Spotlight can find */
   const spotItems = useMemo(
     () => [
@@ -450,34 +406,30 @@ export default function Desktop({ locale, data }) {
         type: "app",
         label: a.title,
         hint: "open window",
-        icon: a.icon,
         run: () => openApp(a.id),
       })),
       ...data.posts.map((p) => ({
         type: "post",
         label: p.title,
         hint: `${p.date} · ${p.readingTime} min read`,
-        icon: "✎",
         run: () => openReader(p),
       })),
       ...data.projects.map((p) => ({
         type: "repo",
         label: p.name,
         hint: p.tagline,
-        icon: "❒",
         run: () => window.open(p.url, "_blank", "noopener"),
       })),
       ...data.links.map((lk) => ({
         type: "link",
         label: lk.title,
         hint: lk.url.replace(/^https?:\/\//, "").split("/")[0],
-        icon: "⚯",
         run: () => window.open(lk.url, "_blank", "noopener"),
       })),
-      { type: "action", label: "Toggle appearance", hint: "light / dark", icon: "◐", run: () => setTheme("toggle") },
-      { type: "action", label: "Email Rizwanul", hint: data.identity.email, icon: "✉", run: () => { window.location.href = `mailto:${data.identity.email}`; } },
+      { type: "action", label: "Toggle appearance", hint: "light / dark", run: () => setTheme("toggle") },
+      { type: "action", label: "Email Rizwanul", hint: data.identity.email, run: () => { window.location.href = `mailto:${data.identity.email}`; } },
     ],
-    [data, openApp, openReader, setTheme]
+    [data, openApp, openReader]
   );
 
   const openIds = new Set(wins.filter((w) => !w.closing).map((w) => w.app));
@@ -487,89 +439,93 @@ export default function Desktop({ locale, data }) {
     : [];
 
   const identity = data.identity;
-  const dockApps = DOCK.map((id) => APPS.find((a) => a.id === id)).filter(Boolean);
+
+  const onMenuAction = (value) => {
+    // Runs after the menu closes and has restored focus.
+    setTimeout(() => {
+      if (value === "search") setSpotOpen(true);
+      else if (value === "overview") openOverview();
+      else if (value === "theme") setTheme("toggle");
+      else if (value === "close-all") { setWins([]); setFocusId(null); }
+      else openApp(value);
+    }, 10);
+  };
+
+  const starts = [
+    { who: "Hiring", what: "Experience and roles", href: `/${locale}/profile#h-experience` },
+    { who: "Leadership", what: "Capabilities and scope", href: `/${locale}/profile#h-capabilities` },
+    { who: "Developers", what: "Open-source projects", href: `/${locale}/profile#h-projects` },
+    { who: "Readers", what: "Writing on AI and systems", href: `/${locale}/blog` },
+  ];
 
   return (
-    <div className={`rudra-os${ovMap ? " ov" : ""}`} onContextMenu={onCtxMenu} onClick={() => { setCtx(null); setLangOpen(false); setPalOpen(false); setPartnerPick(null); }}>
+    <div className={`rudra-os${ovMap ? " ov" : ""}`} onClick={() => setPartnerPick(null)}>
+      <a className="skip-link" href="#main">Skip to content</a>
+
       {/* ambient background */}
       <div className="os-bg" aria-hidden="true">
-        <div className="os-blob a" /><div className="os-blob b" /><div className="os-blob c" />
         {data.contributions && <ContributionField levels={data.contributions} />}
       </div>
 
       {/* menu bar */}
-      <div className="os-menubar">
-        <span className="os-brand"><span className="os-brand-mark" />RudraOS</span>
-        <button className="os-menu-item os-menu-desktop" onClick={() => openApp("about")}>about</button>
-        <button className="os-menu-item os-menu-desktop" onClick={() => openApp("projects")}>projects</button>
-        <button className="os-menu-item os-menu-desktop" onClick={() => openApp("terminal")}>terminal</button>
+      <header className="os-menubar">
+        <span className="os-brand">RudraOS</span>
+        <nav className="os-menu-links" aria-label="Primary">
+          <Link className="os-menu-item" href={`/${locale}/profile`}>Profile</Link>
+          <Link className="os-menu-item" href={`/${locale}/blog`}>Writing</Link>
+          <Link className="os-menu-item os-menu-wide" href={`/${locale}/links`}>Links</Link>
+        </nav>
         <div className="os-menubar-spacer" />
-        <a className="os-menu-switch" href={`/${locale}/profile`}>
-          <span className="os-switch-long">HTML version →</span>
-          <span className="os-switch-short">HTML →</span>
-        </a>
-        <button className="os-mbtn" onClick={(e) => { e.stopPropagation(); setSpotOpen(true); }} aria-label="Search (⌘K)">⌕</button>
-        <span className={`os-status${running ? " running" : ""}`}>
+        <span className={`os-status${running ? " running" : ""}`} aria-hidden="true">
           <span className="os-status-dot" />{running ? "running" : "idle"}
         </span>
-        <button className="os-mbtn" onClick={(e) => { e.stopPropagation(); setTheme("toggle"); }}>◐</button>
-        <div className="os-lang os-pal" onClick={(e) => e.stopPropagation()}>
-          <button
-            className="os-mbtn os-pal-btn"
-            onClick={() => setPalOpen((o) => !o)}
-            aria-label="Colour"
-          >
-            <span className="os-pal-dot" />
-          </button>
-          {palOpen && (
-            <div className="os-lang-menu os-pal-menu">
-              {PALETTES.map((id) => (
-                <button
-                  key={id}
-                  className={id === palette ? "active" : ""}
-                  onClick={() => { setPal(id); setPalOpen(false); }}
-                >
-                  <span className="os-pal-sw" data-p={id} />
-                  {id}
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
-
-        <div className="os-lang" onClick={(e) => e.stopPropagation()}>
-          <button className="os-mbtn" onClick={() => setLangOpen((o) => !o)}>{locale}</button>
-          {langOpen && (
-            <div className="os-lang-menu">
-              {LOCALES.map((l) => (
-                <a key={l} className={l === locale ? "active" : ""} href={`/${l}`}
-                   onClick={(e) => { e.preventDefault(); switchLang(l); }}>
-                  {l.toUpperCase()}{l === locale ? " ✓" : ""}
-                </a>
-              ))}
-            </div>
-          )}
-        </div>
+        <Button className="os-mbtn" onClick={() => setSpotOpen(true)} aria-keyshortcuts="Meta+K Control+K">
+          Search<kbd className="os-menu-wide">⌘K</kbd>
+        </Button>
+        <ColourMenu className="os-mbtn" />
+        <ThemeButton className="os-mbtn" />
+        <LanguageMenu className="os-mbtn" locale={locale} />
         <span className="os-clock">{clock}</span>
-      </div>
+      </header>
 
-      {/* windows */}
-      <div className="os-surface">
-        <div className="os-hero">
-          <p className="os-hero-eyebrow">{identity.role}</p>
-          <h1 className="os-hero-name">{identity.name}</h1>
-          <p className="os-hero-bio">{identity.bio}</p>
-          <p className="os-hero-links">
-            <a href={`/${locale}/profile`}>Full profile →</a>
-            <a href={`/${locale}/blog`}>Writing →</a>
-            <a href={identity.github} target="_blank" rel="noreferrer">GitHub ↗</a>
-            <a href={identity.linkedin} target="_blank" rel="noreferrer">LinkedIn ↗</a>
-          </p>
-        </div>
+      <Menu onAction={onMenuAction}>
+        <MenuContextTrigger render={<main className="os-surface" id="main" tabIndex={-1} />}>
+          <section className="os-hero" aria-labelledby="hero-name">
+            <div className="titlebar" aria-hidden="true"><span>read_me.txt</span></div>
+            <div className="os-hero-body">
+              <h1 className="os-hero-name" id="hero-name">{identity.name}</h1>
+              <p className="os-hero-role">{identity.role}</p>
+              <p className="os-hero-bio">{identity.bio}</p>
+              <dl className="os-hero-facts">
+                <div><dt>Based in</dt><dd>{identity.location}</dd></div>
+                <div><dt>Experience</dt><dd>10+ years</dd></div>
+                <div><dt>Stack</dt><dd>{identity.stack}</dd></div>
+                <div><dt>Education</dt><dd>{identity.education}</dd></div>
+              </dl>
+              <div className="os-hero-actions">
+                <a className="retro-btn primary" href={`mailto:${identity.email}`}>Email me</a>
+                <Link className="retro-btn" href={`/${locale}/profile`}>Full profile</Link>
+                <a className="retro-btn" href={identity.github} target="_blank" rel="noreferrer">GitHub ↗</a>
+                <a className="retro-btn" href={identity.linkedin} target="_blank" rel="noreferrer">LinkedIn ↗</a>
+              </div>
+              <nav aria-label="Start here">
+                <ul className="os-starts">
+                  {starts.map((start) => (
+                    <li key={start.who}>
+                      <Link href={start.href}>
+                        <b>{start.who}</b>
+                        <span>{start.what}</span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            </div>
+          </section>
 
-        {snapPreview && !isMobile && (
-          <div className={`os-snap-preview ${snapPreview}`} aria-hidden="true" />
-        )}
+          {snapPreview && !isMobile && (
+            <div className={`os-snap-preview ${snapPreview}`} aria-hidden="true" />
+          )}
         {wins.map((w) => (
           <Window
             key={w.id}
@@ -595,7 +551,7 @@ export default function Desktop({ locale, data }) {
                 locale={locale}
                 onOpen={openApp}
                 onTheme={setTheme}
-                onLang={switchLang}
+                onLang={(code) => window.location.assign(`/${code}`)}
                 onClose={() => closeWin(w.id)}
               />
             ) : w.app === "reader" ? (
@@ -618,6 +574,7 @@ export default function Desktop({ locale, data }) {
             <div className="os-partner-grid">
               {partnerCands.map((w) => (
                 <button
+                  type="button"
                   key={w.id}
                   className="os-partner-card"
                   onClick={() => {
@@ -625,9 +582,7 @@ export default function Desktop({ locale, data }) {
                     focusWin(w.id);
                   }}
                 >
-                  <span className="os-partner-ico" data-app={w.app === "reader" ? "blog" : w.app} aria-hidden="true">
-                    {w.icon}
-                  </span>
+                  <PixelIcon name={w.app === "reader" ? "blog" : w.app} />
                   <span className="os-partner-t">{w.title}</span>
                 </button>
               ))}
@@ -635,7 +590,19 @@ export default function Desktop({ locale, data }) {
             <div className="os-partner-hint">esc to dismiss</div>
           </div>
         )}
-      </div>
+        </MenuContextTrigger>
+        <MenuContent>
+          <MenuItem value="search">Search</MenuItem>
+          <MenuItem value="overview">Mission Control</MenuItem>
+          <MenuItem value="terminal">Open terminal</MenuItem>
+          <MenuItem value="about">About</MenuItem>
+          <MenuItem value="projects">Projects</MenuItem>
+          <MenuItem value="blog">Writing</MenuItem>
+          <MenuSeparator />
+          <MenuItem value="theme">Toggle theme</MenuItem>
+          <MenuItem value="close-all">Close all windows</MenuItem>
+        </MenuContent>
+      </Menu>
 
       {/* mission control — click targets + labels above the scaled windows */}
       {ovMap && (
@@ -651,7 +618,7 @@ export default function Desktop({ locale, data }) {
                 onClick={(e) => { e.stopPropagation(); closeOverview(); focusWin(w.id); }}
               >
                 <span className="os-ov-label">
-                  <span className="os-ov-label-ico" aria-hidden="true">{w.icon}</span>
+                  <PixelIcon name={w.app === "reader" ? "blog" : w.app} size={12} />
                   {w.title}
                 </span>
               </button>
@@ -662,48 +629,33 @@ export default function Desktop({ locale, data }) {
 
       {/* first-load hint */}
       {showHint && !isMobile && (
-        <div className="os-hint">tip: press <b>⌘K</b> to search · drag a window to a screen edge to tile it</div>
+        <aside className="os-hint">Press <b>⌘K</b> to search. Drag a window to a screen edge to tile it.</aside>
       )}
 
-      {/* spotlight */}
-      {spotOpen && <Spotlight items={spotItems} onClose={() => setSpotOpen(false)} />}
+      <Spotlight items={spotItems} open={spotOpen} onOpenChange={setSpotOpen} />
 
       {/* dock */}
-      <nav className="os-dock" aria-label="Application dock" onClick={(e) => e.stopPropagation()}>
-        {dockApps.flatMap((a) => [
-          ...(a.id === "blog" ? [<span className="os-dock-sep" key="dock-sep" />] : []),
-          <button
-            key={a.id}
-            data-app={a.id}
-            className={`os-dock-item${openIds.has(a.id) ? " open" : ""}`}
-            onClick={() => openApp(a.id)}
-            aria-label={`Open ${a.title}`}
-          >
-            <span className="os-dock-glyph" aria-hidden="true">{dockIcon(a.id)}</span>
-            <span className="os-tip">{a.title}</span>
-          </button>,
-        ])}
+      <nav className="os-dock-nav" aria-label="Apps">
+        <Toolbar className="os-dock" aria-label="Apps" onClick={(e) => e.stopPropagation()}>
+          {DOCK.map(({ id, label }) => (
+            <ToolbarButton
+              key={id}
+              data-app={id}
+              className={`os-dock-item${openIds.has(id) ? " open" : ""}`}
+              onClick={() => openApp(id)}
+            >
+              <PixelIcon name={id} />
+              <span>{label}</span>
+            </ToolbarButton>
+          ))}
+        </Toolbar>
       </nav>
 
-      {/* context menu */}
-      {ctx && (
-        <div className="os-ctx" style={{ left: ctx.x, top: ctx.y }} onClick={(e) => e.stopPropagation()}>
-          <button onClick={() => { setSpotOpen(true); setCtx(null); }}>Search <kbd>⌘K</kbd></button>
-          <button onClick={() => { setCtx(null); openOverview(); }}>Mission Control <kbd>⌃↑</kbd></button>
-          <button onClick={() => { openApp("terminal"); setCtx(null); }}>Open terminal</button>
-          <button onClick={() => { openApp("about"); setCtx(null); }}>About</button>
-          <button onClick={() => { openApp("projects"); setCtx(null); }}>Projects</button>
-          <button onClick={() => { openApp("blog"); setCtx(null); }}>Writing</button>
-          <hr />
-          <button onClick={() => { setTheme("toggle"); setCtx(null); }}>Toggle theme</button>
-          <button onClick={() => { setWins([]); setFocusId(null); setCtx(null); }}>Close all windows</button>
-        </div>
-      )}
-
       {/* boot — quiet, mac-like: mark, progress, one status line */}
+      <noscript><style>{".os-boot{display:none}"}</style></noscript>
       {!booted && (
         <div className={`os-boot${bootOut ? " done" : ""}`} onClick={skipBoot}>
-          <div className="os-boot-mark" aria-hidden="true">R</div>
+          <div className="os-boot-mark" aria-hidden="true"><PixelIcon name="terminal" size={48} /></div>
           <div className="os-boot-name">RudraOS</div>
           <div className="os-boot-bar" role="progressbar" aria-label="Booting" aria-valuenow={Math.round((bootStep / BOOT_LINES.length) * 100)} aria-valuemin={0} aria-valuemax={100}>
             <i style={{ width: `${(bootStep / BOOT_LINES.length) * 100}%` }} />

@@ -10,7 +10,8 @@ export async function generateStaticParams() {
 
 export async function GET(_request, { params }) {
   try {
-    const post = await getPostBySlug(params.slug);
+    const { slug } = await params;
+    const post = await getPostBySlug(slug);
     return Response.json({
       slug: post.slug,
       title: post.title,

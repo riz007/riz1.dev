@@ -12,3 +12,11 @@ pnpm-debug.log*
 .turbo
 *.swp
 *.swo
+
+# Personal AI agent settings
+.claude/settings.local.json
+CLAUDE.local.md
+
+# Third-party skills (pinned in skills-lock.json)
+.claude/skills/
+.agents/

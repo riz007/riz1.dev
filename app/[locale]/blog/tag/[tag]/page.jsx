@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { unstable_setRequestLocale } from "next-intl/server";
+import { setRequestLocale } from "next-intl/server";
 import { getAllTags, getPostsByTag } from "../../../../../lib/posts";
 
 const BASE = "https://riz1.dev";
@@ -15,7 +15,8 @@ async function findTag(slug) {
   return tags.find((t) => t.slug === slug) || null;
 }
 
-export async function generateMetadata({ params: { tag, locale } }) {
+export async function generateMetadata({ params }) {
+  const { tag, locale } = await params;
   const found = await findTag(tag);
   if (!found) return { title: "Topic" };
   return {
@@ -30,8 +31,9 @@ export async function generateMetadata({ params: { tag, locale } }) {
   };
 }
 
-export default async function TagPage({ params: { locale, tag } }) {
-  unstable_setRequestLocale(locale);
+export default async function TagPage({ params }) {
+  const { locale, tag } = await params;
+  setRequestLocale(locale);
 
   const found = await findTag(tag);
   if (!found) notFound();
@@ -73,13 +75,12 @@ export default async function TagPage({ params: { locale, tag } }) {
           </p>
         </div>
 
-        <div role="list">
+        <ul className="post-list">
           {posts.map((post) => (
+            <li key={post.slug}>
             <Link
-              role="listitem"
               className="post-row"
               href={`/${locale}/blog/${post.slug}`}
-              key={post.slug}
             >
               <span className="post-row-date">
                 {post.isoDate ? <time dateTime={post.isoDate}>{post.date}</time> : null}
@@ -90,8 +91,9 @@ export default async function TagPage({ params: { locale, tag } }) {
                 <p className="post-row-meta">{post.readingTime} min read</p>
               </div>
             </Link>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </>
   );
