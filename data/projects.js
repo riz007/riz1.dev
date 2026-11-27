@@ -1,5 +1,44 @@
 export const projects = [
   {
+    repo: "pixel-bangkok",
+    name: "Pixel Bangkok",
+    tagline: "Isometric pixel-art map of Bangkok",
+    description:
+      "An interactive isometric pixel-art map of Bangkok you can pan, zoom and search, street by street. Temples, canals, markets, the Chao Phraya, the BTS and MRT, in Thai and English.",
+    stack: ["Python", "TypeScript", "Next.js"],
+    topics: ["pixel-art", "map", "nextjs", "lora"],
+    url: "https://github.com/riz007/pixel-bangkok",
+    demo: "https://www.pixelbangkok.com",
+    featured: true,
+    stars: 1,
+  },
+  {
+    repo: "canvas-ui",
+    name: "Canvas UI",
+    tagline: "UI design skill for coding agents",
+    description:
+      "A design skill for AI coding agents: explore several distinct directions at once, compare them side by side on a live canvas, tune the tokens, then refine against real screenshots.",
+    stack: ["JavaScript", "Agent Skills"],
+    topics: ["agent-skills", "ui-design", "design-tokens", "claude-code"],
+    url: "https://github.com/riz007/canvas-ui",
+    demo: "https://riz007.github.io/canvas-ui/",
+    featured: true,
+    stars: 0,
+  },
+  {
+    repo: "bodyflow",
+    name: "BodyFlow",
+    tagline: "Pharmacokinetics in 3D",
+    description:
+      "An interactive 3D visualisation of how a medicine moves through the body: absorption, distribution to the organs, liver metabolism and kidney excretion, on a scrubbable timeline beside the plasma concentration curve.",
+    stack: ["TypeScript", "React", "Three.js"],
+    topics: ["threejs", "react-fiber", "healthcare", "medicine"],
+    url: "https://github.com/riz007/bodyflow",
+    demo: "https://bodyrx.vercel.app/",
+    featured: true,
+    stars: 0,
+  },
+  {
     repo: "mcp-apps-ui",
     name: "MCP Apps UI",
     tagline: "Component kit for MCP Apps",
@@ -59,6 +98,18 @@ export const projects = [
     url: "https://github.com/riz007/architect-os",
     featured: true,
     stars: 1,
+  },
+  {
+    repo: "ariamend",
+    name: "Ariamend",
+    tagline: "Accessibility debt, fixed in PRs",
+    description:
+      "An agent that hunts accessibility debt across React, Vue, Next and Nuxt codebases and opens pull requests you can merge with confidence. Checked against WCAG 2.2.",
+    stack: ["TypeScript", "Vue", "React"],
+    topics: ["accessibility", "wcag22", "agentic-ai", "agent-skills"],
+    url: "https://github.com/riz007/ariamend",
+    featured: false,
+    stars: 0,
   },
   {
     repo: "nitpick",
