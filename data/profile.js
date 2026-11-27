@@ -42,7 +42,7 @@ export const capabilityCards = [
 export const experience = [
   {
     role: "Senior Software Developer (Tech Lead)",
-    company: "Codeifai Ltd.",
+    company: "Tech Company in Bangkok",
     range: "Apr 2021 – Present",
   },
   {

@@ -113,7 +113,7 @@ const personSchema = {
     "Node.js",
     "Python",
   ],
-  worksFor: { "@type": "Organization", name: "Codeifai Ltd." },
+  worksFor: { "@type": "Organization", name: "Tech Company in Bangkok" },
 };
 
 const SOCIALS = [
